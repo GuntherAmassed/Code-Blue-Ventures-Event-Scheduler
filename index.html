@@ -9,262 +9,263 @@
 </head>
 <style>
     @font-face {
-    src: url("CodeBlue times fonts/TradeGothicLTStd-Cn18.otf");
-    font-family: Trade Gothic LT Std;
+        src: url("CodeBlue times fonts/TradeGothicLTStd-Cn18.otf");
+        font-family: Trade Gothic LT Std;
 
-}
-
-@font-face {
-    src: url("CodeBlue times fonts/Lucida Sans Typewriter/lucidatypewriterregular.ttf");
-    font-family: Lucida Sans Typewriter;
-}
-
-* {
-    padding: 0;
-    margin: 0;
-}
-
-body {
-    display: flex;
-    flex-direction: column;
-    background: var(--background-dark, #02121F);
-    min-height: 848px;
-    height: 100vh;
-    width: 100vw;
-}
-
-.Main-Container {
-    position: relative;
-    margin-top: 5%;
-    display: flex;
-    height: 50%;
-    justify-content: space-between;
-    flex-direction: column;
-    padding-top: 10%;
-    padding-left: 6.5%;
-    padding-right: 6.5%;
-}
-
-#CodeBlue {
-    width: 102.857px;
-    height: 24px;
-    flex-shrink: 0;
-}
-
-.Planet-Container {
-    position: relative;
-    z-index: -2;
-    background-image: url("Images/unsplash-y-zyg-o-nr-u-be-8.svg");
-    text-decoration: none;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 50%;
-    width: 100%;
-
-}
-
-h1 {
-    color: #FFF;
-    margin-top: 5%;
-    font-size: 2.375rem;
-    font-family: Lucida Sans Typewriter;
-    line-height: 2.875rem;
-    letter-spacing: 0.1875rem;
-    text-transform: uppercase;
-    font-weight: 100;
-}
-
-p {
-    font-size: 0.875rem;
-    font-family: Trade Gothic LT Std;
-    line-height: 0.875rem;
-    letter-spacing: 0.035rem;
-}
-
-button {
-    background: var(--primary, #009AFE);
-    border: 0;
-    display: flex;
-    height: 2.625rem;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: #FFF;
-    font-size: 1rem;
-    font-family: Trade Gothic LT Std;
-    line-height: 1.5rem;
-    letter-spacing: 0.0625rem;
-    text-transform: uppercase;
-}
-
-.TextContainer {
-    display: flex;
-    justify-content: space-between;
-}
-
-span {
-    color: #009AFE;
-}
-
-.Input-Container {
-
-    display: flex;
-    gap: 2rem;
-    flex-direction: column;
-}
-
-.ellipse {
-    position: absolute;
-    top: -5%;
-    width: 100%;
-    height: 10%;
-    z-index: -1;
-    background: #02121F;
-    filter: blur(5px);
-}
-
-input {
-    padding: .5rem;
-    background-color: transparent;
-    box-sizing: border-box;
-    display: flex;
-    outline: none;
-    border: 0;
-    border-bottom: 1px solid var(--primary, #009AFE);
-    font-size: 0.875rem;
-    font-family: Trade Gothic LT Std;
-    line-height: 0.875rem;
-    letter-spacing: 0.035rem;
-    color: gray;
-}
-
-.ellipse-2 {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 7.3125rem;
-    height: 7.3125rem;
-    border-radius: 117px;
-    background: var(--primary, #009AFE);
-    filter: blur(92px);
-
-}
-
-#password-Hidden {
-    width: fit-content;
-    position: absolute;
-    right: 0;
-    bottom: 10%;
-}
-
-#Password-Div {
-    border-bottom: 1px solid var(--primary, #009AFE);
-    position: relative;
-}
-
-#Password-Div input {
-    border-bottom: none;
-}
-
-.TextContainer p:first-of-type {
-    color:  #FFF;
-    font-size: 0.75rem;
-    line-height: 0.625rem;
-    letter-spacing: 0.03rem;
-}
-
-@media screen and (width>=800px) {
-    .ellipse-2 {
-        width: 10rem;
-        height: 10rem;
     }
-}
 
-@media screen and (width>=1000px) {
-    h1 {
-        font-size: 3rem;
-        line-height: 3.5rem;
+    @font-face {
+        src: url("CodeBlue times fonts/Lucida Sans Typewriter/lucidatypewriterregular.ttf");
+        font-family: Lucida Sans Typewriter;
+    }
+
+    * {
+        padding: 0;
+        margin: 0;
     }
 
     body {
-        min-height: 600px;
-        flex-direction: row;
+        display: flex;
+        flex-direction: column;
+        background: var(--background-dark, #02121F);
+        min-height: 848px;
+        height: 100vh;
+        width: 100vw;
+    }
+
+    .Main-Container {
+        position: relative;
+        margin-top: 5%;
+        display: flex;
+        height: 50%;
         justify-content: space-between;
-    }
-
-    button {
-        width: 18%;
-    }
-
-    .Planet-Container {
-        background-image: url("Images/unsplash-y-zyg-o-nr-u-be-8-sdf.svg");
-        height: auto;
-        background-size: cover;
-        background-position: left;
-        max-height: 100%;
-    }
-
-    .ellipse {
-        height: 100%;
-        width: 5%;
-        left: -10px;
-        top: 0;
-
+        flex-direction: column;
+        padding-top: 10%;
+        padding-left: 6.5%;
+        padding-right: 6.5%;
     }
 
     #CodeBlue {
-        width: 9.375rem;
-        height: 2.1875rem;
-        margin-top: -10rem;
-        margin-bottom: 5rem;
+        width: 102.857px;
+        height: 24px;
+        flex-shrink: 0;
     }
 
-    .Main-Container {
-        margin-top: 0;
+    .Planet-Container {
+        position: relative;
+        z-index: -2;
+        background-image: url("Images/unsplash-y-zyg-o-nr-u-be-8.svg");
+        text-decoration: none;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 50%;
+        width: 100%;
+
+    }
+
+    h1 {
+        color: #FFF;
+        margin-top: 5%;
+        font-size: 2.375rem;
+        font-family: Lucida Sans Typewriter;
+        line-height: 2.875rem;
+        letter-spacing: 0.1875rem;
+        text-transform: uppercase;
+        font-weight: 100;
+    }
+
+    p {
+        font-size: 0.875rem;
+        font-family: Trade Gothic LT Std;
+        line-height: 0.875rem;
+        letter-spacing: 0.035rem;
+    }
+
+    button {
+        background: var(--primary, #009AFE);
+        border: 0;
+        display: flex;
+        height: 2.625rem;
+        flex-direction: column;
         justify-content: center;
-        padding-right: 0;
-        padding-top: 0;
-        gap: 3rem;
-        height: 100%;
-        width: 60%;
+        align-items: center;
+        color: #FFF;
+        font-size: 1rem;
+        font-family: Trade Gothic LT Std;
+        line-height: 1.5rem;
+        letter-spacing: 0.0625rem;
+        text-transform: uppercase;
+    }
+
+    .TextContainer {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    span {
+        color: #009AFE;
+    }
+
+    .Input-Container {
+
+        display: flex;
+        gap: 2rem;
+        flex-direction: column;
+    }
+
+    .ellipse {
+        position: absolute;
+        top: -5%;
+        width: 100%;
+        height: 10%;
+        z-index: -1;
+        background: #02121F;
+        filter: blur(5px);
+    }
+
+    input {
+        padding: .5rem;
+        background-color: transparent;
+        box-sizing: border-box;
+        display: flex;
+        outline: none;
+        border: 0;
+        border-bottom: 1px solid var(--primary, #009AFE);
+        font-size: 0.875rem;
+        font-family: Trade Gothic LT Std;
+        line-height: 0.875rem;
+        letter-spacing: 0.035rem;
+        color: gray;
     }
 
     .ellipse-2 {
-        top: 20%;
-        right: 50%;
-        left: 30%;
-        z-index: -1;
-        width: 11.8125rem;
-        height: 11.8125rem;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 7.3125rem;
+        height: 7.3125rem;
+        border-radius: 117px;
         background: var(--primary, #009AFE);
-        filter: blur(122px);
-    }
-}
+        filter: blur(92px);
 
-@media screen and (width>=1400px) {
-    .Planet-Container {
-        background-size: contain;
-        background-position: right;
     }
 
-    .Main-Container {
-        padding-right: 6.5%;
-        width: 50%;
+    #password-Hidden {
+        width: fit-content;
+        position: absolute;
+        right: 0;
+        bottom: 10%;
     }
 
-    .ellipse {
-        width: 35%;
-        left: -10%;
+    #Password-Div {
+        border-bottom: 1px solid var(--primary, #009AFE);
+        position: relative;
     }
-}
 
-@media screen and (width>=1800px) {
-    .ellipse {
-        width: 40%;
-        left: -10%;
+    #Password-Div input {
+        border-bottom: none;
     }
-}
+
+    .TextContainer p:first-of-type {
+        color: #FFF;
+        font-size: 0.75rem;
+        line-height: 0.625rem;
+        letter-spacing: 0.03rem;
+    }
+
+    @media screen and (width>=800px) {
+        .ellipse-2 {
+            width: 10rem;
+            height: 10rem;
+        }
+    }
+
+    @media screen and (width>=1000px) {
+        h1 {
+            font-size: 3rem;
+            line-height: 3.5rem;
+        }
+
+        body {
+            min-height: 600px;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        button {
+            width: 18%;
+        }
+
+        .Planet-Container {
+            background-image: url("Images/unsplash-y-zyg-o-nr-u-be-8-sdf.svg");
+            height: auto;
+            background-size: cover;
+            background-position: left;
+            max-height: 100%;
+        }
+
+        .ellipse {
+            height: 100%;
+            width: 5%;
+            left: -10px;
+            top: 0;
+
+        }
+
+        #CodeBlue {
+            width: 9.375rem;
+            height: 2.1875rem;
+            margin-top: -10rem;
+            margin-bottom: 5rem;
+        }
+
+        .Main-Container {
+            margin-top: 0;
+            justify-content: center;
+            padding-right: 0;
+            padding-top: 0;
+            gap: 3rem;
+            height: 100%;
+            width: 60%;
+        }
+
+        .ellipse-2 {
+            top: 20%;
+            right: 50%;
+            left: 30%;
+            z-index: -1;
+            width: 11.8125rem;
+            height: 11.8125rem;
+            background: var(--primary, #009AFE);
+            filter: blur(122px);
+        }
+    }
+
+    @media screen and (width>=1400px) {
+        .Planet-Container {
+            background-size: contain;
+            background-position: right;
+        }
+
+        .Main-Container {
+            padding-right: 6.5%;
+            width: 50%;
+        }
+
+        .ellipse {
+            width: 35%;
+            left: -10%;
+        }
+    }
+
+    @media screen and (width>=1800px) {
+        .ellipse {
+            width: 40%;
+            left: -10%;
+        }
+    }
 </style>
+
 <body>
     <div class="Main-Container">
         <div class="ellipse-2"></div>
