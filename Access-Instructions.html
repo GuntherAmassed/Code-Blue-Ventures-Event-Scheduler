@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    @font-face {
+        src: url("CodeBlue times fonts/TradeGothicLTStd-Cn18.otf");
+        font-family: Trade Gothic LT Std;
+
+    }
+
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    body {
+        background: var(--background-dark, #02121F);
+        height: 100vh;
+        width: 100vw;
+    }
+
+    .Main-Container {
+
+        display: flex;
+        background-image: url("Images/div.main-section.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        margin: auto;
+        height: 100%;
+        width: 100%;
+        min-height: 848px;
+        max-width: 1000px;
+        flex-direction: column;
+    }
+
+    img {
+        width: max-content;
+    }
+
+    .Container {
+
+        display: flex;
+        align-self: center;
+        height: 60%;
+        justify-content: center;
+        flex-direction: column;
+        gap: 5%;
+        padding-top: 10%;
+        padding-left: 5%;
+        padding-right: 5%;
+        box-sizing: border-box;
+        max-width: 340px;
+
+    }
+
+    h1 {
+        color: #FFF;
+        font-size: 2.375rem;
+        font-family: Lucida Sans Typewriter;
+        line-height: 2.875rem;
+        letter-spacing: 0.1875rem;
+        text-transform: uppercase;
+        font-weight: 100;
+    }
+
+    p {
+        color: #FFF;
+        font-size: 1rem;
+        font-family: Trade Gothic LT Std;
+        line-height: 1.5rem;
+        letter-spacing: 0.0625rem;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    button {
+        background: var(--primary, #009AFE);
+        border: 0;
+        display: flex;
+        height: 2.625rem;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .TextContainer {
+        display: flex;
+        flex-direction: column;
+    }
+
+    span {
+        color: #009AFE;
+    }
+
+    @media (orientation: landscape) {
+        .Main-Container {
+            background-size: cover;
+        }
+    }
+
+    @media screen and (width>=800px) {
+        html {
+            font-size: 20px;
+        }
+
+        .Container {
+            padding-left: 0;
+        }
+    }
+
+    @media screen and (width<390px) {
+        p {
+            font-size: 14px;
+            white-space: wrap;
+        }
+
+        h1 {
+            letter-spacing: normal;
+        }
+
+        .Main-Container {
+            background-size: cover;
+        }
+    }
+
+    @media screen and (width>=1000px) {
+        html {
+            font-size: 16px;
+        }
+
+        .Main-Container {
+            background-image: url("Images/Instruction\ sent.png");
+            background-size: cover;
+            max-width: none;
+        }
+
+        .Container {
+            padding: 0;
+            margin-top: 8%;
+            justify-content: space-around;
+            height: 60%;
+            max-width: 422px;
+
+        }
+
+        h1 {
+            margin-bottom: 3%;
+            font-size: 3rem;
+            line-height: 3.5rem;
+        }
+
+        button {
+            display: flex;
+            width: 40%;
+            height: 2.625rem;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+
+    @media screen and (width>=1700px) {
+        html {
+            font-size: 18px;
+        }
+
+        .Container {
+
+            max-width: 500px;
+
+        }
+    }
+</style>
+
+<body>
+
+    <div class="Main-Container">
+        <div class="Container">
+            <img id="logo" src="Images/CODEBLUE TIME.svg" alt="">
+            <img src="Images/Check.svg" alt="">
+            <div class="TextContainer">
+                <h1>Access instuctions <span>Sent_</span></h1>
+                <p>Check out Mail <span>michell@gmail.com</span></p>
+            </div>
+            <button>
+                <p>Go to Log in Page</p>
+            </button>
+        </div>
+    </div>
+    <script>
+
+    </script>
+</body>
+
+</html>
