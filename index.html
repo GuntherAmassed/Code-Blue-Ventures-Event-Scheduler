@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log In</title>
-    <link rel="stylesheet" href="css/Normalize.css">
+    <!-- <link rel="stylesheet" href="css/Normalize.css"> -->
 </head>
 <style>
     @font-face {
@@ -118,6 +118,7 @@
         top: -5%;
         width: 100%;
         height: 10%;
+        /* opacity:.7; */
         z-index: -1;
         background: #02121F;
         border-radius: 36.15431rem;
@@ -210,10 +211,9 @@
 
         .ellipse {
             border-radius: 68rem;
-            filter: blur(332px);
+            /* filter: blur(100px); */
             height: 100%;
-            width: 5%;
-            left: -10px;
+            width: 10%;
             top: 0;
 
         }
@@ -290,7 +290,7 @@
                 <p><span>Forgot Password</span></p>
             </div>
         </div>
-        <button>
+        <button onclick="window.location.href=`My-profile.html`;">
             Log in
         </button>
     </div>

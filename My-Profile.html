@@ -7,28 +7,241 @@
     <title>Document</title>
 </head>
 <style>
-    body {
-        display: flex;
-        flex-direction: column;
+    @font-face {
+        src: url("CodeBlue times fonts/TradeGothicLTStd-Cn18.otf");
+        font-family: Trade Gothic LT Std;
+
     }
 
-    .Input-Container {}
+    * {
+        padding: 0;
+        margin: 0;
+    }
 
-    .Input-Container-Row {}
+    #password-Hidden {
+        width: fit-content;
+        position: absolute;
+        right: 0;
+        bottom: 10%;
+    }
+
+    #Password-Div {
+        border-bottom: 1px solid var(--primary, #009AFE);
+        position: relative;
+    }
+
+    #Password-Div input {
+        border-bottom: none;
+    }
+
+    input {
+        width: 100%;
+        padding: .5rem;
+        background-color: transparent;
+        box-sizing: border-box;
+        display: flex;
+        outline: none;
+        border: 0;
+        font-size: 1rem;
+        font-family: Trade Gothic LT Std;
+        line-height: 0.875rem;
+        letter-spacing: 0.035rem;
+        color: gray;
+    }
+
+    #Menu-nav {
+        width: 100%;
+        border: 0;
+    }
+
+    #Menu-Nav-Desktop {
+        display: none;
+    }
+
+    #Profile-Pic {
+        display: none;
+    }
+
+    body {
+        background: var(--background-dark, #02121F);
+        padding: 0;
+        margin: 0;
+        height: 100vh;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        gap: 1em
+    }
+
+    .input-container {
+        display: flex;
+        gap: 1em
+    }
+
+    .input-container #Password-Div {
+        width: 50%;
+
+    }
+
+    p {
+        color: var(--primary, #009AFE);
+        font-size: 0.875rem;
+        font-family: Trade Gothic LT Std;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        letter-spacing: 0.035rem;
+        text-transform: uppercase;
+    }
+
+    button {
+        display: flex;
+        border: 0;
+        height: 2.625rem;
+        background: var(--primary, #009AFE);
+        align-items: center;
+        justify-content: center;
+        color: var(--text-white, #FFF);
+        font-size: 1rem;
+        font-family: Trade Gothic LT Std;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.5rem;
+        letter-spacing: 0.0625rem;
+        padding: 0rem 1.5rem 0rem 1.5rem;
+        text-transform: uppercase;
+        box-sizing: border-box;
+    }
+
+    h1 {
+        display: none;
+        font-size: 1.75rem;
+        font-family: Lucida Sans Typewriter;
+        font-style: normal;
+        align-self: center;
+        font-weight: 400;
+        letter-spacing: 0.1875rem;
+        text-transform: uppercase;
+    }
+
+    form {
+        background: var(--background-dark, #02121F);
+
+        padding: 3.5rem 1.5rem 6rem 1.5rem;
+
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .Main-Container {
+        display: grid;
+        grid-template-rows: 1fr 6fr;
+        height: 100%
+    }
+
+    span {
+        color: #009AFE;
+    }
+
+    @media screen and (width>900px) {
+
+        .container {
+            flex-direction: row;
+            align-items: center;
+        }
+
+        #Menu-nav {
+            display: none;
+        }
+
+        #Menu-Nav-Desktop {
+            display: block;
+            height: 100%;
+            max-height: 100vh;
+            min-height: 600px;
+            border: 0;
+
+        }
+
+        #Profile-Pic {
+            display: block;
+            width: 20%;
+            max-width: max-content;
+            align-self: center;
+
+        }
+
+        h1 {
+            display: block;
+            color: white;
+        }
+
+        body {
+            display: grid;
+            grid-template-columns: minmax(max-content, 1fr) minmax(422px, 2fr) 2fr;
+            gap: 3em;
+            min-height: 600px;
+
+        }
+
+        input {
+            font-size: .875rem;
+        }
+
+        form {
+            background: var(--background-blue, #091C2E);
+            padding: 3.5% 7% 20% 7%;
+        }
+
+        .Main-Container {
+            grid-template-rows: 1fr 80% 1fr;
+            max-height: 100vh;
+            min-height: 600px;
+
+        }
+    }
 </style>
 
 <body>
-    <img src="" alt="">
-    <h1>My Profile</h1>
-    <div class="Input-Container">
-        <input type="text">
-        <input type="text">
-    </div>
-    <div class="Input-Container">
-        <input type="text">
-        <input type="text">
-        <input type="text">
-        <input type="text">
+    <img id="Menu-Nav-Desktop" src="Images/admin-profile-div-main-sectiondesktop.svg" alt="">
+    <div class="Main-Container">
+        <h1>My <span>Profile</span>_</h1>
+        <img id="Menu-nav" src="Images/div-main-section-mobile.svg" alt="">
+        <form action="">
+            <img id="Profile-Pic" src="Images/admin-profile-ellipse-22.png" alt="">
+            <div class="input-container">
+                <div id="Password-Div">
+                    <input id="Password" type="text" placeholder="First Name">
+                    <img id="password-Hidden" src="Images/admin-profile-icon-outline-close.svg" alt=""></img>
+                </div>
+                <div id="Password-Div">
+                    <input id="Password" type="text" placeholder="Last Name">
+                    <img id="password-Hidden" src="Images/admin-profile-icon-outline-close.svg" alt=""></img>
+                </div>
+            </div>
+            <div id="Password-Div">
+                <input id="Password" type="text" placeholder="Email">
+                <img id="password-Hidden" src="Images/admin-profile-icon-outline-close.svg" alt=""></img>
+            </div>
+            <div id="Password-Div">
+                <input id="Password" type="text" placeholder="Skype">
+                <img id="password-Hidden" src="Images/admin-profile-icon-outline-close.svg" alt=""></img>
+            </div>
+            <div id="Password-Div">
+                <input id="Password" type="text" placeholder="Location">
+                <img id="password-Hidden" src="Images/admin-profile-icon-outline-close.svg" alt=""></img>
+            </div>
+            <div class="container">
+                <button onclick="window.location.href='index.html';">
+                    Save changes</button>
+                <p>Change Password</p>
+            </div>
+
+        </form>
     </div>
 
 
