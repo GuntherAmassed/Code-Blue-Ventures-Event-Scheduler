@@ -18,6 +18,11 @@
         margin: 0;
     }
 
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+
     #password-Hidden {
         width: fit-content;
         position: absolute;
@@ -236,8 +241,11 @@
                 <img id="password-Hidden" src="Images/admin-profile-icon-outline-close.svg" alt=""></img>
             </div>
             <div class="container">
-                <button onclick="window.location.href='index.html';">
-                    Save changes</button>
+                <button>
+                    <a href="index.html">
+                        Save changes
+                    </a>
+                </button>
                 <p>Change Password</p>
             </div>
 
