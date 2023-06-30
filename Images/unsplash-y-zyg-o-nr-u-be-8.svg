@@ -18,7 +18,7 @@
 <filter id="filter0_f_15_3" x="-282.705" y="-486.111" width="926.343" height="845.789" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-<feGaussianBlur stdDeviation="87" result="effect1_foregroundBlur_15_3"/>
+<feGaussianBlur stdDeviation="70" result="effect1_foregroundBlur_15_3"/>
 </filter>
 <linearGradient id="paint0_linear_15_3" x1="-24" y1="222.669" x2="320.668" y2="215.108" gradientUnits="userSpaceOnUse">
 <stop stop-color="#02121F"/>
