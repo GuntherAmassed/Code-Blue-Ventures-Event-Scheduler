@@ -252,8 +252,10 @@
     </div>
     <script>
         var button2 = document.getElementById("indexPageButton");
-        button2.addEventListener("click", () => {
-            window.location.href = "./index.html";
+        button2.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            window.location.href = "index.html";
         })
     </script>
 
