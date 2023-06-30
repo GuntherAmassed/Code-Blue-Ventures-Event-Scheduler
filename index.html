@@ -25,6 +25,7 @@
     }
 
     a {
+
         color: inherit;
         text-decoration: none;
     }
@@ -174,6 +175,7 @@
     }
 
     #Password-Div input {
+        width: 100%;
         border-bottom: none;
     }
 
@@ -297,14 +299,19 @@
             </div>
         </div>
 
-        <button>
-            <a href="My-Profile.html">
-                Log in</a>
+        <button id="NextPageButton">
+            Log in
         </button>
     </div>
     <div class="Planet-Container">
         <div class="ellipse"></div>
     </div>
+    <script>
+        var button = document.getElementById("NextPageButton");
+        button.addEventListener("click", () => {
+            window.location.href = "My-Profile.html";
+        })
+    </script>
 </body>
 
 </html>

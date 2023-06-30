@@ -187,7 +187,7 @@
 
         body {
             display: grid;
-            grid-template-columns: minmax(max-content, 1fr) minmax(600px, 2fr) minmax(max-content,2fr);
+            grid-template-columns: minmax(max-content, 1fr) minmax(600px, 2fr) minmax(max-content, 2fr);
             gap: 3em;
             min-height: 600px;
 
@@ -199,7 +199,7 @@
 
         form {
             background: var(--background-blue, #091C2E);
-            gap:8%;
+            gap: 8%;
             padding: 3.5% 7% 20% 7%;
         }
 
@@ -241,18 +241,21 @@
                 <input id="Password" type="text" placeholder="Location">
                 <img id="password-Hidden" src="Images/admin-profile-icon-outline-close.svg" alt=""></img>
             </div>
-            <div class="container">
-                <button>
-                    <a href="index.html">
-                        Save changes
-                    </a>
+            <div class="container" >
+                <button id="indexPageButton">
+                    Save changes
                 </button>
                 <p>Change Password</p>
             </div>
 
         </form>
     </div>
-
+    <script>
+        var button2 = document.getElementById("indexPageButton");
+        button2.addEventListener("click", () => {
+            window.location.href = "./index.html";
+        })
+    </script>
 
 </body>
 
