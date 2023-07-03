@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    @font-face {
+        src: url("CodeBlue times fonts/TradeGothicLTStd-Cn18.otf");
+        font-family: Trade Gothic LT Std;
+
+    }
+
+    html {
+        display: flex;
+        flex-direction: column;
+        background-image: url("public/images/iPhone\ 14\ -\ 2.svg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        min-height: 848px;
+        width: 100vw;
+        height: 100vh;
+        align-items: center;
+        justify-content: center;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        padding-top: 5rem;
+        padding-left: 5%;
+        padding-right: 5%;
+        height: 100%;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: row;
+        gap: 2.5rem;
+        align-items: center;
+    }
+
+    h1 {
+        color: #FFF;
+        font-size: 2.375rem;
+        font-family: Lucida Sans Typewriter;
+
+        letter-spacing: 0.1875rem;
+        text-transform: uppercase;
+        font-weight: 100;
+    }
+
+    p {
+        color: #FFF;
+        font-size: 1rem;
+        font-family: Trade Gothic LT Std;
+
+        letter-spacing: 0.0625rem;
+        text-transform: uppercase;
+    }
+
+    button {
+        width: 164px;
+        background: var(--primary, #009AFE);
+        border: 0;
+        display: flex;
+        height: 2.625rem;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+
+    span {
+        color: #009AFE;
+    }
+
+    img {
+        width: 7.0625rem;
+        height: 1.6875rem;
+    }
+
+    p span {
+        white-space: nowrap;
+    }
+
+    input {
+        padding: .5rem;
+        font-size: 16px;
+        border-radius: 0;
+        background-color: transparent;
+        box-sizing: border-box;
+        display: flex;
+        outline: none;
+        border: 0;
+        border-bottom: 1px solid var(--primary, #009AFE);
+        font-size: 0.875rem;
+        font-family: Trade Gothic LT Std;
+        line-height: 0.875rem;
+        letter-spacing: 0.035rem;
+        color: gray;
+    }
+
+    .Main {
+
+        gap: 3.5rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .Text-Container {
+        max-width: 21.375rem;
+    }
+
+    #Log-In-Page:hover {
+        cursor: pointer;
+    }
+    #Reset-Password{
+        cursor: pointer;
+    }
+
+    @media screen and (width>=700px) {
+        h1 {
+            font-size: 3rem;
+            letter-spacing: 0.1875rem;
+        }
+
+        input {
+            font-size: 1rem;
+        }
+
+        p {
+            font-size: 1rem;
+            letter-spacing: 0.0625rem;
+        }
+
+        .Text-Container {
+            max-width: 26rem;
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+
+    @media screen and (width>=1000px) {
+        body {
+            padding-top: 8rem;
+            width: 50%;
+            box-sizing: border-box;
+            max-width: 674px;
+        }
+
+        html {
+            background-image: url("Images/Reset\ Password.svg");
+        }
+    }
+
+    @media screen and (width>=1440px) {
+        body {
+            padding-left: 3rem;
+            padding-right: 7.87rem;
+        }
+    }
+</style>
+
+<body>
+    <div class="Main">
+
+
+        <img src="Images/CODEBLUE TIME.svg" alt="">
+        <div class="Text-Container">
+            <h1>Reset <span>Password_</span> </h1>
+            <p>Please enter your email address and we will send you further access instructions.</p>
+        </div>
+        <input type="email" placeholder="Email">
+        <div class="container">
+            <button id="Reset-Password">
+                <p>Reset Password</p>
+            </button>
+            <p id="Log-In-Page"><span>go to log in page</span></p>
+        </div>
+    </div>
+    <script>
+        var ResetPassword=document.getElementById("Reset-Password");
+        var LogIn = document.getElementById("Log-In-Page");
+        LogIn.addEventListener("click", () => {
+            window.location.href = "index.html"
+        })
+        ResetPassword.addEventListener("click",()=>{
+            window.location.href="Instructions.html"
+        })
+    </script>
+</body>
+
+</html>

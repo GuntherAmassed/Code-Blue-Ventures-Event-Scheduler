@@ -188,6 +188,17 @@
         line-height: 0.625rem;
         letter-spacing: 0.03rem;
     }
+    #Forgot-Password:hover{
+        cursor: pointer;
+    }
+    #NextPageButton:hover{
+        cursor: pointer;
+    }
+    .TextContainer :first-child{
+        display: inline-flex;
+        gap: 0.5rem;
+        align-items: end;
+    }
 
     @media screen and (width>=800px) {
         .ellipse-2 {
@@ -298,7 +309,7 @@
             </div>
             <div class="TextContainer">
                 <p><img src="Images/frame-3780.svg" alt=""> Remember me</p>
-                <p><span>Forgot Password</span></p>
+                <p id="Forgot-Password"><span>Forgot Password</span></p>
             </div>
         </div>
 
@@ -310,9 +321,13 @@
         <div class="ellipse"></div>
     </div>
     <script>
+        var ForgotPassword = document.getElementById("Forgot-Password");
         var button = document.getElementById("NextPageButton");
         button.addEventListener("click", () => {
             window.location.href = "My-Profile.html";
+        })
+        ForgotPassword.addEventListener("click", () => {
+            window.location.href = "Reset.html";
         })
     </script>
 </body>
