@@ -33,17 +33,16 @@
     body {
         display: flex;
         flex-direction: column;
-        background: var(--background-dark, #02121F);
-        min-height: 848px;
+       
         height: 100vh;
-        width: 100vw;
+        background: var(--background-dark, #02121F);
     }
 
     .Main-Container {
         position: relative;
         margin-top: 5%;
         display: flex;
-       
+        min-height: 50%;
         height: 50%;
         justify-content: space-between;
         flex-direction: column;
@@ -58,16 +57,16 @@
         flex-shrink: 0;
     }
 
-   
+
     .Planet-Container {
         position: relative;
         z-index: -2;
-        background-image: url("Images/unsplash-y-zyg-o-nr-u-be-8.svg");
+        /* background-image: url("Images/unsplash-y-zyg-o-nr-u-be-8.svg");
         text-decoration: none;
         background-repeat: no-repeat;
-      
-        height: 50%;
-        width:  100%;
+        background-size: cover; */
+     
+        width: 100%;
 
     }
 
@@ -307,9 +306,9 @@
             Log in
         </button>
     </div>
-    <div class="Planet-Container">
+    <img class="Planet-Container" src="Images/unsplash-y-zyg-o-nr-u-be-8.svg">
         <div class="ellipse"></div>
-    </div>
+</img>
     <script>
         var button = document.getElementById("NextPageButton");
         button.addEventListener("click", () => {
