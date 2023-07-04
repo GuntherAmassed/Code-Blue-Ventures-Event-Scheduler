@@ -188,26 +188,36 @@
         line-height: 0.625rem;
         letter-spacing: 0.03rem;
     }
-    #Forgot-Password:hover{
+
+    #Forgot-Password:hover {
         cursor: pointer;
     }
-    #NextPageButton:hover{
+
+    #NextPageButton:hover {
         cursor: pointer;
     }
-    .TextContainer :first-child{
+
+    .TextContainer :first-child {
         display: inline-flex;
         gap: 0.5rem;
         align-items: end;
     }
+
     @media screen and (width <=390px) {
-      .Planet-Container{
-        background-image: url("Images/unsplash-y-zyg-o-nr-u-be-8.png");
-      }
-       
+        @media (orientation: landscape) {
+            .Planet-Container {
+                background-image: url("Images/unsplash-y-zyg-o-nr-u-be-8.svg");
+            }
+        }
+
+        .Planet-Container {
+            background-image: url("Images/unsplash-y-zyg-o-nr-u-be-8.png");
+        }
+
     }
 
     @media screen and (width>=800px) {
-        
+
         .ellipse-2 {
             width: 10rem;
             height: 10rem;
