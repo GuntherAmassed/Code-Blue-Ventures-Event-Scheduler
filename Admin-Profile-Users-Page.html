@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    @font-face {
+        src: url("CodeBlue times fonts/TradeGothicLTStd-Cn18.otf");
+        font-family: Trade Gothic LT Std;
+
+    }
+
+    @font-face {
+        src: url("CodeBlue times fonts/Lucida Sans Typewriter/lucidatypewriterregular.ttf");
+        font-family: Lucida Sans Typewriter;
+    }
+
+    body {
+        white-space: nowrap;
+        overflow: overlay;
+    }
+
+    *::-webkit-scrollbar {
+        width: 2px;
+        display: block;
+
+    }
+
+    *::-webkit-scrollbar-button {
+        display: none;
+    }
+
+    *::-webkit-scrollbar-track {
+        display: none;
+    }
+
+    *::-webkit-scrollbar-track-piece {
+        display: none;
+    }
+
+    *::-webkit-scrollbar-thumb {
+        overflow: overlay;
+        background-color: #009AFE;
+        border: 1px solid #ffffff40;
+        border-radius: 14px;
+    }
+
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        color: var(--placeholders, #929BA3);
+        background: var(--background-dark, #02121F);
+        width: 100vw;
+        height: 100vh;
+        font-size: 0.5rem;
+        font-family: Trade Gothic LT Std;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 0.875rem;
+        letter-spacing: 0.035rem;
+    }
+
+    main {
+        height: 100%;
+        display: grid;
+        grid-template-rows: 1fr 9fr;
+    }
+
+    header {
+        width: 100%;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1rem;
+    }
+
+    div {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    html {
+        border: 0;
+    }
+
+    body {
+        border: 0;
+        height: 100vh;
+    }
+
+
+    table {
+        width: 100%;
+        height: 100%;
+    }
+
+    tbody {
+        color: var(--white, #FFF);
+        font-size: 0.5rem;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.125rem;
+        letter-spacing: 0.03125rem;
+        height: 100%;
+        display: block;
+        overflow: auto;
+    }
+
+    tbody tr {
+        gap: .5rem;
+        display: grid;
+        grid-template-columns: repeat(6, 1fr) 0.3fr;
+        grid-template-rows: 50px;
+    }
+
+    thead tr {
+        text-align: left;
+        display: grid;
+        grid-template-columns: repeat(6, 1fr) 0.3fr;
+        grid-template-rows: 50px;
+
+    }
+
+    tbody tr td {
+        border-bottom: 1px solid var(--border, #1F2D3A);
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+    }
+
+    tbody tr td img {
+        width: max-content;
+    }
+
+    thead tr th {
+        display: flex;
+        scrollbar-gutter: stable both edges;
+        align-items: center;
+    }
+
+
+    #Menu-Desktop {
+        display: none;
+    }
+
+    h1 {
+        color: #009AFE;
+        font-size: 1.75rem;
+        font-family: Lucida Sans Typewriter;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 130%;
+        letter-spacing: 0.1875rem;
+        text-transform: uppercase;
+    }
+
+    button {
+        border: 0;
+        width: 20%;
+        background: var(--primary, #009AFE);
+        color: var(--white, #FFF);
+        text-align: center;
+        height: 2.625rem;
+        font-size: 1rem;
+        font-family: Trade Gothic LT Std;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.5rem;
+        letter-spacing: 0.0625rem;
+        text-transform: uppercase;
+    }
+
+    @media screen and (width>=1000px) {
+        #Menu {
+            display: none;
+        }
+
+        #Menu-Desktop {
+            display: block;
+        }
+
+        body {
+            padding-right: 2.5%;
+            display: grid;
+            grid-template-columns: 1fr 9fr;
+        }
+
+        button {
+            width: 100px;
+        }
+
+    }
+</style>
+
+<body>
+    <img id="Menu-Desktop" src="" alt="">
+    <Main>
+        <header>
+            <img id="Menu" src="" alt="">
+            <div>
+                <h1>users_</h1>
+                <img src="" alt="">
+                <button>Add user</button>
+            </div>
+        </header>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Skype</th>
+                    <th>Location</th>
+                    <th>Time Zone</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td>Jane cooper</td>
+                    <td>jane@gmail</td>
+                    <td>111</td>
+                    <td>
+                        <img src="Images/admin-profile-us-united-states-of-america-usa.svg" alt=""> new york
+                    </td>
+                    <td>ut52</td>
+                    <td>admin
+                    </td>
+                    <td>
+                        <img src="Images/admin-profile-icon-edit.svg" alt="">
+                        <img src="Images/admin-profile-icon-card.svg" alt="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jane cooper</td>
+                    <td>jane@gmail</td>
+                    <td>111</td>
+                    <td>
+                        <img src="Images/admin-profile-us-united-states-of-america-usa.svg" alt=""> new york
+                    </td>
+                    <td>ut52</td>
+                    <td>admin
+                    </td>
+                    <td>
+                        <img src="Images/admin-profile-icon-edit.svg" alt="">
+                        <img src="Images/admin-profile-icon-card.svg" alt="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jane cooper</td>
+                    <td>jane@gmail</td>
+                    <td>111</td>
+                    <td>
+                        <img src="Images/admin-profile-us-united-states-of-america-usa.svg" alt=""> new york
+                    </td>
+                    <td>ut52</td>
+                    <td>admin
+                    </td>
+                    <td>
+                        <img src="Images/admin-profile-icon-edit.svg" alt="">
+                        <img src="Images/admin-profile-icon-card.svg" alt="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jane cooper</td>
+                    <td>jane@gmail</td>
+                    <td>111</td>
+                    <td>
+                        <img src="Images/admin-profile-us-united-states-of-america-usa.svg" alt=""> new york
+                    </td>
+                    <td>ut52</td>
+                    <td>admin
+                    </td>
+                    <td>
+                        <img src="Images/admin-profile-icon-edit.svg" alt="">
+                        <img src="Images/admin-profile-icon-card.svg" alt="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jane cooper</td>
+                    <td>jane@gmail</td>
+                    <td>111</td>
+                    <td>
+                        <img src="Images/admin-profile-us-united-states-of-america-usa.svg" alt=""> new york
+                    </td>
+                    <td>ut52</td>
+                    <td>admin
+                    </td>
+                    <td>
+                        <img src="Images/admin-profile-icon-edit.svg" alt="">
+                        <img src="Images/admin-profile-icon-card.svg" alt="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jane cooper</td>
+                    <td>jane@gmail</td>
+                    <td>111</td>
+                    <td>
+                        <img src="Images/admin-profile-us-united-states-of-america-usa.svg" alt=""> new york
+                    </td>
+                    <td>ut52</td>
+                    <td>admin
+                    </td>
+                    <td>
+                        <img src="Images/admin-profile-icon-edit.svg" alt="">
+                        <img src="Images/admin-profile-icon-card.svg" alt="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jane cooper</td>
+                    <td>jane@gmail</td>
+                    <td>111</td>
+                    <td>
+                        <img src="Images/admin-profile-us-united-states-of-america-usa.svg" alt=""> new york
+                    </td>
+                    <td>ut52</td>
+                    <td>admin
+                    </td>
+                    <td>
+                        <img src="Images/admin-profile-icon-edit.svg" alt="">
+                        <img src="Images/admin-profile-icon-card.svg" alt="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jane cooper</td>
+                    <td>jane@gmail</td>
+                    <td>111</td>
+                    <td>
+                        <img src="Images/admin-profile-us-united-states-of-america-usa.svg" alt=""> new york
+                    </td>
+                    <td>ut52</td>
+                    <td>admin
+                    </td>
+                    <td>
+                        <img src="Images/admin-profile-icon-edit.svg" alt="">
+                        <img src="Images/admin-profile-icon-card.svg" alt="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jane cooper</td>
+                    <td>jane@gmail</td>
+                    <td>111</td>
+                    <td>
+                        <img src="Images/admin-profile-us-united-states-of-america-usa.svg" alt=""> new york
+                    </td>
+                    <td>ut52</td>
+                    <td>admin
+                    </td>
+                    <td>
+                        <img src="Images/admin-profile-icon-edit.svg" alt="">
+                        <img src="Images/admin-profile-icon-card.svg" alt="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jane cooper</td>
+                    <td>jane@gmail</td>
+                    <td>111</td>
+                    <td>
+                        <img src="Images/admin-profile-us-united-states-of-america-usa.svg" alt=""> new york
+                    </td>
+                    <td>ut52</td>
+                    <td>admin
+                    </td>
+                    <td>
+                        <img src="Images/admin-profile-icon-edit.svg" alt="">
+                        <img src="Images/admin-profile-icon-card.svg" alt="">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Jane cooper</td>
+                    <td>jane@gmail</td>
+                    <td>111</td>
+                    <td>
+                        <img src="Images/admin-profile-us-united-states-of-america-usa.svg" alt=""> new york
+                    </td>
+                    <td>ut52</td>
+                    <td>admin
+                    </td>
+                    <td>
+                        <img src="Images/admin-profile-icon-edit.svg" alt="">
+                        <img src="Images/admin-profile-icon-card.svg" alt="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jane cooper</td>
+                    <td>jane@gmail</td>
+                    <td>111</td>
+                    <td>
+                        <img src="Images/admin-profile-us-united-states-of-america-usa.svg" alt=""> new york
+                    </td>
+                    <td>ut52</td>
+                    <td>admin
+                    </td>
+                    <td>
+                        <img src="Images/admin-profile-icon-edit.svg" alt="">
+                        <img src="Images/admin-profile-icon-card.svg" alt="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jane cooper</td>
+                    <td>jane@gmail</td>
+                    <td>111</td>
+                    <td>
+                        <img src="Images/admin-profile-us-united-states-of-america-usa.svg" alt=""> new york
+                    </td>
+                    <td>ut52</td>
+                    <td>admin
+                    </td>
+                    <td>
+                        <img src="Images/admin-profile-icon-edit.svg" alt="">
+                        <img src="Images/admin-profile-icon-card.svg" alt="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jane cooper</td>
+                    <td>jane@gmail</td>
+                    <td>111</td>
+                    <td>
+                        <img src="Images/admin-profile-us-united-states-of-america-usa.svg" alt=""> new york
+                    </td>
+                    <td>ut52</td>
+                    <td>admin
+                    </td>
+                    <td>
+                        <img src="Images/admin-profile-icon-edit.svg" alt="">
+                        <img src="Images/admin-profile-icon-card.svg" alt="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jane cooper</td>
+                    <td>jane@gmail</td>
+                    <td>111</td>
+                    <td>
+                        <img src="Images/admin-profile-us-united-states-of-america-usa.svg" alt=""> new york
+                    </td>
+                    <td>ut52</td>
+                    <td>admin
+                    </td>
+                    <td>
+                        <img src="Images/admin-profile-icon-edit.svg" alt="">
+                        <img src="Images/admin-profile-icon-card.svg" alt="">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Jane cooper</td>
+                    <td>jane@gmail</td>
+                    <td>111</td>
+                    <td>
+                        <img src="Images/admin-profile-us-united-states-of-america-usa.svg" alt=""> new york
+                    </td>
+                    <td>ut52</td>
+                    <td>admin
+                    </td>
+                    <td>
+                        <img src="Images/admin-profile-icon-edit.svg" alt="">
+                        <img src="Images/admin-profile-icon-card.svg" alt="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jane cooper</td>
+                    <td>jane@gmail</td>
+                    <td>111</td>
+                    <td>
+                        <img src="Images/admin-profile-us-united-states-of-america-usa.svg" alt=""> new york
+                    </td>
+                    <td>ut52</td>
+                    <td>admin
+                    </td>
+                    <td>
+                        <img src="Images/admin-profile-icon-edit.svg" alt="">
+                        <img src="Images/admin-profile-icon-card.svg" alt="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jane cooper</td>
+                    <td>jane@gmail</td>
+                    <td>111</td>
+                    <td>
+                        <img src="Images/admin-profile-us-united-states-of-america-usa.svg" alt=""> new york
+                    </td>
+                    <td>ut52</td>
+                    <td>admin
+                    </td>
+                    <td>
+                        <img src="Images/admin-profile-icon-edit.svg" alt="">
+                        <img src="Images/admin-profile-icon-card.svg" alt="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jane cooper</td>
+                    <td>jane@gmail</td>
+                    <td>111</td>
+                    <td>
+                        <img src="Images/admin-profile-us-united-states-of-america-usa.svg" alt=""> new york
+                    </td>
+                    <td>ut52</td>
+                    <td>admin
+                    </td>
+                    <td>
+                        <img src="Images/admin-profile-icon-edit.svg" alt="">
+                        <img src="Images/admin-profile-icon-card.svg" alt="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jane cooper</td>
+                    <td>jane@gmail</td>
+                    <td>111</td>
+                    <td>
+                        <img src="Images/admin-profile-us-united-states-of-america-usa.svg" alt=""> new york
+                    </td>
+                    <td>ut52</td>
+                    <td>admin
+                    </td>
+                    <td>
+                        <img src="Images/admin-profile-icon-edit.svg" alt="">
+                        <img src="Images/admin-profile-icon-card.svg" alt="">
+                    </td>
+                </tr>
+
+
+            </tbody>
+        </table>
+    </Main>
+</body>
+
+</html>
