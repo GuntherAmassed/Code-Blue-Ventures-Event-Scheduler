@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Roboto:wght@100;400&display=swap"
+    rel="stylesheet">
 <style>
     @font-face {
         src: url("CodeBlue times fonts/TradeGothicLTStd-Cn18.otf");
@@ -60,13 +64,14 @@
         width: 100vw;
         height: 100vh;
         font-size: 0.875rem;
-        padding: 1em;
         font-family: Trade Gothic LT Std;
         font-style: normal;
         font-weight: 400;
         line-height: 0.875rem;
         overflow-y: hidden;
         letter-spacing: 0.035rem;
+        border: 0;
+        height: 100vh;
     }
 
     main {
@@ -77,26 +82,18 @@
 
     header {
         width: 100%;
+        height: 100%;
         z-index: 1;
         display: flex;
         justify-content: center;
         flex-direction: column;
+        margin-bottom: 1em;
     }
 
     div {
         display: flex;
         justify-content: space-between;
     }
-
-    html {
-        border: 0;
-    }
-
-    body {
-        border: 0;
-        height: 100vh;
-    }
-
 
     table {
         width: 100%;
@@ -130,6 +127,7 @@
     }
 
     thead tr {
+
         text-align: left;
         gap: .5rem;
         display: grid;
@@ -140,15 +138,17 @@
 
     }
 
-
-
-
     tbody tr td img {
         width: max-content;
     }
 
-
-
+    #Menu {
+        margin: -1em;
+        margin-bottom: 1em;
+        margin-top: -2em;
+       
+        flex-grow: 0;
+    }
 
     #Menu-Desktop {
         display: none;
@@ -187,14 +187,26 @@
         text-transform: uppercase;
     }
 
+    .Button-Container {
+        display: flex;
+        gap: 1.5rem;
+    }
+
     @media screen and (width>800px) {
+
+        body {
+            padding: 1em;
+        }
+
         tbody tr td {
+            text-transform: capitalize;
             display: flex;
             align-items: center;
             gap: .5rem;
         }
 
         thead tr {
+            text-transform: capitalize;
             border: 0;
         }
 
@@ -202,20 +214,25 @@
 
 
     @media screen and (width>=1000px) {
-
+        body {
+            padding: 0;
+        }
 
         #Menu {
             display: none;
         }
 
         #Menu-Desktop {
+            height: 100%;
+            align-self: left;
             display: block;
         }
 
         body {
             padding-right: 5%;
             display: grid;
-            grid-template-columns: 2fr 8fr;
+            grid-template-columns: 1.5fr 8fr;
+            gap: 3em;
         }
 
         button {
@@ -225,6 +242,11 @@
     }
 
     @media screen and (width<=800px) {
+       
+        body {
+            padding: 1em;
+        }
+
         thead {
             display: none;
         }
@@ -310,14 +332,16 @@
 </style>
 
 <body>
-    <img id="Menu-Desktop" src="" alt="">
+    <img id="Menu-Desktop" src="Images/admin-profile-div-main-section.svg" alt="">
     <Main>
         <header>
-            <img id="Menu" src="" alt="">
+            <!-- <img id="Menu" src="Images/div-main-section-mobile.svg" alt=""> -->
             <div>
                 <h1><span>users</span>_</h1>
-                <img src="" alt="">
-                <button>Add user</button>
+                <div class="Button-Container">
+                    <img src="Images/admin-profile-icon-search.svg" alt="">
+                    <button>Add user</button>
+                </div>
             </div>
         </header>
         <table>
