@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        border: 1px solid gray
+    }
+
+    html {
+        height: 100vh;
+    }
+
+    body {
+        max-height: 100vh;
+        background: var(--background-dark, #02121F);
+        display: grid;
+        grid-template-rows: 1fr 9fr;
+    }
+
+    main {
+        color: white;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        font-size: 0.875rem;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.125rem;
+        letter-spacing: 0.03125rem;
+    }
+
+    img {
+        width: 100%;
+        height: 100px;
+    }
+
+
+
+    div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .row {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .Frame {
+        background: var(--background-blue, #091C2E);
+    }
+
+    #Menu-Mobile {
+        margin-top: -1em;
+        box-sizing: initial;
+        height: 100%;
+        margin-bottom: 2rem;
+    }
+
+    #Menu-Desktop {
+        display: none;
+    }
+
+    main {
+        padding: 1em;
+        justify-content: space-between;
+    }
+
+    h1 {
+        font-size: 1.75rem;
+    }
+
+    @media screen and (width>=800px) {
+        h1 {
+            font-size: 2.5rem;
+        }
+    }
+
+    @media screen and (width >=1000px) {
+        h1 {
+            font-size: 1.75rem;
+        }
+
+        #Menu-Mobile {
+            display: none;
+        }
+
+        #Menu-Desktop {
+            box-sizing:unset;
+            display: block;
+            height: 100%;
+           width: auto;
+        }
+
+        main {
+            padding-right: 5rem;
+        }
+
+        body {
+            display: grid;
+            grid-template-columns: 1fr 9fr;
+            min-height: 600px;
+        }
+    }
+</style>
+
+<body>
+    <img id="Menu-Desktop" src="Images/admin-profile-div-main-section.svg" alt="">
+    <img id="Menu-Mobile" src="Images/div-main-section-mobile.svg" alt="">
+
+    <main>
+
+        <h1>Hello Jenny</h1>
+        <div class="row Frame">
+            <div>
+                <img src="" alt="">
+                Lorem ipsum dolor sit amet.
+            </div>
+            <div>
+                <img src="" alt="">
+                Lorem ipsum dolor sit amet.
+            </div>
+            <div>
+                <img src="" alt="">
+                Lorem ipsum dolor sit amet.
+            </div>
+            <div>
+                <img src="" alt="">
+                Lorem ipsum dolor sit amet.
+            </div>
+        </div>
+        <div class="Frame">
+            <p>upcoming time</p>
+            <div class="row">
+                <img src="" alt="">
+                <img src="" alt="">
+                <img src="" alt="">
+            </div>
+            <div class="row">
+                <img src="" alt="">
+                Lorem ipsum dolor sit amet.
+                <img src="" alt="">
+            </div>
+            <table>
+                <tbody>
+                    <tr>
+                        <th>Event</th>
+                        <td>Sabbath</td>
+                    </tr>
+                    <tr>
+                        <th>Starts</th>
+                        <td>Friday</td>
+                    </tr>
+                    <tr>
+                        <th>Ends</th>
+                        <td>Saturday</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="Frame">
+            FAQ
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed, magni. Perspiciatis hic quae dolor dolore
+            accusantium nemo optio debitis facilis odio laboriosam rerum nihil asperiores soluta qui, mollitia quis
+            consectetur earum dicta eaque quo vero? Natus in id nulla rerum iusto et magni vel quae delectus, tempore
+            laborum itaque ratione beatae tenetur hic corporis fuga sapiente quo nemo culpa mollitia dignissimos sit.
+            Voluptates, deserunt neque doloremque accusamus maiores modi quae officia quos tempore nam provident quasi
+            dolorum dolore corrupti ex ducimus dolorem repellat! Facilis itaque nam eveniet ipsa commodi necessitatibus
+            id
+            reiciendis facere, voluptatibus fugiat quaerat autem explicabo quam laborum Lorem ipsum dolor sit amet
+            consectetur, adipisicing elit. Vel aut rem cumque aspernatur mollitia nisi repellat similique eum harum,
+            corrupti ipsam inventore, amet voluptatem, reprehenderit sed quis! Blanditiis voluptas cumque mollitia
+            voluptates nemo temporibus porro eius nulla? Reprehenderit debitis saepe unde fugiat, cupiditate, omnis vel
+            officia velit eos tenetur est nulla? Optio dolor asperiores aut delectus minima ipsum sit itaque debitis,
+            quam accusamus, cumque obcaecati! Sit hic libero totam similique, deleniti repudiandae incidunt cum
+            reiciendis nam eveniet exercitationem id ab soluta quod perferendis eaque perspiciatis asperiores! Hic ullam
+            nihil quisquam qui, dolorum eum necessitatibus ipsam? Amet excepturi in voluptates adipisci?
+        </div>
+    </main>
+
+</body>
+
+</html>
