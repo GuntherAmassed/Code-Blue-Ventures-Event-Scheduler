@@ -87,10 +87,12 @@
         display: flex;
         justify-content: center;
         flex-direction: column;
-        margin-bottom: 1em;
+        box-sizing: border-box;
+        margin-bottom: 2.5em;
     }
 
     div {
+        box-sizing: border-box;
         display: flex;
         justify-content: space-between;
     }
@@ -142,13 +144,6 @@
         width: max-content;
     }
 
-    #Menu {
-        margin: -1em;
-        margin-bottom: 1em;
-        margin-top: -2em;
-       
-        flex-grow: 0;
-    }
 
     #Menu-Desktop {
         display: none;
@@ -192,10 +187,20 @@
         gap: 1.5rem;
     }
 
-    @media screen and (width>800px) {
+    body {
+        padding: 1em;
+    }
 
-        body {
-            padding: 1em;
+    #Menu {
+        margin: -1em;
+        margin-top: -3em;
+        margin-bottom: 2em;
+    }
+
+
+    @media screen and (width>800px) {
+        h1 {
+            font-size: 2.5rem;
         }
 
         tbody tr td {
@@ -210,12 +215,22 @@
             border: 0;
         }
 
+        button {
+            width: 200px;
+            font-size: 1.5rem;
+        }
+
     }
 
 
     @media screen and (width>=1000px) {
-        body {
-            padding: 0;
+        h1 {
+            font-size: 1.75rem;
+        }
+
+        button {
+            font-size: 1rem;
+            width: 20%;
         }
 
         #Menu {
@@ -223,16 +238,19 @@
         }
 
         #Menu-Desktop {
+            margin-left: -1em;
             height: 100%;
             align-self: left;
             display: block;
         }
 
         body {
+            max-width: 100%;
             padding-right: 5%;
             display: grid;
-            grid-template-columns: 1.5fr 8fr;
+            grid-template-columns: 1.5fr 8.5fr;
             gap: 3em;
+
         }
 
         button {
@@ -242,10 +260,8 @@
     }
 
     @media screen and (width<=800px) {
-       
-        body {
-            padding: 1em;
-        }
+
+
 
         thead {
             display: none;
@@ -335,7 +351,7 @@
     <img id="Menu-Desktop" src="Images/admin-profile-div-main-section.svg" alt="">
     <Main>
         <header>
-            <!-- <img id="Menu" src="Images/div-main-section-mobile.svg" alt=""> -->
+            <img id="Menu" src="Images/div-main-section-mobile.svg" alt="">
             <div>
                 <h1><span>users</span>_</h1>
                 <div class="Button-Container">
