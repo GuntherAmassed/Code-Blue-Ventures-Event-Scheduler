@@ -22,7 +22,7 @@
     body {
         background: var(--background-dark, #02121F);
         padding-top: 8rem;
-       
+
 
     }
 
@@ -174,13 +174,13 @@
         grid-template-rows: 1fr;
         padding-left: 0;
         overflow-y: hidden;
-        overflow-x: scroll;
+        overflow-x: auto;
 
     }
 
 
     .Locations {
-        overflow-x: scroll;
+        overflow-x: auto;
         display: grid;
         grid-template-columns: repeat(10, max-content);
         grid-template-rows: 1fr;
@@ -211,6 +211,10 @@
         flex-direction: row;
         align-items: center;
         gap: .5rem;
+    }
+
+    .change-Date div:first-of-type>img {
+        width: 1rem;
     }
 
     .change-Date img {
@@ -250,6 +254,8 @@
 
     }
 
+
+
     .Paragraph-Head img {
         width: 1.5rem;
         height: fit-content;
@@ -264,9 +270,9 @@
     }
 
     @media screen and (width<=499px) {
-       h1{
-        font-size: 1.25rem;
-       }
+        h1 {
+            font-size: 1.25rem;
+        }
     }
 
     @media screen and (width>=500px) {
@@ -311,7 +317,7 @@
             justify-content: space-between;
             padding-right: 5rem;
             width: 100%;
-            overflow: scroll;
+            overflow: auto;
 
         }
 
