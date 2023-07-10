@@ -1,0 +1,52 @@
+ <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" fill="none">
+            <circle cx="60" cy="60" r="60" fill="black" />            
+            <text fill="white" xml:space="preserve" style="white-space: pre" font-family="Trade Gothic LT Std"
+                font-size="12" letter-spacing="0.04em">
+                <tspan x="54.188" y="18.664">12</tspan>
+            </text>
+            <text fill="white" xml:space="preserve" style="white-space: pre" font-family="Trade Gothic LT Std"
+                font-size="12" letter-spacing="0.04em">
+                <tspan x="58" y="112.664">6</tspan>
+            </text>
+            <text fill="white" xml:space="preserve" style="white-space: pre" font-family="Trade Gothic LT Std"
+                font-size="12" letter-spacing="0.04em">
+                <tspan x="106" y="68.664">3</tspan>
+            </text>
+            <text fill="white" xml:space="preserve" style="white-space: pre" font-family="Trade Gothic LT Std"
+                font-size="12" letter-spacing="0.04em">
+                <tspan x="8" y="68.664">9</tspan>
+            </text>
+            <text fill="white" xml:space="preserve" style="white-space: pre" font-family="Trade Gothic LT Std"
+                font-size="12" letter-spacing="0.04em">
+                <tspan x="14" y="90.664">8</tspan>
+            </text>
+            <text fill="white" xml:space="preserve" style="white-space: pre" font-family="Trade Gothic LT Std"
+                font-size="12" letter-spacing="0.04em">
+                <tspan x="100" y="90.664">4</tspan>
+            </text>
+            <text fill="white" xml:space="preserve" style="white-space: pre" font-family="Trade Gothic LT Std"
+                font-size="12" letter-spacing="0.04em">
+                <tspan x="14" y="43.664">10</tspan>
+            </text>
+            <text fill="white" xml:space="preserve" style="white-space: pre" font-family="Trade Gothic LT Std"
+                font-size="12" letter-spacing="0.04em">
+                <tspan x="100" y="43.664">2</tspan>
+            </text>
+            <text fill="white" xml:space="preserve" style="white-space: pre" font-family="Trade Gothic LT Std"
+                font-size="12" letter-spacing="0.04em">
+                <tspan x="30" y="104.664">7</tspan>
+            </text>
+            <text fill="white" xml:space="preserve" style="white-space: pre" font-family="Trade Gothic LT Std"
+                font-size="12" letter-spacing="0.04em">
+                <tspan x="88" y="104.664">5</tspan>
+            </text>
+            <text fill="white" xml:space="preserve" style="white-space: pre" font-family="Trade Gothic LT Std"
+                font-size="12" letter-spacing="0.04em">
+                <tspan x="30" y="24.664">11</tspan>
+            </text>
+            <text fill="white" xml:space="preserve" style="white-space: pre" font-family="Trade Gothic LT Std"
+                font-size="12" letter-spacing="0.04em">
+                <tspan x="88" y="24.664">1</tspan>
+            </text>
+
+        </svg>

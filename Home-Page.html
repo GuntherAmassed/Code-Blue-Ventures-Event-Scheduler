@@ -5,13 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Roboto:wght@100;400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="font.css">
+    <link rel="stylesheet" href="clock.css">
 </head>
 <style>
     * {
         margin: 0;
         padding: 0;
-        box-sizing: border-box;
-        border: 1px solid gray
     }
 
     html {
@@ -19,10 +23,10 @@
     }
 
     body {
-        max-height: 100vh;
         background: var(--background-dark, #02121F);
         display: grid;
         grid-template-rows: 1fr 9fr;
+        padding-top: 8rem;
     }
 
     main {
@@ -37,6 +41,21 @@
         font-weight: 400;
         line-height: 1.125rem;
         letter-spacing: 0.03125rem;
+        padding: 1em;
+        width: 100vw;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    p {
+        color: #FFF;
+        font-family: Trade Gothic LT Std;
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.5rem;
+        letter-spacing: 0.0625rem;
+        text-transform: uppercase;
     }
 
     img {
@@ -54,6 +73,7 @@
     .row {
         display: flex;
         flex-direction: row;
+        gap: .5rem;
     }
 
     .Frame {
@@ -61,28 +81,204 @@
     }
 
     #Menu-Mobile {
-        margin-top: -1em;
-        box-sizing: initial;
-        height: 100%;
-        margin-bottom: 2rem;
+        position: absolute;
+        width: 100vw;
+        height: auto;
+        top: 0;
     }
 
     #Menu-Desktop {
         display: none;
     }
 
-    main {
+    table {
+        border-collapse: collapse;
+    }
+
+    table td,
+    th {
+        text-align: left;
         padding: 1em;
-        justify-content: space-between;
+        border: 1px solid gray;
+    }
+
+    table span {
+        color: var(--placeholders, #929BA3);
+        font-family: Trade Gothic LT Std;
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 0.875rem;
+        letter-spacing: 0.035rem;
     }
 
     h1 {
+        font-family: Lucida Sans Typewriter;
         font-size: 1.75rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 130%;
+        letter-spacing: 0.1875rem;
+        text-transform: uppercase;
+        font-size: 1.75rem;
+    }
+
+    span {
+        color: #009AFE;
+    }
+
+
+
+
+    .location-borders {
+        padding: 1em;
+        border-radius: 3.125rem;
+        border: 1px solid var(--placeholders, #929BA3);
+
+    }
+
+    .clock-Frame {
+        background: var(--background-blue, #091C2E);
+        align-items: center;
+        justify-content: center;
+        gap: .5rem;
+        width: 12rem;
+        height: 14rem;
+
+    }
+
+    .clock-Frame p {
+        color: var(--placeholders, #929BA3);
+        font-family: Trade Gothic LT Std;
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 0.875rem;
+        letter-spacing: 0.035rem;
+    }
+
+    .clock-Frame p:first-of-type {
+        color: white;
+    }
+
+    .Frame {
+        justify-content: space-around;
+        gap: 2rem;
+        padding: 2em;
+    }
+
+    .row.Frame {
+        gap: 2rem;
+        background: var(--background-dark, #02121F);
+        justify-content: normal;
+        display: grid;
+        grid-template-columns: repeat(10, max-content);
+        grid-template-rows: 1fr;
+        padding-left: 0;
+        overflow-x: scroll;
+
+    }
+
+
+    .Locations {
+        overflow-x: scroll;
+        display: grid;
+        grid-template-columns: repeat(10, max-content);
+        grid-template-rows: 1fr;
+        padding: 1em;
+        padding-left: 0;
+    }
+
+    .change-Date {
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        justify-content: space-between;
+
+
+    }
+
+    .change-Date p {
+        color: var(--placeholders, #929BA3);
+        font-family: Trade Gothic LT Std;
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 0.875rem;
+        letter-spacing: 0.035rem;
+    }
+
+    .change-Date div {
+        flex-direction: row;
+        align-items: center;
+        gap: .5rem;
+    }
+
+    .change-Date img {
+        width: 1.5rem;
+        height: fit-content;
+
+    }
+
+    .drop-Down-Paragraph p {
+        color: var(--placeholders, #929BA3);
+        font-family: Roboto;
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.125rem;
+        letter-spacing: 0.03125rem;
+        text-transform: none;
+    }
+
+    .Paragraph-Head p {
+        color: var(--white, #FFF);
+        font-family: Trade Gothic LT Std;
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.5rem;
+        letter-spacing: 0.0625rem;
+        text-transform: uppercase;
+
+    }
+
+    .Paragraph-Head {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+    }
+
+    .Paragraph-Head img {
+        width: 1.5rem;
+        height: fit-content;
+    }
+
+    .drop-Down-Paragraph {
+        display: flex;
+        gap: 1rem;
+        padding-top: 1em;
+        padding-bottom: 1em;
+        border-bottom: 1px solid var(--primary, #009AFE);
+    }
+
+
+
+    @media screen and (width>=500px) {
+        body {
+            padding-top: 12rem;
+        }
     }
 
     @media screen and (width>=800px) {
         h1 {
             font-size: 2.5rem;
+        }
+
+        body {
+            padding-top: 18rem;
         }
     }
 
@@ -91,65 +287,221 @@
             font-size: 1.75rem;
         }
 
+        body {
+            padding: 0;
+        }
+
+
         #Menu-Mobile {
             display: none;
         }
 
         #Menu-Desktop {
-            box-sizing:unset;
             display: block;
-            height: 100%;
-           width: auto;
+            height: 100vh;
+            min-height: 600px;
+            box-sizing: border-box;
+            width: auto;
         }
 
         main {
+            justify-content: space-between;
             padding-right: 5rem;
+            width: 100%;
+            overflow: scroll;
+
+        }
+
+        .Frame {
+            max-width: 100%;
         }
 
         body {
             display: grid;
             grid-template-columns: 1fr 9fr;
+            grid-template-rows: 100vh;
+            gap: 2rem;
+            justify-content: left;
+            width: 100vw;
+            max-height: 100vh;
             min-height: 600px;
         }
+
+        .row.Frame {
+            min-height: 14.625rem;
+        }
+
     }
 </style>
 
 <body>
+
     <img id="Menu-Desktop" src="Images/admin-profile-div-main-section.svg" alt="">
     <img id="Menu-Mobile" src="Images/div-main-section-mobile.svg" alt="">
 
     <main>
+        <div class="row">
+            <h1>👋</h1>
+            <h1>
+                <span> Hello,</span>Jenny Willson_
+                <p>
+                    New York Est-s <span>11:18am</span>
+                </p>
+            </h1>
+        </div>
 
-        <h1>Hello Jenny</h1>
+
         <div class="row Frame">
-            <div>
-                <img src="" alt="">
-                Lorem ipsum dolor sit amet.
+            <div class="clock-Frame">
+                <div class="clock">
+
+                    <div class="middle">
+                        <img src="Images/all-users-text.png" alt="">
+                        <div id="hour"></div>
+                        <div id="minute"></div>
+                        <div id="second"></div>
+                    </div>
+
+                </div>
+
+                <p>Lorem ipsum</p>
+                <p>Iusto, eligendi. Dolor</p>
+                <p>Amet quas repellend</p>
+
+
             </div>
-            <div>
-                <img src="" alt="">
-                Lorem ipsum dolor sit amet.
+            <div class="clock-Frame">
+                <div class="clock-Dark">
+
+                    <div class="middle">
+
+                        <img src="Images/all-users-home-text.svg" alt="">
+                        <div class="point"></div>
+                        <div id="hour"></div>
+                        <div id="minute"></div>
+                        <div id="second"></div>
+                    </div>
+
+                </div>
+                <p>Lorem ipsum</p>
+                <p>Iusto, eligendi. Dolor</p>
+                <p>Amet quas repellend</p>
             </div>
-            <div>
-                <img src="" alt="">
-                Lorem ipsum dolor sit amet.
+            <div class="clock-Frame">
+                <div class="clock">
+
+                    <div class="middle">
+                        <img src="Images/all-users-text.png" alt="">
+                        <div id="hour"></div>
+                        <div id="minute"></div>
+                        <div id="second"></div>
+                    </div>
+
+                </div>
+
+                <p>Lorem ipsum</p>
+                <p>Iusto, eligendi. Dolor</p>
+                <p>Amet quas repellend</p>
             </div>
-            <div>
-                <img src="" alt="">
-                Lorem ipsum dolor sit amet.
+
+            <div class="clock-Frame">
+                <div class="clock-Dark">
+
+                    <div class="middle">
+
+                        <img src="Images/all-users-home-text.svg" alt="">
+                        <div class="point"></div>
+                        <div id="hour"></div>
+                        <div id="minute"></div>
+                        <div id="second"></div>
+                    </div>
+
+                </div>
+
+                <p>Lorem ipsum</p>
+                <p>Iusto, eligendi. Dolor</p>
+                <p>Amet quas repellend</p>
             </div>
+            <div class="clock-Frame">
+                <div class="clock">
+
+                    <div class="middle">
+                        <img src="Images/all-users-text.png" alt="">
+                        <div id="hour"></div>
+                        <div id="minute"></div>
+                        <div id="second"></div>
+                    </div>
+
+                </div>
+
+                <p>Lorem ipsum</p>
+                <p>Iusto, eligendi. Dolor</p>
+                <p>Amet quas repellend</p>
+            </div>
+
+            <div class="clock-Frame">
+                <div class="clock-Dark">
+
+                    <div class="middle">
+
+                        <img src="Images/all-users-home-text.svg" alt="">
+                        <div class="point"></div>
+                        <div id="hour"></div>
+                        <div id="minute"></div>
+                        <div id="second"></div>
+                    </div>
+
+                </div>
+
+                <p>Lorem ipsum</p>
+                <p>Iusto, eligendi. Dolor</p>
+                <p>Amet quas repellend</p>
+            </div>
+            <div class="clock-Frame">
+                <div class="clock">
+
+                    <div class="middle">
+                        <img src="Images/all-users-text.png" alt="">
+                        <div id="hour"></div>
+                        <div id="minute"></div>
+                        <div id="second"></div>
+                    </div>
+
+                </div>
+
+                <p>Lorem ipsum</p>
+                <p>Iusto, eligendi. Dolor</p>
+                <p>Amet quas repellend</p>
+            </div>
+
+
         </div>
         <div class="Frame">
-            <p>upcoming time</p>
-            <div class="row">
-                <img src="" alt="">
-                <img src="" alt="">
-                <img src="" alt="">
+            <h1>upcoming time</h1>
+            <div class="row Locations">
+                <div class="location-borders">New York</div>
+                <div class="location-borders">Lakewood</div>
+                <div class="location-borders">Passaic</div>
+                <div class="location-borders">New York</div>
+                <div class="location-borders">Lakewood</div>
+                <div class="location-borders">Passaic</div>
+                <div class="location-borders">New York</div>
+                <div class="location-borders">Lakewood</div>
+                <div class="location-borders">Passaic</div>
             </div>
             <div class="row">
-                <img src="" alt="">
-                Lorem ipsum dolor sit amet.
-                <img src="" alt="">
+                <div class="change-Date">
+                    <div>
+                        <img src="Images/icon-calendar.svg" alt="">
+                        <p>Lorem ipsum dolor sit amet.</p>
+                    </div>
+                    <div>
+                        <img src="Images/icon-outline-arrow-left.svg" alt="">
+                        <img src="Images/icon-outline-arrow-right.svg" alt="">
+                    </div>
+                </div>
+
+
             </div>
             <table>
                 <tbody>
@@ -159,36 +511,94 @@
                     </tr>
                     <tr>
                         <th>Starts</th>
-                        <td>Friday</td>
+                        <td>Friday <span>7, April 6:34pm</span> </td>
                     </tr>
                     <tr>
                         <th>Ends</th>
-                        <td>Saturday</td>
+                        <td>Saturday <span>7, April 6:34pm</span></td>
                     </tr>
                 </tbody>
             </table>
 
         </div>
         <div class="Frame">
-            FAQ
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed, magni. Perspiciatis hic quae dolor dolore
-            accusantium nemo optio debitis facilis odio laboriosam rerum nihil asperiores soluta qui, mollitia quis
-            consectetur earum dicta eaque quo vero? Natus in id nulla rerum iusto et magni vel quae delectus, tempore
-            laborum itaque ratione beatae tenetur hic corporis fuga sapiente quo nemo culpa mollitia dignissimos sit.
-            Voluptates, deserunt neque doloremque accusamus maiores modi quae officia quos tempore nam provident quasi
-            dolorum dolore corrupti ex ducimus dolorem repellat! Facilis itaque nam eveniet ipsa commodi necessitatibus
-            id
-            reiciendis facere, voluptatibus fugiat quaerat autem explicabo quam laborum Lorem ipsum dolor sit amet
-            consectetur, adipisicing elit. Vel aut rem cumque aspernatur mollitia nisi repellat similique eum harum,
-            corrupti ipsam inventore, amet voluptatem, reprehenderit sed quis! Blanditiis voluptas cumque mollitia
-            voluptates nemo temporibus porro eius nulla? Reprehenderit debitis saepe unde fugiat, cupiditate, omnis vel
-            officia velit eos tenetur est nulla? Optio dolor asperiores aut delectus minima ipsum sit itaque debitis,
-            quam accusamus, cumque obcaecati! Sit hic libero totam similique, deleniti repudiandae incidunt cum
-            reiciendis nam eveniet exercitationem id ab soluta quod perferendis eaque perspiciatis asperiores! Hic ullam
-            nihil quisquam qui, dolorum eum necessitatibus ipsam? Amet excepturi in voluptates adipisci?
+            <h1>FAQ</h1>
+            <div class="drop-Down-Paragraph">
+                <div class="Paragraph-Head">
+                    <p>Shabbos</p>
+                    <img src="Images/icon-plus.svg" alt="">
+                </div>
+
+                <div>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil assumenda eligendi dolores cum
+                        doloremque rerum amet. Tempora, ipsam obcaecati placeat repellendus omnis dicta, nobis
+                        voluptatum dolorum ratione sequi alias accusantium cum nulla eveniet repudiandae tempore?
+                        Deleniti labore tenetur reiciendis praesentium commodi velit eum eveniet quibusdam, similique
+                        neque cupiditate, aliquid ut error a, natus quasi non nostrum voluptas adipisci? Iste odit
+                        iusto, nobis eos reiciendis sint minima quam commodi facere! A modi minima doloribus culpa
+                        itaque saepe nam sit nostrum inventore atque porro consequuntur, blanditiis exercitationem nemo
+                        ut laboriosam quis earum tempore similique perspiciatis. Architecto mollitia iste unde sint
+                        quasi accusamus?</p>
+                </div>
+            </div>
+            <div class="drop-Down-Paragraph">
+                <div class="Paragraph-Head">
+                    <p>Shabbos</p>
+                    <img src="Images/icon-plus.svg" alt="">
+                </div>
+
+                <div>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil assumenda eligendi dolores cum
+                        doloremque rerum amet. Tempora, ipsam obcaecati placeat repellendus omnis dicta, nobis
+                        voluptatum dolorum ratione sequi alias accusantium cum nulla eveniet repudiandae tempore?
+                        Deleniti labore tenetur reiciendis praesentium commodi velit eum eveniet quibusdam, similique
+                        neque cupiditate, aliquid ut error a, natus quasi non nostrum voluptas adipisci? Iste odit
+                        iusto, nobis eos reiciendis sint minima quam commodi facere! A modi minima doloribus culpa
+                        itaque saepe nam sit nostrum inventore atque porro consequuntur, blanditiis exercitationem nemo
+                        ut laboriosam quis earum tempore similique perspiciatis. Architecto mollitia iste unde sint
+                        quasi accusamus?</p>
+                </div>
+            </div>
+            <div class="drop-Down-Paragraph">
+                <div class="Paragraph-Head">
+                    <p>Shabbos</p>
+                    <img src="Images/icon-plus.svg" alt="">
+                </div>
+
+                <div>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil assumenda eligendi dolores cum
+                        doloremque rerum amet. Tempora, ipsam obcaecati placeat repellendus omnis dicta, nobis
+                        voluptatum dolorum ratione sequi alias accusantium cum nulla eveniet repudiandae tempore?
+                        Deleniti labore tenetur reiciendis praesentium commodi velit eum eveniet quibusdam, similique
+                        neque cupiditate, aliquid ut error a, natus quasi non nostrum voluptas adipisci? Iste odit
+                        iusto, nobis eos reiciendis sint minima quam commodi facere! A modi minima doloribus culpa
+                        itaque saepe nam sit nostrum inventore atque porro consequuntur, blanditiis exercitationem nemo
+                        ut laboriosam quis earum tempore similique perspiciatis. Architecto mollitia iste unde sint
+                        quasi accusamus?</p>
+                </div>
+            </div>
+            <div class="drop-Down-Paragraph">
+                <div class="Paragraph-Head">
+                    <p>Shabbos</p>
+                    <img src="Images/icon-plus.svg" alt="">
+                </div>
+
+                <div>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil assumenda eligendi dolores cum
+                        doloremque rerum amet. Tempora, ipsam obcaecati placeat repellendus omnis dicta, nobis
+                        voluptatum dolorum ratione sequi alias accusantium cum nulla eveniet repudiandae tempore?
+                        Deleniti labore tenetur reiciendis praesentium commodi velit eum eveniet quibusdam, similique
+                        neque cupiditate, aliquid ut error a, natus quasi non nostrum voluptas adipisci? Iste odit
+                        iusto, nobis eos reiciendis sint minima quam commodi facere! A modi minima doloribus culpa
+                        itaque saepe nam sit nostrum inventore atque porro consequuntur, blanditiis exercitationem nemo
+                        ut laboriosam quis earum tempore similique perspiciatis. Architecto mollitia iste unde sint
+                        quasi accusamus?</p>
+                </div>
+            </div>
+
         </div>
     </main>
-
+    <script src="clock.js"></script>
 </body>
 
 </html>
