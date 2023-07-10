@@ -11,8 +11,11 @@
         rel="stylesheet">
     <link rel="stylesheet" href="font.css">
     <link rel="stylesheet" href="clock.css">
+    <link rel="stylesheet" href="desktop-Menu.css">
+    <link rel="stylesheet" href="scroll-Bar.css">
 </head>
 <style>
+    
     * {
         padding: 0;
         margin: 0;
@@ -219,7 +222,7 @@
 
     .change-Date img {
         width: 1.5rem;
-        height:  1.125rem;
+        height: 1.125rem;
 
 
     }
@@ -301,18 +304,18 @@
             padding: 0;
         }
 
-       
+
 
         #Menu-Mobile {
             display: none;
         }
 
         #Menu-Desktop {
-            display: block;
+            display: flex;
             height: 100vh;
-            min-height: 600px;
+            min-height: 800px;
             width: auto;
-            
+
         }
 
         main {
@@ -329,14 +332,14 @@
 
         body {
             display: grid;
-            grid-template-columns: 1fr 9fr;
+            grid-template-columns: 1.5fr 9fr;
             grid-template-rows: 100vh;
             gap: 2rem;
             justify-content: left;
             width: 100vw;
             max-height: 100vh;
-            min-height: 600px;
-           
+            min-height: 800px;
+
         }
 
         .row.Frame {
@@ -347,8 +350,15 @@
 </style>
 
 <body>
-
-    <img id="Menu-Desktop" src="Images/admin-profile-div-main-section.svg" alt="">
+    <div class="Frame-Menu" id="Menu-Desktop">
+        <div class="container">
+            <img src="Images/CODEBLUE TIME.svg" alt="">
+            <p id="user"><img src="public/images/admin-profile-icon-user.svg" alt=""> user</p>
+            <p id="home"><img src="public/images/admin-profile-icon-home.svg" alt=""> home</p>
+            <p id="My-Profile"><img src="public/images/admin-profile-icon-users.svg" alt="">My Profile</p>
+        </div>
+        <p id="log-out"><img src="public/images/admin-profile-icon-exit.svg" alt=""> log out</p>
+    </div>
     <img id="Menu-Mobile" src="Images/div-main-section-mobile.svg" alt="">
 
     <main>
@@ -610,6 +620,7 @@
 
         </div>
     </main>
+    <script src="Menu.js"></script>
     <script src="clock.js"></script>
 </body>
 

@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Roboto:wght@100;400&display=swap"
     rel="stylesheet">
+<link rel="stylesheet" href="desktop-Menu.css">
 <style>
     @font-face {
         src: url("CodeBlue times fonts/TradeGothicLTStd-Cn18.otf");
@@ -92,6 +93,9 @@
         flex-direction: column;
         box-sizing: border-box;
         margin-bottom: 1.5em;
+        padding-bottom: 1em;
+        border-bottom: 1px solid var(--border, #1F2D3A);
+
     }
 
     div {
@@ -191,7 +195,7 @@
         gap: 1.5rem;
     }
 
-    
+
 
     body {
         overflow-y: visible;
@@ -205,6 +209,18 @@
             padding-right: .5em;
             padding-bottom: .5rem;
 
+        }
+
+        tr td:nth-child(2) {
+            color: var(--placeholders, #929BA3);
+        }
+
+        tr td:nth-child(3) {
+            color: var(--placeholders, #929BA3);
+        }
+
+        tr td:nth-child(5) {
+            color: var(--placeholders, #929BA3);
         }
 
         table {
@@ -235,7 +251,7 @@
     }
 
 
-    @media screen and (width>=1000px) {
+    @media screen and (width>=1100px) {
         body {
             overflow-y: hidden;
             min-height: 600px;
@@ -243,6 +259,8 @@
 
         header {
             justify-content: center;
+            padding-bottom: 0;
+            border: 0;
         }
 
         h1 {
@@ -261,7 +279,7 @@
         #Menu-Desktop {
             height: 100%;
             align-self: left;
-            display: block;
+            display: flex;
         }
 
         body {
@@ -276,6 +294,7 @@
         button {
             width: 100px;
         }
+
 
     }
 
@@ -328,7 +347,7 @@
 
         tr td:last-child img {
             margin-right: 2em;
-            width: 32px;
+            width: 25px;
             height: auto;
         }
 
@@ -377,7 +396,16 @@
 </style>
 
 <body>
-    <img id="Menu-Desktop" src="Images/admin-profile-div-main-section.svg" alt="">
+    <div class="Frame-Menu" id="Menu-Desktop">
+        <div class="container">
+            <img src="Images/CODEBLUE TIME.svg" alt="">
+            <p id="user"><img src="public/images/admin-profile-icon-user.svg" alt=""> user</p>
+            <p id="home"><img src="public/images/admin-profile-icon-home.svg" alt=""> home</p>
+            <p id="My-Profile"><img src="public/images/admin-profile-icon-users.svg" alt="">My Profile</p>
+        </div>
+        <p id="log-out"><img src="public/images/admin-profile-icon-exit.svg" alt=""> log out</p>
+    </div>
+    <!-- <img id="Menu-Desktop" src="Images/admin-profile-div-main-section.svg" alt=""> -->
     <Main>
         <header>
             <img id="Menu" src="Images/div-main-section-mobile.svg" alt="">
@@ -709,6 +737,7 @@
             </tbody>
         </table>
     </Main>
+    <script src="Menu.js"></script>
 </body>
 
 </html>
