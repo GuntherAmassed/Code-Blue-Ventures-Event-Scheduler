@@ -13,9 +13,28 @@
     <link rel="stylesheet" href="clock.css">
     <link rel="stylesheet" href="desktop-Menu.css">
     <link rel="stylesheet" href="scroll-Bar.css">
+    <link rel="stylesheet" href="Mobile-Menu.css">
 </head>
 <style>
-    
+    #Menu-Mobile-Frame {
+        flex-direction: row;
+        width: 100%;
+        height: 100%;
+    }
+
+    #Menu-Mobile-Frame-Extended {
+        height: 100%;
+    }
+    #Menu-Mobile-Frame-Extended div:first-child{
+        flex-direction: row;
+    }
+
+    #Menu-Mobile-Frame-Extended div:nth-child(2) div:last-child {
+        padding-bottom: 2.5rem;
+    }
+
+
+
     * {
         padding: 0;
         margin: 0;
@@ -24,9 +43,8 @@
 
     body {
         background: var(--background-dark, #02121F);
-        padding-top: 8rem;
-
-
+        display: grid;
+        grid-template-rows: .5fr 9fr;
 
     }
 
@@ -41,6 +59,7 @@
         font-weight: 400;
         line-height: 1.125rem;
         letter-spacing: 0.03125rem;
+
         padding: 1em;
         width: 100vw;
         box-sizing: border-box;
@@ -58,10 +77,10 @@
         text-transform: uppercase;
     }
 
-    img {
+    /* img {
         width: 100%;
         height: 100px;
-    }
+    } */
 
 
 
@@ -80,12 +99,7 @@
         background: var(--background-blue, #091C2E);
     }
 
-    #Menu-Mobile {
-        position: absolute;
-        width: 100vw;
-        height: auto;
-        top: 0;
-    }
+
 
     #Menu-Desktop {
         display: none;
@@ -277,24 +291,17 @@
         h1 {
             font-size: 1.25rem;
         }
+        body{
+            grid-template-rows: .3fr 9fr;
+        }
     }
-
-    @media screen and (width>=500px) {
-        body {
-            padding-top: 12rem;
+    @media screen and (width<=299px){
+        body{
+            grid-template-rows: .2fr 9fr;
         }
     }
 
-    @media screen and (width>=800px) {
-        h1 {
-            font-size: 2.5rem;
-        }
-
-        body {
-            padding-top: 18rem;
-        }
-    }
-
+   
     @media screen and (width >=1000px) {
         h1 {
             font-size: 1.75rem;
@@ -359,9 +366,36 @@
         </div>
         <p id="log-out"><img src="public/images/admin-profile-icon-exit.svg" alt=""> log out</p>
     </div>
-    <img id="Menu-Mobile" src="Images/div-main-section-mobile.svg" alt="">
 
+    <div id="Menu-Mobile-Frame">
+        <img id="Code-Blue" src="Images/CODEBLUE TIME.svg" alt="">
+        <img id="Option-Frame" src="public/images/frame.svg" alt="">
+        <img id="Mobile-Frame" src="public/images/div-main-section.png" alt="">
+    </div>
+    <div id="Menu-Mobile-Frame-Extended">
+        <div>
+            <img id="Code-Blue" src="Images/CODEBLUE TIME.svg" alt="">
+            <img id="ExIcon" src="Images/admin-profile-icon-outline-close.svg" alt="">
+        </div>
+        <div>
+            <div>
+                <p id="user-Mobile"><img src="public/images/admin-profile-icon-users.svg" alt="">Users</p>
+            </div>
+            <div>
+                <p id="home-Mobile"><img src="public/images/admin-profile-icon-home.svg" alt="">Home</p>
+            </div>
+            <div>
+                <p id="My-Profile-Mobile"><img src="public/images/admin-profile-icon-user.svg" alt="">My Profile</p>
+            </div>
+
+            <div>
+                <p id="log-out-Mobile"> <img src="public/images/admin-profile-icon-exit.svg" alt="">Log out</p>
+            </div>
+        </div>
+        <img id="Mobile-Frame-Extended" src="Images/Frame 232-Extended.png" alt="">
+    </div>
     <main>
+
         <div class="row">
             <h1>👋</h1>
             <h1>
@@ -620,6 +654,7 @@
 
         </div>
     </main>
+    <script src="Mobile-Menu.js"></script>
     <script src="Menu.js"></script>
     <script src="clock.js"></script>
 </body>

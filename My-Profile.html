@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="desktop-Menu.css">
+
+    <link rel="stylesheet" href="Mobile-Menu.css">
+
 </head>
 <style>
     @font-face {
@@ -17,6 +20,18 @@
     @font-face {
         src: url("CodeBlue times fonts/Lucida Sans Typewriter/lucidatypewriterregular.ttf");
         font-family: Lucida Sans Typewriter;
+    }
+
+    #Menu-Mobile-Frame {
+        height: 100%;
+    }
+
+    #Menu-Mobile-Frame-Extended {
+        height: 100%;
+    }
+
+    #Menu-Mobile-Frame-Extended div:nth-child(2) div:last-child {
+        padding-bottom: 2.5rem;
     }
 
     * {
@@ -162,14 +177,18 @@
         cursor: pointer;
     }
 
-    @media screen and (width>900px) {
+    @media screen and (width>=1000px) {
 
         .container {
             flex-direction: row;
             align-items: center;
         }
 
-        #Menu-nav {
+        #Menu-Mobile-Frame {
+            display: none;
+        }
+
+        #Menu-Mobile-Frame-Extended {
             display: none;
         }
 
@@ -239,7 +258,33 @@
     </div>
     <div class="Main-Container">
         <h1>My <span>Profile</span>_</h1>
-        <img id="Menu-nav" src="Images/div-main-section-mobile.svg" alt="">
+        <div id="Menu-Mobile-Frame">
+            <img id="Code-Blue" src="Images/CODEBLUE TIME.svg" alt="">
+            <img id="Option-Frame" src="public/images/frame.svg" alt="">
+            <img id="Mobile-Frame" src="public/images/div-main-section.png" alt="">
+        </div>
+        <div id="Menu-Mobile-Frame-Extended">
+            <div>
+                <img id="Code-Blue" src="Images/CODEBLUE TIME.svg" alt="">
+                <img id="ExIcon" src="Images/admin-profile-icon-outline-close.svg" alt="">
+            </div>
+            <div>
+                <div>
+                    <p id="user-Mobile"><img src="public/images/admin-profile-icon-users.svg" alt="">Users</p>
+                </div>
+                <div>
+                    <p id="home-Mobile"><img src="public/images/admin-profile-icon-home.svg" alt="">Home</p>
+                </div>
+                <div>
+                    <p id="My-Profile-Mobile"><img src="public/images/admin-profile-icon-user.svg" alt="">My Profile</p>
+                </div>
+
+                <div>
+                    <p id="log-out-Mobile"> <img src="public/images/admin-profile-icon-exit.svg" alt="">Log out</p>
+                </div>
+            </div>
+            <img id="Mobile-Frame-Extended" src="Images/Frame 232-Extended.png" alt="">
+        </div>
         <form action="">
             <img id="Profile-Pic" src="Images/admin-profile-ellipse-22.png" alt="">
             <div class="input-container">
@@ -273,8 +318,9 @@
 
         </form>
     </div>
+    <script src="Mobile-Menu.js"></script>
     <script src="Menu.js"></script>
-    
+
 
 </body>
 

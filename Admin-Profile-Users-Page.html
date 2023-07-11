@@ -11,7 +11,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Roboto:wght@100;400&display=swap"
     rel="stylesheet">
 <link rel="stylesheet" href="desktop-Menu.css">
+<link rel="stylesheet" href="Mobile-Menu.css">
 <style>
+ 
     @font-face {
         src: url("CodeBlue times fonts/TradeGothicLTStd-Cn18.otf");
         font-family: Trade Gothic LT Std;
@@ -21,6 +23,18 @@
     @font-face {
         src: url("CodeBlue times fonts/Lucida Sans Typewriter/lucidatypewriterregular.ttf");
         font-family: Lucida Sans Typewriter;
+    }
+
+    #Menu-Mobile-Frame {
+        height: 100%;
+    }
+
+    #Menu-Mobile-Frame-Extended {
+        height: 100%;
+    }
+
+    #Menu-Mobile-Frame-Extended div:nth-child(2) div:last-child {
+        padding-bottom: 2.5rem;
     }
 
     body {
@@ -66,13 +80,12 @@
     body {
         color: var(--placeholders, #929BA3);
         background: var(--background-dark, #02121F);
-
         font-size: 0.875rem;
         font-family: Trade Gothic LT Std;
         font-style: normal;
+        min-height: 600px;
         font-weight: 400;
         line-height: 0.875rem;
-        overflow-y: hidden;
         letter-spacing: 0.035rem;
         border: 0;
         height: 100%;
@@ -81,7 +94,9 @@
     main {
         height: 100%;
         display: grid;
-        grid-template-rows: 1fr 9fr;
+        gap: 2rem;
+        grid-template-rows: 1.5fr .5fr 9fr;
+       
     }
 
     header {
@@ -92,7 +107,6 @@
         justify-content: space-between;
         flex-direction: column;
         box-sizing: border-box;
-        margin-bottom: 1.5em;
         padding-bottom: 1em;
         border-bottom: 1px solid var(--border, #1F2D3A);
 
@@ -197,11 +211,7 @@
 
 
 
-    body {
-        overflow-y: visible;
-        min-height: 848px;
-    }
-
+   
 
     @media screen and (width>800px) {
         header div {
@@ -227,9 +237,7 @@
             padding: 1em;
         }
 
-        h1 {
-            font-size: 2.5rem;
-        }
+
 
         tbody tr td {
             text-transform: capitalize;
@@ -243,10 +251,6 @@
             border: 0;
         }
 
-        button {
-            width: 200px;
-            font-size: 1.5rem;
-        }
 
     }
 
@@ -272,8 +276,12 @@
             width: 20%;
         }
 
-        #Menu {
+        #Menu-Mobile-Frame {
             display: none;
+        }
+        main{
+            grid-template-rows: 1fr 9fr;
+            gap: 0;
         }
 
         #Menu-Desktop {
@@ -299,11 +307,7 @@
     }
 
     @media screen and (width<=800px) {
-        body {
-            overflow-y: visible;
-            min-height: 848px;
-
-        }
+        
 
         header div {
             padding-left: .5em;
@@ -405,10 +409,36 @@
         </div>
         <p id="log-out"><img src="public/images/admin-profile-icon-exit.svg" alt=""> log out</p>
     </div>
-    <!-- <img id="Menu-Desktop" src="Images/admin-profile-div-main-section.svg" alt=""> -->
     <Main>
+        <div id="Menu-Mobile-Frame">
+            <img id="Code-Blue" src="Images/CODEBLUE TIME.svg" alt="">
+            <img id="Option-Frame" src="public/images/frame.svg" alt="">
+            <img id="Mobile-Frame" src="public/images/div-main-section.png" alt="">
+        </div>
+        <div id="Menu-Mobile-Frame-Extended">
+            <div>
+                <img id="Code-Blue" src="Images/CODEBLUE TIME.svg" alt="">
+                <img id="ExIcon" src="Images/admin-profile-icon-outline-close.svg" alt="">
+            </div>
+            <div>
+                <div>
+                    <p id="user-Mobile"><img src="public/images/admin-profile-icon-users.svg" alt="">Users</p>
+                </div>
+                <div>
+                    <p id="home-Mobile"><img src="public/images/admin-profile-icon-home.svg" alt="">Home</p>
+                </div>
+                <div>
+                    <p id="My-Profile-Mobile"><img src="public/images/admin-profile-icon-user.svg" alt="">My Profile</p>
+                </div>
+
+                <div>
+                    <p id="log-out-Mobile"> <img src="public/images/admin-profile-icon-exit.svg" alt="">Log out</p>
+                </div>
+            </div>
+            <img id="Mobile-Frame-Extended" src="Images/Frame 232-Extended.png" alt="">
+        </div>
         <header>
-            <img id="Menu" src="Images/div-main-section-mobile.svg" alt="">
+
             <div>
                 <h1><span>users</span>_</h1>
                 <div class="Button-Container">
@@ -737,6 +767,7 @@
             </tbody>
         </table>
     </Main>
+    <script src="Mobile-Menu.js"></script>
     <script src="Menu.js"></script>
 </body>
 
