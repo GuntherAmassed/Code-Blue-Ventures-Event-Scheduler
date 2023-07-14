@@ -25,6 +25,7 @@
     #Menu-Mobile-Frame-Extended {
         height: 100%;
     }
+    
     #Menu-Mobile-Frame-Extended div:first-child{
         flex-direction: row;
     }
@@ -45,6 +46,7 @@
         background: var(--background-dark, #02121F);
         display: grid;
         grid-template-rows: .5fr 9fr;
+        overflow-x: hidden;
 
     }
 
@@ -552,8 +554,8 @@
                         <p>Lorem ipsum dolor sit amet.</p>
                     </div>
                     <div>
-                        <img src="Images/icon-outline-arrow-left.svg" alt="">
-                        <img src="Images/icon-outline-arrow-right.svg" alt="">
+                        <img id="Arrow-Left" src="Images/icon-outline-arrow-left.svg" alt="">
+                        <img id="Arrow-Right" src="Images/icon-outline-arrow-right.svg" alt="">
                     </div>
                 </div>
 
