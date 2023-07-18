@@ -5,23 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="desktop-Menu.css">
-
-    <link rel="stylesheet" href="Mobile-Menu.css">
+    <link rel="stylesheet" href="css/desktop-Menu.css">
+    <link rel="stylesheet" href="css/Mobile-Menu.css">
+    <link rel="stylesheet" href="css/font.css">
+    <link rel="stylesheet" href="css/scroll-Bar.css">
 
 </head>
 <style>
-    @font-face {
-        src: url("CodeBlue times fonts/TradeGothicLTStd-Cn18.otf");
-        font-family: Trade Gothic LT Std;
-
-    }
-
-    @font-face {
-        src: url("CodeBlue times fonts/Lucida Sans Typewriter/lucidatypewriterregular.ttf");
-        font-family: Lucida Sans Typewriter;
-    }
-
     #Menu-Mobile-Frame {
         height: 100%;
     }
@@ -44,11 +34,17 @@
         text-decoration: none;
     }
 
-    #password-Hidden {
-        width: fit-content;
+    .password-Hidden,
+    #Drop-Down-Icon {
+        width: 1rem;
         position: absolute;
         right: 0;
-        bottom: 10%;
+        bottom: 15%;
+        cursor: pointer;
+    }
+
+    #Drop-Down-Icon {
+        right: 20px;
     }
 
     #Password-Div {
@@ -60,9 +56,11 @@
         border-bottom: none;
     }
 
-    input {
+    input,
+    label,
+    label div,
+    #Drop-Down-Locations p {
         width: 100%;
-        padding: .5rem;
         background-color: transparent;
         box-sizing: border-box;
         display: flex;
@@ -73,6 +71,16 @@
         line-height: 0.875rem;
         letter-spacing: 0.035rem;
         color: gray;
+    }
+
+    label {
+        padding-left: .5em;
+        display: block;
+        color: darkgray;
+    }
+
+    label div {
+        padding: .5em;
     }
 
     #Menu-nav {
@@ -227,14 +235,12 @@
 
         }
 
-        input {
-            font-size: .875rem;
-        }
+
 
         form {
             background: var(--background-blue, #091C2E);
             gap: 8%;
-            padding: 3.5% 7% 20% 7%;
+            padding: 3.5% 10% 20% 10%;
         }
 
         .Main-Container {
@@ -243,6 +249,46 @@
             min-height: 600px;
 
         }
+    }
+
+    .input-padding {
+        padding: .5em;
+        padding-left: 0;
+    }
+
+    #Drop-Down-Locations {
+        position: absolute;
+        padding-top: 1em;
+        overflow: auto;
+        width: 100%;
+        height: 256px;
+        background: var(--background-blue, #091C2E);
+        box-shadow: 5px 4px 100px 0px rgba(3, 16, 24, 0.40);
+    }
+
+    #Drop-Down-Locations p {
+        cursor: pointer;
+        margin-bottom: 2em;
+        padding-left: 2em;
+        gap: 2em;
+        display: flex;
+        color: white;
+        align-items: end;
+    }
+
+    #Current-Location {
+        display: flex;
+        gap: 1em;
+        color: white;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    ::-webkit-scrollbar {
+        width: 2px;
+        height: 2px;
     }
 </style>
 
@@ -289,25 +335,47 @@
             <img id="Profile-Pic" src="Images/admin-profile-ellipse-22.png" alt="">
             <div class="input-container">
                 <div id="Password-Div">
-                    <input id="Password" type="text" placeholder="First Name">
-                    <img id="password-Hidden" src="Images/admin-profile-icon-outline-close.svg" alt=""></img>
+                    <label for="">
+                        First Name
+                        <input id="Password" type="text" placeholder="">
+                    </label>
+
+                    <img class="password-Hidden" src="Images/admin-profile-icon-outline-close.svg" alt=""></img>
                 </div>
                 <div id="Password-Div">
-                    <input id="Password" type="text" placeholder="Last Name">
-                    <img id="password-Hidden" src="Images/admin-profile-icon-outline-close.svg" alt=""></img>
+                    <label for="">
+                        Last Name
+                        <input id="Password" type="text" placeholder="">
+                    </label>
+                    <img class="password-Hidden" src="Images/admin-profile-icon-outline-close.svg" alt=""></img>
                 </div>
             </div>
             <div id="Password-Div">
-                <input id="Password" type="text" placeholder="Email">
-                <img id="password-Hidden" src="Images/admin-profile-icon-outline-close.svg" alt=""></img>
+                <label for="">Email<input id="Password" type="text" placeholder=""></label>
+                <img class="password-Hidden" src="Images/admin-profile-icon-outline-close.svg" alt=""></img>
             </div>
             <div id="Password-Div">
-                <input id="Password" type="text" placeholder="Skype">
-                <img id="password-Hidden" src="Images/admin-profile-icon-outline-close.svg" alt=""></img>
+                <label for=""> Skype<input id="Password" type="text" placeholder=""></label>
+                <img class="password-Hidden" src="Images/admin-profile-icon-outline-close.svg" alt=""></img>
             </div>
             <div id="Password-Div">
-                <input id="Password" type="text" placeholder="Location">
-                <img id="password-Hidden" src="Images/admin-profile-icon-outline-close.svg" alt=""></img>
+                <label for="">Location<div id="Current-Location"></div></label>
+                <img id="Drop-Down-Icon" src="public/images/icon-outline-arrow-down.svg" alt="">
+                <img class="password-Hidden" id="password-Hidden-DropDown"
+                    src="Images/admin-profile-icon-outline-close.svg" alt=""></img>
+                <div id="Drop-Down-Locations" class="hidden">
+                    <p class="Location"><img src="public/images/nz-new-zealand.svg" alt=""> New York, USA</p>
+                    <p class="Location"><img src="public/images/nz-new-zealand.svg" alt=""> New York, USA</p>
+                    <p class="Location"><img src="public/images/nz-new-zealand.svg" alt=""> New York, USA</p>
+                    <p class="Location"><img src="public/images/nz-new-zealand.svg" alt=""> New York, USA</p>
+                    <p class="Location"><img src="public/images/nz-new-zealand.svg" alt=""> New York, USA</p>
+                    <p class="Location"><img src="public/images/nz-new-zealand.svg" alt=""> New York, USA</p>
+                    <p class="Location"><img src="public/images/nz-new-zealand.svg" alt=""> New York, USA</p>
+                    <p class="Location"><img src="public/images/nz-new-zealand.svg" alt=""> New York, USA</p>
+                    <p class="Location"><img src="public/images/nz-new-zealand.svg" alt=""> New York, USA</p>
+                    <p class="Location"><img src="public/images/nz-new-zealand.svg" alt=""> New York, USA</p>
+                    <p class="Location"><img src="public/images/nz-new-zealand.svg" alt=""> New York, USA</p>
+                </div>
             </div>
             <div class="container">
                 <button id="indexPageButton">
@@ -318,9 +386,47 @@
 
         </form>
     </div>
-    <script src="Mobile-Menu.js"></script>
-    <script src="Menu.js"></script>
-
+    <script src="JsFiles/Mobile-Menu.js"></script>
+    <script src="JsFiles/Menu.js"></script>
+    <script>
+        var inputs = document.getElementsByTagName('input');
+        var ExIconInput = document.getElementsByClassName('password-Hidden');
+        var ExIconLocation = document.getElementById('password-Hidden-DropDown');
+        var DropDownIcon = document.getElementById('Drop-Down-Icon');
+        var DropDownLocations = document.getElementById('Drop-Down-Locations');
+        var Locations = document.getElementsByClassName('Location');
+        var CurrentLocation = document.getElementById('Current-Location');
+        for (let i = 0; i < inputs.length; i++) {
+            inputs[i].addEventListener('input', () => {
+                if (inputs[i].value.trim() !== '') {
+                    inputs[i].classList.add('input-padding');
+                } else {
+                    inputs[i].classList.remove('input-padding');
+                }
+            })
+            ExIconInput[i].addEventListener('click', () => {
+                inputs[i].value = '';
+                inputs[i].classList.remove('input-padding');
+            })
+        }
+        DropDownIcon.addEventListener('click', () => {
+            if (DropDownIcon.src.endsWith("arrow-down.svg")) {
+                DropDownIcon.src = "public/images/icon-outline-arrow-up.svg"
+            }
+            else {
+                DropDownIcon.src = "public/images/icon-outline-arrow-down.svg"
+            }
+            DropDownLocations.classList.toggle('hidden');
+        })
+        for (let i = 0; i < Locations.length; i++) {
+            Locations[i].addEventListener('click', () => {
+                CurrentLocation.innerHTML = Locations[i].innerHTML;
+            })
+        }
+        ExIconLocation.addEventListener('click', () => {
+            CurrentLocation.innerHTML = '';
+        })
+    </script>
 
 </body>
 

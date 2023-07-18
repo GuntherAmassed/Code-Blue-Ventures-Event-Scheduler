@@ -9,13 +9,26 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Roboto:wght@100;400&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="font.css">
-    <link rel="stylesheet" href="clock.css">
-    <link rel="stylesheet" href="desktop-Menu.css">
-    <link rel="stylesheet" href="scroll-Bar.css">
-    <link rel="stylesheet" href="Mobile-Menu.css">
+    <link rel="stylesheet" href="css/font.css">
+    <link rel="stylesheet" href="css/clock.css">
+    <link rel="stylesheet" href="css/desktop-Menu.css">
+    <link rel="stylesheet" href="css/scroll-Bar.css">
+    <link rel="stylesheet" href="css/Mobile-Menu.css">
 </head>
 <style>
+    .content {
+        display: block;
+    }
+
+   
+
+    #Arrow-Right,
+    #Arrow-Left {
+        width: 2rem;
+        height: 2rem;
+        cursor: pointer;
+    }
+
     #Menu-Mobile-Frame {
         flex-direction: row;
         width: 100%;
@@ -25,8 +38,8 @@
     #Menu-Mobile-Frame-Extended {
         height: 100%;
     }
-    
-    #Menu-Mobile-Frame-Extended div:first-child{
+
+    #Menu-Mobile-Frame-Extended div:first-child {
         flex-direction: row;
     }
 
@@ -289,21 +302,27 @@
         border-bottom: 1px solid var(--primary, #009AFE);
     }
 
+    #Plus-Icon-4:active .drop-Down-Paragraph:first-of-type {
+        display: none;
+    }
+
     @media screen and (width<=499px) {
         h1 {
             font-size: 1.25rem;
         }
-        body{
+
+        body {
             grid-template-rows: .3fr 9fr;
         }
     }
-    @media screen and (width<=299px){
-        body{
+
+    @media screen and (width<=299px) {
+        body {
             grid-template-rows: .2fr 9fr;
         }
     }
 
-   
+
     @media screen and (width >=1000px) {
         h1 {
             font-size: 1.75rem;
@@ -355,6 +374,12 @@
             min-height: 14.625rem;
         }
 
+    }
+    .Plus-Icon {
+        cursor: pointer;
+    }
+    .Content.hidden {
+        display: none;
     }
 </style>
 
@@ -415,124 +440,117 @@
 
                     <div class="middle">
                         <img src="Images/all-users-text.svg" alt="">
-                        <div id="hour"></div>
-                        <div id="minute"></div>
-                        <div id="second"></div>
+                        <div class="hour"></div>
+                        <div class="minute"></div>
+                        <div class="second"></div>
                     </div>
 
                 </div>
 
-                <p>Lorem ipsum</p>
-                <p>Iusto, eligendi. Dolor</p>
-                <p>Amet quas repellend</p>
-
-
+                <p class="Name-Of-Place">Lorem ipsum</p>
+                <p class="Day-Of-Week">Iusto, eligendi. Dolor</p>
             </div>
             <div class="clock-Frame">
                 <div class="clock-Dark">
-
                     <div class="middle">
 
                         <img src="Images/all-users-home-text.svg" alt="">
                         <div class="point"></div>
-                        <div id="hour"></div>
-                        <div id="minute"></div>
-                        <div id="second"></div>
+                        <div class="hour"></div>
+                        <div class="minute"></div>
+                        <div class="second"></div>
                     </div>
-
                 </div>
-                <p>Lorem ipsum</p>
-                <p>Iusto, eligendi. Dolor</p>
-                <p>Amet quas repellend</p>
+                <p class="Name-Of-Place">Lorem ipsum</p>
+                <p class="Day-Of-Week">Iusto, eligendi. Dolor</p>
             </div>
             <div class="clock-Frame">
                 <div class="clock">
 
                     <div class="middle">
                         <img src="Images/all-users-text.svg" alt="">
-                        <div id="hour"></div>
-                        <div id="minute"></div>
-                        <div id="second"></div>
+                        <div class="hour"></div>
+                        <div class="minute"></div>
+                        <div class="second"></div>
                     </div>
 
                 </div>
 
-                <p>Lorem ipsum</p>
-                <p>Iusto, eligendi. Dolor</p>
-                <p>Amet quas repellend</p>
+                <p class="Name-Of-Place">Lorem ipsum</p>
+                <p class="Day-Of-Week">Iusto, eligendi. Dolor</p>
             </div>
-
             <div class="clock-Frame">
                 <div class="clock-Dark">
-
                     <div class="middle">
 
                         <img src="Images/all-users-home-text.svg" alt="">
                         <div class="point"></div>
-                        <div id="hour"></div>
-                        <div id="minute"></div>
-                        <div id="second"></div>
+                        <div class="hour"></div>
+                        <div class="minute"></div>
+                        <div class="second"></div>
                     </div>
-
                 </div>
-
-                <p>Lorem ipsum</p>
-                <p>Iusto, eligendi. Dolor</p>
-                <p>Amet quas repellend</p>
+                <p class="Name-Of-Place">Lorem ipsum</p>
+                <p class="Day-Of-Week">Iusto, eligendi. Dolor</p>
             </div>
             <div class="clock-Frame">
                 <div class="clock">
 
                     <div class="middle">
                         <img src="Images/all-users-text.svg" alt="">
-                        <div id="hour"></div>
-                        <div id="minute"></div>
-                        <div id="second"></div>
+                        <div class="hour"></div>
+                        <div class="minute"></div>
+                        <div class="second"></div>
                     </div>
 
                 </div>
 
-                <p>Lorem ipsum</p>
-                <p>Iusto, eligendi. Dolor</p>
-                <p>Amet quas repellend</p>
+                <p class="Name-Of-Place">Lorem ipsum</p>
+                <p class="Day-Of-Week">Iusto, eligendi. Dolor</p>
             </div>
-
             <div class="clock-Frame">
                 <div class="clock-Dark">
-
                     <div class="middle">
 
                         <img src="Images/all-users-home-text.svg" alt="">
                         <div class="point"></div>
-                        <div id="hour"></div>
-                        <div id="minute"></div>
-                        <div id="second"></div>
+                        <div class="hour"></div>
+                        <div class="minute"></div>
+                        <div class="second"></div>
                     </div>
-
                 </div>
-
-                <p>Lorem ipsum</p>
-                <p>Iusto, eligendi. Dolor</p>
-                <p>Amet quas repellend</p>
+                <p class="Name-Of-Place">Lorem ipsum</p>
+                <p class="Day-Of-Week">Iusto, eligendi. Dolor</p>
             </div>
             <div class="clock-Frame">
                 <div class="clock">
 
                     <div class="middle">
                         <img src="Images/all-users-text.svg" alt="">
-                        <div id="hour"></div>
-                        <div id="minute"></div>
-                        <div id="second"></div>
+                        <div class="hour"></div>
+                        <div class="minute"></div>
+                        <div class="second"></div>
                     </div>
 
                 </div>
 
-                <p>Lorem ipsum</p>
-                <p>Iusto, eligendi. Dolor</p>
-                <p>Amet quas repellend</p>
+                <p class="Name-Of-Place">Lorem ipsum</p>
+                <p class="Day-Of-Week">Iusto, eligendi. Dolor</p>
             </div>
+            <div class="clock-Frame">
+                <div class="clock-Dark">
+                    <div class="middle">
 
-
+                        <img src="Images/all-users-home-text.svg" alt="">
+                        <div class="point"></div>
+                        <div class="hour"></div>
+                        <div class="minute"></div>
+                        <div class="second"></div>
+                    </div>
+                </div>
+                <p class="Name-Of-Place">Lorem ipsum</p>
+                <p class="Day-Of-Week">Iusto, eligendi. Dolor</p>
+            </div>
         </div>
         <div class="Frame">
             <h1>upcoming time</h1>
@@ -584,10 +602,10 @@
             <div class="drop-Down-Paragraph">
                 <div class="Paragraph-Head">
                     <p>Shabbos</p>
-                    <img src="Images/icon-plus.svg" alt="">
+                    <img class="Plus-Icon" src="Images/icon-plus.svg" alt="">
                 </div>
 
-                <div>
+                <div class="Content">
                     <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil assumenda eligendi dolores cum
                         doloremque rerum amet. Tempora, ipsam obcaecati placeat repellendus omnis dicta, nobis
                         voluptatum dolorum ratione sequi alias accusantium cum nulla eveniet repudiandae tempore?
@@ -602,10 +620,10 @@
             <div class="drop-Down-Paragraph">
                 <div class="Paragraph-Head">
                     <p>Shabbos</p>
-                    <img src="Images/icon-plus.svg" alt="">
+                    <img class="Plus-Icon" src="Images/icon-plus.svg" alt="">
                 </div>
 
-                <div>
+                <div class="Content">
                     <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil assumenda eligendi dolores cum
                         doloremque rerum amet. Tempora, ipsam obcaecati placeat repellendus omnis dicta, nobis
                         voluptatum dolorum ratione sequi alias accusantium cum nulla eveniet repudiandae tempore?
@@ -620,10 +638,10 @@
             <div class="drop-Down-Paragraph">
                 <div class="Paragraph-Head">
                     <p>Shabbos</p>
-                    <img src="Images/icon-plus.svg" alt="">
+                    <img class="Plus-Icon" src="Images/icon-plus.svg" alt="">
                 </div>
 
-                <div>
+                <div class="Content">
                     <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil assumenda eligendi dolores cum
                         doloremque rerum amet. Tempora, ipsam obcaecati placeat repellendus omnis dicta, nobis
                         voluptatum dolorum ratione sequi alias accusantium cum nulla eveniet repudiandae tempore?
@@ -638,10 +656,10 @@
             <div class="drop-Down-Paragraph">
                 <div class="Paragraph-Head">
                     <p>Shabbos</p>
-                    <img src="Images/icon-plus.svg" alt="">
+                    <img class="Plus-Icon" src="Images/icon-plus.svg" alt="">
                 </div>
 
-                <div>
+                <div class="Content">
                     <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil assumenda eligendi dolores cum
                         doloremque rerum amet. Tempora, ipsam obcaecati placeat repellendus omnis dicta, nobis
                         voluptatum dolorum ratione sequi alias accusantium cum nulla eveniet repudiandae tempore?
@@ -656,10 +674,22 @@
 
         </div>
     </main>
-    <script src="ZmanimApi.js"></script>
-    <script src="Mobile-Menu.js"></script>
-    <script src="Menu.js"></script>
-    <script src="clock.js"></script>
+    <script src="JsFiles/clock.js"></script>
+    <script src="JsFiles/ZmanimApi.js"></script>
+    <script src="JsFiles/Mobile-Menu.js"></script>
+    <script src="JsFiles/Menu.js"></script>
+    <script>
+        const plusIcon = document.getElementsByClassName('Plus-Icon');
+        const contentDiv = document.getElementsByClassName('Content');
+        console.log(contentDiv);
+        for (let i = 0; i < plusIcon.length; i++) {
+            plusIcon[i].addEventListener('click', function () {
+                contentDiv[i].classList.toggle('hidden');
+            });
+        }
+
+
+    </script>
 </body>
 
 </html>
