@@ -1,7 +1,9 @@
 const port = 3000;
 const express = require('express');
 const cors = require('cors');
-cors.all
+const ct = require('countries-and-timezones');
+const { createPool } = require('mysql2');
+cors.all;
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -383,6 +385,69 @@ const timeZone = [
         "name": "Pacific/Kiritimati"
     }
 ];
+const fs = require('fs');
+let files = fs.readdirSync('C:/Users/Moshe Stern/Desktop/Figma Api/ZuntaTimes/Images/Flags');
+
+let FinalCountryIntialArray = [];
+let fileNames = [];
+
+function getCountries() {
+
+    let countryIntials = [];
+    for (let i = 0; i < files.length; i++) {
+        let filesSplit = files[i].split(/ |-/);
+        countryIntials.push(filesSplit[0]);
+    }
+    for (let i = 0; i < countryIntials.length; i++) {
+        let country = ct.getCountry(countryIntials[i].toUpperCase());
+        if (country !== null) {
+            FinalCountryIntialArray.push(country);
+        }
+    }
+}
+function getFlagNames() {
+    for (let i = 0; i < FinalCountryIntialArray.length; i++) {
+        for (let j = 0; j < files.length; j++) {
+            if (files[j].includes(FinalCountryIntialArray[i].name)) {
+                fileNames.push(files[j])
+            }
+        }
+
+    }
+}
+
+const pool = createPool({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'loginforzunta'
+});
+getCountries();
+getFlagNames();
+
+app.get('/UserInfo', (req, res) => {
+    let flagPath = [];
+    let data = [];
+    pool.query('SELECT * FROM userinfo', (error, results) => {
+        if (error) {
+            return console.log(error)
+        }
+        for (let i = 0; i < results.length; i++) {
+            for (let j = 0; j < files.length; j++) {
+                if (files[j].includes(results[i].Location)) {
+                    flagPath.push(files[j]);
+                }
+            }
+
+        }
+        data.push({
+            filePaths: flagPath,
+            serverData: results
+        })
+        res.send(data);
+        console.log('Sent Data');
+    });
+})
 app.post('/ClockAmount', (req, res) => {
     clockAmount = req.body.Amount;
     for (let i = 0; i < clockAmount; i++) {
@@ -401,3 +466,5 @@ app.post('/ClockAmount', (req, res) => {
 app.listen(port, () => {
     console.log("listening on port " + port);
 })
+
+
