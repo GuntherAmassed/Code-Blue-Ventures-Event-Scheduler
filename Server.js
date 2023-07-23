@@ -387,9 +387,80 @@ const timeZone = [
 ];
 const fs = require('fs');
 let files = fs.readdirSync('C:/Users/Moshe Stern/Desktop/Figma Api/ZuntaTimes/Images/Flags');
-
+const pool = createPool({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'loginforzunta'
+});
 let FinalCountryIntialArray = [];
 let fileNames = [];
+let row='';
+
+getCountries();
+getFlagNames();
+
+pool.query('SELECT * FROM userinfo', (error, results) => {
+    if (error) {
+        return console.log(error)
+    }
+    for (let i = 0; i < results.length; i++) {
+        for (let j = 0; j < files.length; j++) {
+            if (files[j].includes(results[i].Location)) {
+                results[i].FlagPath = files[j];
+                break;
+            }
+            else {
+                results[i].FlagPath = 'xx Unknown.svg';
+            }
+        }
+    }
+   let data = results;
+    for (let i = 0; i < data.length; i++) {
+        row += ` <tr>
+        <td>${data[i].First_Name} ${data[i].Last_Name}</td>
+        <td>${data[i].Email}</td>
+        <td>${data[i].Skype}</td>
+        <td>
+            <img src="Images/Flags/${data[i].FlagPath}" alt=""> ${data[i].Location}
+        </td>
+        <td>${data[i].timeZone}</td>
+        <td>${data[i].Role}</td>
+        <td>
+            <img src="Images/admin-profile-icon-edit.svg" alt="">
+            <img src="Images/admin-profile-icon-card.svg" alt="">
+        </td>
+    </tr>
+        `;
+    } 
+});
+
+
+app.get('/UserInfo', (req, res) => {
+    res.send(row);
+    console.log('Sent Data');
+})
+app.post('/ClockAmount', (req, res) => {
+    clockAmount = req.body.Amount;
+    for (let i = 0; i < clockAmount; i++) {
+        times.push({
+            Place: timeZone[i].name,
+            Hour: formatInTimeZone(today, timeZone[i].name, 'HH'),
+            Minute: formatInTimeZone(today, timeZone[i].name, 'mm'),
+            Second: formatInTimeZone(today, timeZone[i].name, 'ss'),
+            Day: formatInTimeZone(today, timeZone[i].name, 'EEEE')
+        })
+    }
+    res.send(times);
+})
+app.get('/Zunta-Times', (req, res) => {
+
+})
+
+
+app.listen(port, () => {
+    console.log("listening on port " + port);
+})
 
 function getCountries() {
 
@@ -415,56 +486,3 @@ function getFlagNames() {
 
     }
 }
-
-const pool = createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'loginforzunta'
-});
-getCountries();
-getFlagNames();
-
-app.get('/UserInfo', (req, res) => {
-    let flagPath = [];
-    let data = [];
-    pool.query('SELECT * FROM userinfo', (error, results) => {
-        if (error) {
-            return console.log(error)
-        }
-        for (let i = 0; i < results.length; i++) {
-            for (let j = 0; j < files.length; j++) {
-                if (files[j].includes(results[i].Location)) {
-                    flagPath.push(files[j]);
-                }
-            }
-
-        }
-        data.push({
-            filePaths: flagPath,
-            serverData: results
-        })
-        res.send(data);
-        console.log('Sent Data');
-    });
-})
-app.post('/ClockAmount', (req, res) => {
-    clockAmount = req.body.Amount;
-    for (let i = 0; i < clockAmount; i++) {
-        times.push({
-            Place: timeZone[i].name,
-            Hour: formatInTimeZone(today, timeZone[i].name, 'HH'),
-            Minute: formatInTimeZone(today, timeZone[i].name, 'mm'),
-            Second: formatInTimeZone(today, timeZone[i].name, 'ss'),
-            Day: formatInTimeZone(today, timeZone[i].name, 'EEEE')
-        })
-    }
-    res.send(times);
-})
-
-
-app.listen(port, () => {
-    console.log("listening on port " + port);
-})
-
-

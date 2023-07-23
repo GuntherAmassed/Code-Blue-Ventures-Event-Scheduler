@@ -47,3 +47,9 @@
 .Frame-Menu p:hover{
     cursor: pointer;
 }
+@media screen and (height<=730px) {
+    .Frame-Menu{
+        background-size: auto;
+        min-height: 600px;
+    }
+}
