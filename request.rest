@@ -1,1 +1,10 @@
-get http://localhost:3000/UserInfo
+GET http://localhost:3000/
+
+####
+post http://localhost:3000
+Content-Type: application/json
+
+{ 
+    "Password":"1234",
+    "Email":"Aaron145@gmail.com"
+}

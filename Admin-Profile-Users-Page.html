@@ -167,17 +167,20 @@
             display: block;
             padding: 0;
             overflow: auto;
+            border-collapse: collapse;
         }
 
-        tbody tr {
-            z-index: -1;
+
+        tr {
+            z-index: 1;
+            margin-bottom: 1em;
+            border-bottom: 1px solid var(--border, #1F2D3A);
+
         }
 
-        tbody tr td {
-            border-right: 1px solid var(--border, #1F2D3A);
-        }
 
-        tbody tr td:last-child {
+
+       thead tr{
             border: 0;
         }
 
@@ -197,14 +200,13 @@
 
         tbody td,
         thead th {
-            padding: 1em;
+            text-align: left;
+            padding: 1.5em;
         }
 
-        td {
-            text-align: center;
-        }
+       
 
-        table td {
+        table td,th {
             width: 7%;
         }
     }

@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log In</title>
-    <!-- <link rel="stylesheet" href="css/Normalize.css"> -->
 </head>
 <link rel="stylesheet" href="css/font.css">
 <style>
@@ -162,12 +161,13 @@
         bottom: 10%;
     }
 
-    #Password-Div {
+    #Password-Div,
+    .Email-div {
         border-bottom: 1px solid var(--primary, #009AFE);
         position: relative;
     }
 
-    #Password-Div input {
+    input {
         width: 100%;
         border-bottom: none;
     }
@@ -301,6 +301,20 @@
             left: -10%;
         }
     }
+
+    .Error-Message {
+        position: absolute;
+        display: none;
+        gap: .5em;
+        margin: .5em;
+        color: #FF2D6C;
+        text-transform: capitalize;
+        align-items: end;
+    }
+
+    .Error-Message img {
+        width: 1em;
+    }
 </style>
 
 <body>
@@ -309,9 +323,19 @@
         <img id="CodeBlue" src="Images/CODEBLUE TIME.svg" alt="">
         <h1>Log <span>in_</span></h1>
         <div class="Input-Container">
-            <input type="text" placeholder="Email">
+            <div class="Email-div">
+                <input id="Email" type="text" placeholder="Email">
+                <div class="Error-Message">
+                    <img src="public/images/icon-outline-error.svg" alt="">
+                    <p></p>
+                </div>
+            </div>
             <div id="Password-Div">
                 <input id="Password" type="text" placeholder="Password">
+                <div class="Error-Message">
+                    <img src="public/images/icon-outline-error.svg" alt="">
+                    <p></p>
+                </div>
                 <img id="password-Hidden" src="Images/icon-password-hidden.svg" alt=""></img>
             </div>
             <div class="TextContainer">
@@ -320,7 +344,7 @@
             </div>
         </div>
 
-        <button id="NextPageButton">
+        <button id="Log-in-button">
             Log in
         </button>
     </div>
@@ -329,13 +353,65 @@
     </div>
     <script>
         var ForgotPassword = document.getElementById("Forgot-Password");
-        var button = document.getElementById("NextPageButton");
-        button.addEventListener("click", () => {
-            window.location.href = "Home-Page.html";
-        })
+        let Password = document.getElementById('Password');
+        let Email = document.getElementById('Email');
+        let input = document.getElementsByTagName('input');
+        let button = document.getElementById("Log-in-button");
+        let errors = document.getElementsByClassName('Error-Message');
+        let errorMessage = false;
+        button.addEventListener("click", LogIn);
+
+        for (let i = 0; i < input.length; i++) {
+            input[i].addEventListener('click', () => {
+                if (errorMessage) {
+                    for (let i = 0; i < input.length; i++) {
+                        input[i].value = '';
+                        input[i].style.color = 'gray';
+                        errors[i].style.display = 'none';
+                    }
+                    errorMessage = false;
+                }
+            })
+        }
+
         ForgotPassword.addEventListener("click", () => {
             window.location.href = "Reset.html";
         })
+        async function LogIn() {
+            let UserData = {
+                Password: Password.value,
+                Email: Email.value
+            }
+            let response = await fetch('http://localhost:3000', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                mode: 'no-cors',
+                body: JSON.stringify(UserData)
+
+
+            });
+            if (response.headers.get('content-type') === 'application/json; charset=utf-8') {
+                let data = response.json();
+                for (error of errors) {
+                    error.style.display = 'flex';
+                    error.children[1].innerHTML = data.message;
+                    for (let i = 0; i < input.length; i++) {
+                        input[i].style.color = '#FF2D6C';
+                        input[i].value = 'Error';
+                    }
+                    errorMessage = true;
+                }
+
+            }
+            else if (response.headers.get('content-type') === 'text/html; charset=utf-8') {
+                document.open();
+                document.write(data);
+                document.close();
+            }
+
+        }
     </script>
 </body>
 

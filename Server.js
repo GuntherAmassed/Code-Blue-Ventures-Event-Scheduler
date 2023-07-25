@@ -1,4 +1,5 @@
 const port = 3000;
+require('dotenv').config()
 const express = require('express');
 const cors = require('cors');
 const ct = require('countries-and-timezones');
@@ -11,6 +12,10 @@ const { formatInTimeZone } = require('date-fns-tz');
 const today = new Date();
 let clockAmount = '';
 let times = [];
+var path = require('path');
+let dirName = 'C:/Users/Moshe Stern/Desktop/Figma Api/ZuntaTimes';
+const jwt = require('jsonwebtoken');
+app.use(express.static(dirName));
 const timeZone = [
     {
         "offset": "GMT-12:00",
@@ -386,7 +391,8 @@ const timeZone = [
     }
 ];
 const fs = require('fs');
-let files = fs.readdirSync('C:/Users/Moshe Stern/Desktop/Figma Api/ZuntaTimes/Images/Flags');
+const { error } = require('console');
+let files = fs.readdirSync(`Images/Flags`);
 const pool = createPool({
     host: 'localhost',
     user: 'root',
@@ -395,29 +401,64 @@ const pool = createPool({
 });
 let FinalCountryIntialArray = [];
 let fileNames = [];
-let row='';
+let row = '';
+const LogInQuery = `SELECT * FROM userinfo us WHERE us.Email=? AND us.Password=?;`;
+
+
+
 
 getCountries();
 getFlagNames();
 
-pool.query('SELECT * FROM userinfo', (error, results) => {
-    if (error) {
-        return console.log(error)
-    }
-    for (let i = 0; i < results.length; i++) {
-        for (let j = 0; j < files.length; j++) {
-            if (files[j].includes(results[i].Location)) {
-                results[i].FlagPath = files[j];
-                break;
-            }
-            else {
-                results[i].FlagPath = 'xx Unknown.svg';
+
+
+app.get('/HomePage', (req, res) => {
+    res.setHeader('Content-Type', 'text/html');
+    res.sendFile(path.join(dirName, '/Home-Page.html'))
+})
+// app.get('/', (req, res) => {
+//     res.sendFile(path.join(dirName, '/index.html'))
+// })
+
+app.post('', (req, res) => {
+    pool.query(LogInQuery, [req.body.Email, req.body.Password], (error, results, fields) => {
+        let response = {
+            message: '',
+        }
+        if (error) {
+            console.error(error);
+            response.message = 'Error connecting to Database';
+            res.send(response);
+        } else if (results.length > 0) {
+            res.redirect('/HomePage');
+            // const accessToken = jwt.sign(response.UserData, process.env.ACCESS_TOKEN_SECRET);
+            // res.json({ accessToken: accessToken })
+        } else {
+            response.message = 'User does not exist';
+            res.send(response);
+        }
+    })
+})
+
+app.get('/UserInfo', (req, res) => {
+    pool.query('SELECT * FROM userinfo', (error, results) => {
+        if (error) {
+            return console.log(error)
+        }
+        for (let i = 0; i < results.length; i++) {
+            for (let j = 0; j < files.length; j++) {
+                if (files[j].includes(results[i].Location)) {
+                    results[i].FlagPath = files[j];
+                    break;
+                }
+                else {
+                    results[i].FlagPath = 'xx Unknown.svg';
+                }
             }
         }
-    }
-   let data = results;
-    for (let i = 0; i < data.length; i++) {
-        row += ` <tr>
+        let data = results;
+        for (let i = 0; i < data.length; i++) {
+            row += ` <tr>
         <td>${data[i].First_Name} ${data[i].Last_Name}</td>
         <td>${data[i].Email}</td>
         <td>${data[i].Skype}</td>
@@ -432,11 +473,8 @@ pool.query('SELECT * FROM userinfo', (error, results) => {
         </td>
     </tr>
         `;
-    } 
-});
-
-
-app.get('/UserInfo', (req, res) => {
+        }
+    });
     res.send(row);
     console.log('Sent Data');
 })
@@ -452,9 +490,6 @@ app.post('/ClockAmount', (req, res) => {
         })
     }
     res.send(times);
-})
-app.get('/Zunta-Times', (req, res) => {
-
 })
 
 

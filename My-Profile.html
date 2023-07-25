@@ -36,7 +36,6 @@
 
     .password-Hidden,
     #Drop-Down-Icon {
-        width: 1rem;
         position: absolute;
         right: 0;
         bottom: 15%;
@@ -44,7 +43,7 @@
     }
 
     #Drop-Down-Icon {
-        right: 20px;
+        right: 30px;
     }
 
     #Password-Div {
@@ -165,7 +164,7 @@
         background: var(--background-dark, #02121F);
 
         padding: 3.5rem 1.5rem 6rem 1.5rem;
-
+        justify-content: space-evenly;
         display: flex;
         flex-direction: column;
         gap: 2rem;
@@ -185,7 +184,20 @@
         cursor: pointer;
     }
 
+    @media screen and (width<=999px) {
+
+        .password-Hidden,
+        #Drop-Down-Icon {
+            width: 1.5rem;
+        }
+    }
+
     @media screen and (width>=1000px) {
+
+        .password-Hidden,
+        #Drop-Down-Icon {
+            width: 1rem;
+        }
 
         .container {
             flex-direction: row;
