@@ -1,11 +1,16 @@
 const ct = require('countries-and-timezones');
 const fs = require('fs');
+require('dotenv').config()
+const jwt = require('jsonwebtoken');
+
 let files = fs.readdirSync('C:/Users/Moshe Stern/Desktop/Figma Api/ZuntaTimes/Images/Flags');
 const { createPool } = require('mysql2');
 let FinalCountryIntialArray = [];
-let fileNames=[];
+let fileNames = [];
+const crytpo = require('crypto');
 const InsertLocations = 'INSERT INTO locationtable (location,timezones) VALUES (?, ?)';
 const createUserQuery = 'INSERT INTO userinfo (Email, First_Name, Last_Name, Skype, timeZone, Password, Role) VALUES (?, ?, ?, ?, ?, ? ,?)';
+const updateUserRefreshToken = `UPDATE userinfo SET userinfo.Refresh_Token=? WHERE userinfo.Email=?;`;
 const pool = createPool({
     host: 'localhost',
     user: 'root',
@@ -25,8 +30,9 @@ class RandomNameGenerator {
     }
 }
 const nameGenerator = new RandomNameGenerator();
-getCountries();
-getFlagNames();
+// getCountries();
+// getFlagNames();
+// addRefreshTokensToDatabase()
 function getCountries() {
 
     let countryIntials = [];
@@ -75,12 +81,29 @@ function addTimezonesToDataBase() {
 function getFlagNames() {
     for (let i = 0; i < FinalCountryIntialArray.length; i++) {
         for (let j = 0; j < files.length; j++) {
-            if(files[j].includes(FinalCountryIntialArray[i].name)){
+            if (files[j].includes(FinalCountryIntialArray[i].name)) {
                 fileNames.push(files[j])
             }
         }
-       
+
     }
 }
-
+function addRefreshTokensToDatabase() {
+    pool.query('SELECT * FROM userinfo', (err, results) => {
+        if (err) {
+            console.log(err.message);
+        }
+        for (let i = 0; i < results.length; i++) {
+            let token =jwt.sign(results[i], process.env.REFRESH_TOKEN_SECRET, { expiresIn: '90d' })
+            pool.query(updateUserRefreshToken, [token, results[i].Email], (err) => {
+                if (err) {
+                    console.log(err.message);
+                }
+                else {
+                    console.log('inserted Refresh token');
+                }
+            })
+        }
+    })
+}
 

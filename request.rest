@@ -1,10 +1,19 @@
-GET http://localhost:3000/
+GET http://localhost:3000/HomePage
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGaXJzdF9OYW1lIjoiQWFyb24iLCJMYXN0X05hbWUiOiJaZWFzZXIiLCJTa3lwZSI6MTIzNCwiTG9jYXRpb24iOiJOb3J0aCBLb3JlYSIsInRpbWVab25lIjoiQXNpYS9QeW9uZ3lhbmciLCJSb2xlIjoidGVzdCIsImlhdCI6MTY5MDc0NDU1MiwiZXhwIjoxNjkwNzQ0NjEyfQ.3bPccbZVaXZOGfLtShZbTbVJBvnAJUnWXvDYDff7bI8
+
+
+
+
+
+
+
 
 ####
-post http://localhost:3000
+POST http://localhost:3000/LogIn
 Content-Type: application/json
 
 { 
     "Password":"1234",
-    "Email":"Aaron145@gmail.com"
+    "Email":"Aaron145@gmail.com",
+    "rememberMe":true
 }

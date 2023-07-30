@@ -12,6 +12,7 @@ const { formatInTimeZone } = require('date-fns-tz');
 const today = new Date();
 let clockAmount = '';
 let times = [];
+const crytpo = require('crypto');
 var path = require('path');
 let dirName = 'C:/Users/Moshe Stern/Desktop/Figma Api/ZuntaTimes';
 const jwt = require('jsonwebtoken');
@@ -392,6 +393,8 @@ const timeZone = [
 ];
 const fs = require('fs');
 const { error } = require('console');
+const { json } = require('body-parser');
+const { finished } = require('stream');
 let files = fs.readdirSync(`Images/Flags`);
 const pool = createPool({
     host: 'localhost',
@@ -403,43 +406,148 @@ let FinalCountryIntialArray = [];
 let fileNames = [];
 let row = '';
 const LogInQuery = `SELECT * FROM userinfo us WHERE us.Email=? AND us.Password=?;`;
+const refreshTokenAdd = `INSERT INTO refresh_token(Refresh_Tokens) VALUES(?);`;
+const checkIfRefreshTokenIsInDatabase = `SELECT * FROM userinfo us WHERE us.Refresh_Token=?;`;
 
 
-
+/////calling
 
 getCountries();
 getFlagNames();
 
 
+/////listeners
 
-app.get('/HomePage', (req, res) => {
-    res.setHeader('Content-Type', 'text/html');
-    res.sendFile(path.join(dirName, '/Home-Page.html'))
-})
-// app.get('/', (req, res) => {
-//     res.sendFile(path.join(dirName, '/index.html'))
-// })
-
-app.post('', (req, res) => {
+app.post('/LogIn', (req, res) => {
     pool.query(LogInQuery, [req.body.Email, req.body.Password], (error, results, fields) => {
         let response = {
+            error: true,
             message: '',
         }
         if (error) {
-            console.error(error);
+            console.error(error.message);
             response.message = 'Error connecting to Database';
             res.send(response);
-        } else if (results.length > 0) {
-            res.redirect('/HomePage');
-            // const accessToken = jwt.sign(response.UserData, process.env.ACCESS_TOKEN_SECRET);
-            // res.json({ accessToken: accessToken })
-        } else {
+        }
+        else if (results.length > 0) {
+            try {
+                response.error = false;
+                let User = {
+                    First_Name: results[0].First_Name,
+                    Last_Name: results[0].Last_Name,
+                    Skype: results[0].Skype,
+                    Location: results[0].Location,
+                    timeZone: results[0].timeZone,
+                    Role: results[0].Role,
+                };
+                if (req.body.rememberMe === true) {
+                    res.json({ accessToken: generateAccessToken(User), refreshToken: generateRefreshToken(User) })
+                }
+                else {
+                    res.json({ accessToken: generateAccessToken(User) })
+                }
+
+            }
+            catch (err) {
+                console.error(err);
+            }
+
+        }
+        else {
             response.message = 'User does not exist';
             res.send(response);
         }
     })
 })
 
+
+app.get('/HomePage', authenticateToken, (req, res) => {
+    fs.readFile(path.join(dirName, '/Home-Page.html'), 'utf8', (err, htmlContent) => {
+        if (err) {
+            return res.status(500).send('Error reading the HTML file.');
+        }
+
+        const responseObj = {
+            User: req.user,
+            HTMLContent: htmlContent
+        };
+        res.json(responseObj)
+    })
+})
+
+
+
+app.post('/token', (req, res) => {
+    const refreshToken = req.body.token
+    if (refreshToken == null) return res.sendStatus(401)
+    pool.query(checkIfRefreshTokenIsInDatabase, [refreshToken], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.sendStatus(401)
+        }
+        else {
+            jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+                if (err) return res.sendStatus(403)
+                const accessToken = generateAccessToken({ name: user.name })
+                res.json({ accessToken: accessToken })
+            })
+        }
+
+    })
+
+})
+
+app.delete('/logout', (req, res) => {
+    refreshTokens = refreshTokens.filter(token => token !== req.body.token)
+    res.sendStatus(204)
+})
+
+
+/////functions
+function generateAccessToken(User) {
+    return jwt.sign(User, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1m' })
+}
+function generateRefreshToken(User) {
+    let token = jwt.sign(User, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '90d' });
+    let error = true;
+    pool.query(refreshTokenAdd, [token], (err) => {
+        if (err) {
+            console.error(err);
+        }
+        else {
+            error = false;
+        }
+    })
+    if (error) {
+        return token;
+    }
+    else {
+        return 'couldnt add to datbase'
+    }
+}
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if (token == null) {
+        return res.sendStatus(401)
+    }
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, User) => {
+        if (err) {
+            console.log(err.message)
+            return res.sendStatus(403);
+        }
+        else {
+            req.user = User;
+            next();
+        }
+    })
+}
+app.listen(port, () => {
+    console.log("listening on port " + port);
+})
+
+
+////
 app.get('/UserInfo', (req, res) => {
     pool.query('SELECT * FROM userinfo', (error, results) => {
         if (error) {
@@ -491,12 +599,6 @@ app.post('/ClockAmount', (req, res) => {
     }
     res.send(times);
 })
-
-
-app.listen(port, () => {
-    console.log("listening on port " + port);
-})
-
 function getCountries() {
 
     let countryIntials = [];

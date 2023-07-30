@@ -380,38 +380,51 @@
         async function LogIn() {
             let UserData = {
                 Password: Password.value,
-                Email: Email.value
+                Email: Email.value,
+                rememberMe: true
             }
-            let response = await fetch('http://localhost:3000', {
+            let response = await fetch('http://localhost:3000/LogIn', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
-                mode: 'no-cors',
                 body: JSON.stringify(UserData)
-
-
             });
-            if (response.headers.get('content-type') === 'application/json; charset=utf-8') {
-                let data = response.json();
-                for (error of errors) {
-                    error.style.display = 'flex';
-                    error.children[1].innerHTML = data.message;
-                    for (let i = 0; i < input.length; i++) {
-                        input[i].style.color = '#FF2D6C';
-                        input[i].value = 'Error';
+            let data = await response.json();
+            if ('error' in data) {
+                if (data.error === true) {
+                    for (error of errors) {
+                        error.style.display = 'flex';
+                        error.children[1].innerHTML = data.message;
+                        for (let i = 0; i < input.length; i++) {
+                            input[i].style.color = '#FF2D6C';
+                            input[i].value = 'Error';
+                        }
+                        errorMessage = true;
+
                     }
-                    errorMessage = true;
                 }
-
             }
-            else if (response.headers.get('content-type') === 'text/html; charset=utf-8') {
-                document.open();
-                document.write(data);
-                document.close();
+            else {
+                try {
+                    let redirectResponse = await fetch('http://localhost:3000/HomePage', {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${data}`
+                        },
+                    });
+                    let redirectResponseData = await redirectResponse.json();
+                    document.open();
+                    document.write(data);
+                    document.close();
+                }
+                catch (error) {
+                    console.error(error.message);
+                }
             }
-
         }
+
+
     </script>
 </body>
 
