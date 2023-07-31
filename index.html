@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log In</title>
+    <!-- <script src="JsFiles/checkingForCookies.js"></script> -->
+    <link rel="stylesheet" href="css/font.css">
 </head>
-<link rel="stylesheet" href="css/font.css">
 <style>
     * {
         padding: 0;
@@ -406,16 +407,19 @@
                 }
             }
             else {
+                document.cookie = `token = ${data.refreshToken};`;
                 try {
                     let redirectResponse = await fetch('http://localhost:3000/HomePage', {
                         method: 'GET',
                         headers: {
-                            'Authorization': `Bearer ${data}`
+                            'Authorization': `Bearer ${data.accessToken}`
                         },
                     });
                     let redirectResponseData = await redirectResponse.json();
+                    console.log('hi');
+                    localStorage.setItem('User', redirectResponse.User)
                     document.open();
-                    document.write(data);
+                    document.write(redirectResponseData.HTMLContent);
                     document.close();
                 }
                 catch (error) {

@@ -395,6 +395,7 @@ const fs = require('fs');
 const { error } = require('console');
 const { json } = require('body-parser');
 const { finished } = require('stream');
+const { reject } = require('bcrypt/promises');
 let files = fs.readdirSync(`Images/Flags`);
 const pool = createPool({
     host: 'localhost',
@@ -406,9 +407,9 @@ let FinalCountryIntialArray = [];
 let fileNames = [];
 let row = '';
 const LogInQuery = `SELECT * FROM userinfo us WHERE us.Email=? AND us.Password=?;`;
-const refreshTokenAdd = `INSERT INTO refresh_token(Refresh_Tokens) VALUES(?);`;
-const checkIfRefreshTokenIsInDatabase = `SELECT * FROM userinfo us WHERE us.Refresh_Token=?;`;
-
+const refreshTokenAdd = `INSERT INTO refresh_token(Refresh_Tokens,Id) VALUES(?,?);`;
+const checkIfRefreshTokenIsInDatabase = `SELECT * FROM Refresh_Token WHERE Refresh_Token.Refresh_Tokens=?;`;
+const checkIfUserHasRefreshToken = `SELECT * FROM Refresh_Token WHERE refresh_token.id=?;`
 
 /////calling
 
@@ -417,9 +418,12 @@ getFlagNames();
 
 
 /////listeners
+app.get('', (req, res) => {
+
+})
 
 app.post('/LogIn', (req, res) => {
-    pool.query(LogInQuery, [req.body.Email, req.body.Password], (error, results, fields) => {
+    pool.query(LogInQuery, [req.body.Email, req.body.Password], async (error, results, fields) => {
         let response = {
             error: true,
             message: '',
@@ -433,6 +437,7 @@ app.post('/LogIn', (req, res) => {
             try {
                 response.error = false;
                 let User = {
+                    id: results[0].Id,
                     First_Name: results[0].First_Name,
                     Last_Name: results[0].Last_Name,
                     Skype: results[0].Skype,
@@ -441,12 +446,11 @@ app.post('/LogIn', (req, res) => {
                     Role: results[0].Role,
                 };
                 if (req.body.rememberMe === true) {
-                    res.json({ accessToken: generateAccessToken(User), refreshToken: generateRefreshToken(User) })
+                    res.json({ accessToken: generateAccessToken(User), refreshToken: await generateRefreshToken(User) })
                 }
                 else {
                     res.json({ accessToken: generateAccessToken(User) })
                 }
-
             }
             catch (err) {
                 console.error(err);
@@ -462,13 +466,13 @@ app.post('/LogIn', (req, res) => {
 
 
 app.get('/HomePage', authenticateToken, (req, res) => {
+    console.log("hi");
     fs.readFile(path.join(dirName, '/Home-Page.html'), 'utf8', (err, htmlContent) => {
         if (err) {
             return res.status(500).send('Error reading the HTML file.');
         }
-
         const responseObj = {
-            User: req.user,
+            User: req.User,
             HTMLContent: htmlContent
         };
         res.json(responseObj)
@@ -476,25 +480,24 @@ app.get('/HomePage', authenticateToken, (req, res) => {
 })
 
 
-
 app.post('/token', (req, res) => {
-    const refreshToken = req.body.token
-    if (refreshToken == null) return res.sendStatus(401)
+  
+    const refreshToken = req.body.token;
+    if (refreshToken == null) return res.sendStatus(401)  
     pool.query(checkIfRefreshTokenIsInDatabase, [refreshToken], (err, results) => {
         if (err) {
-            console.error(err);
+            console.error(err); 
             return res.sendStatus(401)
         }
-        else {
+        else if (results.length > 0) {
             jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+               
                 if (err) return res.sendStatus(403)
-                const accessToken = generateAccessToken({ name: user.name })
+                const accessToken = generateAccessToken({ user })
                 res.json({ accessToken: accessToken })
             })
         }
-
     })
-
 })
 
 app.delete('/logout', (req, res) => {
@@ -505,43 +508,66 @@ app.delete('/logout', (req, res) => {
 
 /////functions
 function generateAccessToken(User) {
-    return jwt.sign(User, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1m' })
+    return jwt.sign(User, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' })
 }
-function generateRefreshToken(User) {
+async function generateRefreshToken(User) {
+    let oldRefreshToken = await checkForRefreshToken(User.id);
+    if (oldRefreshToken != null) {
+        return oldRefreshToken;
+    }
     let token = jwt.sign(User, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '90d' });
-    let error = true;
-    pool.query(refreshTokenAdd, [token], (err) => {
-        if (err) {
-            console.error(err);
-        }
-        else {
-            error = false;
-        }
+    return new Promise((resolve, reject) => {
+        pool.query(refreshTokenAdd, [token, User.id], (err) => {
+            if (err) {
+                reject(err);
+            }
+            else {
+                resolve(token);
+            }
+        })
     })
-    if (error) {
-        return token;
-    }
-    else {
-        return 'couldnt add to datbase'
-    }
+
+
 }
 function authenticateToken(req, res, next) {
+    console.log('hi');
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
     if (token == null) {
         return res.sendStatus(401)
     }
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, User) => {
-        if (err) {
-            console.log(err.message)
-            return res.sendStatus(403);
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, User) => {
+        try {
+            if (err) {
+                console.log(err.message);
+                res.sendStatus(403);
+            }
+            else {
+                req.User = User;
+                next();
+            }
         }
-        else {
-            req.user = User;
-            next();
+        catch (error) {
+            console.log(error);
         }
     })
 }
+
+async function checkForRefreshToken(id) {
+    return new Promise((resolve, reject) => {
+        pool.query(checkIfUserHasRefreshToken, [id], (err, results) => {
+            if (err) {
+                console.error(err);
+                reject(err);
+            } else if (results.length > 0) {
+                resolve(results[0].Refresh_Tokens);
+            } else {
+                resolve(null);
+            }
+        });
+    });
+}
+
 app.listen(port, () => {
     console.log("listening on port " + port);
 })

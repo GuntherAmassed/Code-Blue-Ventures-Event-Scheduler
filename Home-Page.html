@@ -427,7 +427,7 @@
 
         <div class="row">
             <h1>👋</h1>
-            <h1>
+            <h1 id="User-Name-Time">
                 <span> Hello,</span>Jenny Willson_
                 <p>
                     New York Est-s <span>11:18am</span>
@@ -683,7 +683,12 @@
     <script>
         const plusIcon = document.getElementsByClassName('Plus-Icon');
         const contentDiv = document.getElementsByClassName('Content');
-        console.log(contentDiv);
+        const nameTitle= document.getElementById('User-Name-Time'); 
+      let User=  localStorage.getItem('User');
+      console.log(User);
+      console.log(User[0]);
+      console.log(User[0].id);
+        // nameTitle.innerHTML=`${}`;
         for (let i = 0; i < plusIcon.length; i++) {
             plusIcon[i].addEventListener('click', function () {
                 contentDiv[i].classList.toggle('hidden');

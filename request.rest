@@ -1,19 +1,21 @@
 GET http://localhost:3000/HomePage
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJGaXJzdF9OYW1lIjoiQWFyb24iLCJMYXN0X05hbWUiOiJaZWFzZXIiLCJTa3lwZSI6MTIzNCwiTG9jYXRpb24iOiJOb3J0aCBLb3JlYSIsInRpbWVab25lIjoiQXNpYS9QeW9uZ3lhbmciLCJSb2xlIjoidGVzdCIsImlhdCI6MTY5MDc0NDU1MiwiZXhwIjoxNjkwNzQ0NjEyfQ.3bPccbZVaXZOGfLtShZbTbVJBvnAJUnWXvDYDff7bI8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiRmlyc3RfTmFtZSI6IkFhcm9uIiwiTGFzdF9OYW1lIjoiU2NoaWViZWwiLCJTa3lwZSI6MTIzNCwiTG9jYXRpb24iOiJCb3NuaWEgYW5kIEhlcnplZ292aW5hIiwidGltZVpvbmUiOiJFdXJvcGUvQmVsZ3JhZGUiLCJSb2xlIjoidGVzdCIsImlhdCI6MTY5MDgzMTAwMSwiZXhwIjoxNjkwOTE3NDAxfQ.rKO4XF-GvTcgggCEdsOrU2llMhUj-KaxSj6I0o-wTt0
 
+###
+POST http://localhost:3000/token
+Content-Type: application/json
 
-
-
-
-
-
-
+{ 
+    "token":
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiRmlyc3RfTmFtZSI6IkFhcm9uIiwiTGFzdF9OYW1lIjoiU2NoaWViZWwiLCJTa3lwZSI6MTIzNCwiTG9jYXRpb24iOiJCb3NuaWEgYW5kIEhlcnplZ292aW5hIiwidGltZVpvbmUiOiJFdXJvcGUvQmVsZ3JhZGUiLCJSb2xlIjoidGVzdCIsImlhdCI6MTY5MDgzMDQ2OSwiZXhwIjoxNjk4NjA2NDY5fQ.AQD-sn6ZSz0nCGN305QbTHwVHR5DxCgju9s59y-tiYU"
+   
+}
 ####
 POST http://localhost:3000/LogIn
 Content-Type: application/json
 
 { 
     "Password":"1234",
-    "Email":"Aaron145@gmail.com",
+    "Email":"Aaron360@gmail.com",
     "rememberMe":true
 }
