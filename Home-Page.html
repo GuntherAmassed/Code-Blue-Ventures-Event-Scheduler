@@ -21,7 +21,6 @@
     }
 
 
-
     #Arrow-Right,
     #Arrow-Left {
         width: 2rem;
@@ -203,20 +202,22 @@
         justify-content: normal;
         display: grid;
         height: fit-content;
-        grid-template-columns: repeat(10, max-content);
-        grid-template-rows: 1fr;
+        grid-auto-columns: 1fr;
+        grid-auto-rows: 1fr;
+        grid-auto-flow: column;
         padding-left: 0;
         overflow-y: hidden;
         overflow-x: auto;
-
     }
 
 
     .Locations {
         overflow-x: auto;
         display: grid;
-        grid-template-columns: repeat(10, max-content);
-        grid-template-rows: 1fr;
+        height: fit-content;
+        grid-auto-columns: max-content;
+        grid-auto-rows: max-content;
+        grid-auto-flow: column;
         padding: 1em;
         padding-left: 0;
     }
@@ -389,7 +390,6 @@
     <div class="Frame-Menu" id="Menu-Desktop">
         <div class="container">
             <img src="Images/CODEBLUE TIME.svg" alt="">
-            <p id="user"><img src="public/images/admin-profile-icon-user.svg" alt=""> user</p>
             <p id="home"><img src="public/images/admin-profile-icon-home.svg" alt=""> home</p>
             <p id="My-Profile"><img src="public/images/admin-profile-icon-users.svg" alt="">My Profile</p>
         </div>
@@ -408,15 +408,11 @@
         </div>
         <div>
             <div>
-                <p id="user-Mobile"><img src="public/images/admin-profile-icon-users.svg" alt="">Users</p>
-            </div>
-            <div>
                 <p id="home-Mobile"><img src="public/images/admin-profile-icon-home.svg" alt="">Home</p>
             </div>
             <div>
                 <p id="My-Profile-Mobile"><img src="public/images/admin-profile-icon-user.svg" alt="">My Profile</p>
             </div>
-
             <div>
                 <p id="log-out-Mobile"> <img src="public/images/admin-profile-icon-exit.svg" alt="">Log out</p>
             </div>
@@ -428,144 +424,19 @@
         <div class="row">
             <h1>👋</h1>
             <h1 id="User-Name-Time">
-                <span> Hello,</span>Jenny Willson_
-                <p>
-                    New York Est-s <span>11:18am</span>
-                </p>
+
             </h1>
         </div>
 
 
-        <div class="row Frame">
-            <div class="clock-Frame">
-                <div class="clock">
+        <div class="row Frame" id="row-clock-frame-box">
 
-                    <div class="middle">
-                        <img src="Images/all-users-text.svg" alt="">
-                        <div class="hour"></div>
-                        <div class="minute"></div>
-                        <div class="second"></div>
-                    </div>
 
-                </div>
-
-                <p class="Name-Of-Place">Lorem ipsum</p>
-                <p class="Day-Of-Week">Iusto, eligendi. Dolor</p>
-            </div>
-            <div class="clock-Frame">
-                <div class="clock-Dark">
-                    <div class="middle">
-
-                        <img src="Images/all-users-home-text.svg" alt="">
-                        <div class="point"></div>
-                        <div class="hour"></div>
-                        <div class="minute"></div>
-                        <div class="second"></div>
-                    </div>
-                </div>
-                <p class="Name-Of-Place">Lorem ipsum</p>
-                <p class="Day-Of-Week">Iusto, eligendi. Dolor</p>
-            </div>
-            <div class="clock-Frame">
-                <div class="clock">
-
-                    <div class="middle">
-                        <img src="Images/all-users-text.svg" alt="">
-                        <div class="hour"></div>
-                        <div class="minute"></div>
-                        <div class="second"></div>
-                    </div>
-
-                </div>
-
-                <p class="Name-Of-Place">Lorem ipsum</p>
-                <p class="Day-Of-Week">Iusto, eligendi. Dolor</p>
-            </div>
-            <div class="clock-Frame">
-                <div class="clock-Dark">
-                    <div class="middle">
-
-                        <img src="Images/all-users-home-text.svg" alt="">
-                        <div class="point"></div>
-                        <div class="hour"></div>
-                        <div class="minute"></div>
-                        <div class="second"></div>
-                    </div>
-                </div>
-                <p class="Name-Of-Place">Lorem ipsum</p>
-                <p class="Day-Of-Week">Iusto, eligendi. Dolor</p>
-            </div>
-            <div class="clock-Frame">
-                <div class="clock">
-
-                    <div class="middle">
-                        <img src="Images/all-users-text.svg" alt="">
-                        <div class="hour"></div>
-                        <div class="minute"></div>
-                        <div class="second"></div>
-                    </div>
-
-                </div>
-
-                <p class="Name-Of-Place">Lorem ipsum</p>
-                <p class="Day-Of-Week">Iusto, eligendi. Dolor</p>
-            </div>
-            <div class="clock-Frame">
-                <div class="clock-Dark">
-                    <div class="middle">
-
-                        <img src="Images/all-users-home-text.svg" alt="">
-                        <div class="point"></div>
-                        <div class="hour"></div>
-                        <div class="minute"></div>
-                        <div class="second"></div>
-                    </div>
-                </div>
-                <p class="Name-Of-Place">Lorem ipsum</p>
-                <p class="Day-Of-Week">Iusto, eligendi. Dolor</p>
-            </div>
-            <div class="clock-Frame">
-                <div class="clock">
-
-                    <div class="middle">
-                        <img src="Images/all-users-text.svg" alt="">
-                        <div class="hour"></div>
-                        <div class="minute"></div>
-                        <div class="second"></div>
-                    </div>
-
-                </div>
-
-                <p class="Name-Of-Place">Lorem ipsum</p>
-                <p class="Day-Of-Week">Iusto, eligendi. Dolor</p>
-            </div>
-            <div class="clock-Frame">
-                <div class="clock-Dark">
-                    <div class="middle">
-
-                        <img src="Images/all-users-home-text.svg" alt="">
-                        <div class="point"></div>
-                        <div class="hour"></div>
-                        <div class="minute"></div>
-                        <div class="second"></div>
-                    </div>
-                </div>
-                <p class="Name-Of-Place">Lorem ipsum</p>
-                <p class="Day-Of-Week">Iusto, eligendi. Dolor</p>
-            </div>
         </div>
         <div class="Frame">
             <h1>upcoming time</h1>
-            <div class="row Locations">
-                <div class="location-borders">New York</div>
-                <div class="location-borders">Lakewood</div>
-                <div class="location-borders">Passaic</div>
-                <div class="location-borders">New York</div>
-                <div class="location-borders">Lakewood</div>
-                <div class="location-borders">Passaic</div>
-                <div class="location-borders">New York</div>
-                <div class="location-borders">Lakewood</div>
-                <div class="location-borders">Passaic</div>
+            <div class="row Locations" id="row-location-frame">
+
             </div>
             <div class="row">
                 <div class="change-Date">
@@ -585,11 +456,11 @@
                 <tbody>
                     <tr>
                         <th>Event</th>
-                        <td>Sabbath</td>
+                        <td id="Event-Name"></td>
                     </tr>
                     <tr>
                         <th>Starts</th>
-                        <td id="Start-of-Event"> </td>
+                        <td id="Start-of-Event"></td>
                     </tr>
                     <tr>
                         <th>Ends</th>
@@ -683,18 +554,22 @@
     <script>
         const plusIcon = document.getElementsByClassName('Plus-Icon');
         const contentDiv = document.getElementsByClassName('Content');
-        const nameTitle= document.getElementById('User-Name-Time'); 
-      let User=  localStorage.getItem('User');
-      console.log(User);
-      console.log(User[0]);
-      console.log(User[0].id);
-        // nameTitle.innerHTML=`${}`;
+        const nameTitle = document.getElementById('User-Name-Time');
+        let dataOfUser = JSON.parse(localStorage.getItem('User'));
+        let User = dataOfUser.user;
+
+
+        console.log(User);
+        nameTitle.innerHTML = ` <span> Hello,</span>${User.First_Name} ${User.Last_Name}_
+                <p>
+                    New York Est-s <span>11:18am</span>
+                </p>`;
         for (let i = 0; i < plusIcon.length; i++) {
             plusIcon[i].addEventListener('click', function () {
                 contentDiv[i].classList.toggle('hidden');
             });
         }
-      
+
     </script>
 </body>
 

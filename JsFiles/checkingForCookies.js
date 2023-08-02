@@ -1,6 +1,7 @@
 
 checkForCookies();
 async function checkForCookies() {
+    console.log('hi');
     let Token = getCookie('token');
     if (Token == null) {
         return console.log('no cookie');
@@ -31,7 +32,7 @@ async function checkForCookies() {
             console.log('no data returned');
         }
         else {
-            localStorage.setItem('User', dataHomePage.User);
+            localStorage.setItem('User', JSON.stringify(dataHomePage.User));
             document.open();
             document.write(dataHomePage.HTMLContent);
             document.close();

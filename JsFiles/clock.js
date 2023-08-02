@@ -1,30 +1,40 @@
-const Clocks = document.getElementsByClassName("clock-Frame");
 const HOURHAND = document.getElementsByClassName("hour");
 const MINUTEHAND = document.getElementsByClassName("minute");
 const SECONDHAND = document.getElementsByClassName("second");
 const NameOfPlace = document.getElementsByClassName("Name-Of-Place");
-const DayOfWeek = document.getElementsByClassName("Day-Of-Week")
+const DayOfWeek = document.getElementsByClassName("Day-Of-Week");
+const clockFrameRow = document.getElementById('row-clock-frame-box');
+const LocationFrameRow = document.getElementById('row-location-frame');
 
 const urlClockAmount = 'http://localhost:3000/ClockAmount';
-const ClockAmountNumber = {
-  Amount: Clocks.length
+
+let LocationOfUser = JSON.parse(localStorage.getItem('User'));
+let LocationActive = LocationOfUser.user.timeZone;
+
+async function Exucute(){
+  await ClockStart(urlClockAmount);
+  await ZmanFetch(LocationActive)
 }
-let TimeZones = []
-async function ClockAmount(urlClockAmount) {
+Exucute();
+
+async function ClockStart(urlClockAmount) {
   let response = await fetch(urlClockAmount, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(ClockAmountNumber)
   });
   let data = await response.json();
-  TimeZones = data;
-  StartClocks();
+  PopulateLocationTable(data.TimeZones);
+  StartClocks(data);
 }
-ClockAmount(urlClockAmount);
-function StartClocks() {
-  for (let i = 0; i < Clocks.length; i++) {
+
+function StartClocks(data) {
+  let clockFrame = data.clockFrame;
+  clockFrameRow.innerHTML = clockFrame;
+  let TimeZones = data.TimeZones;
+
+  for (let i = 0; i < TimeZones.length; i++) {
     let hr = TimeZones[i].Hour;
     let min = TimeZones[i].Minute;
     let sec = TimeZones[i].Second;
@@ -43,10 +53,14 @@ function StartClocks() {
       SECONDHAND[i].style.transform = "rotate(" + secPosition + "deg)";
     };
     setInterval(runClock, 1000);
-
   }
 }
 
+function PopulateLocationTable(Places) {
+  for(let i =0; i<Places.length; i++){
+    LocationFrameRow.innerHTML+=` <div class="location-borders">${Places[i].Place}</div>`
+  }
+}
 
 
 

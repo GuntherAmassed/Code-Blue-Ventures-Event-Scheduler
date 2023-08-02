@@ -11,7 +11,6 @@ app.use(express.json());
 const { formatInTimeZone } = require('date-fns-tz');
 const today = new Date();
 let clockAmount = '';
-let times = [];
 const crytpo = require('crypto');
 var path = require('path');
 let dirName = 'C:/Users/Moshe Stern/Desktop/Figma Api/ZuntaTimes';
@@ -403,6 +402,11 @@ const pool = createPool({
     password: '',
     database: 'loginforzunta'
 });
+const cities = require('all-the-cities');
+
+
+
+let FirstTime = true;
 let FinalCountryIntialArray = [];
 let fileNames = [];
 let row = '';
@@ -415,8 +419,6 @@ const checkIfUserHasRefreshToken = `SELECT * FROM Refresh_Token WHERE refresh_to
 
 getCountries();
 getFlagNames();
-
-
 /////listeners
 app.get('', (req, res) => {
 
@@ -466,32 +468,48 @@ app.post('/LogIn', (req, res) => {
 
 
 app.get('/HomePage', authenticateToken, (req, res) => {
-    console.log("hi");
+    let responseObj;
     fs.readFile(path.join(dirName, '/Home-Page.html'), 'utf8', (err, htmlContent) => {
         if (err) {
             return res.status(500).send('Error reading the HTML file.');
         }
-        const responseObj = {
-            User: req.User,
-            HTMLContent: htmlContent
-        };
+
+        if (req.User.Role === 'Admin') {
+            let adminRights = {
+                Mobile: `<p id="user-Desktop-Admin"><img src="public/images/admin-profile-icon-user.svg" alt=""> user</p>`,
+                Desktop: ` <div id="Users-Mobile-admin">
+                <p id="user-Mobile"><img src="public/images/admin-profile-icon-users.svg" alt="">Users</p>
+                 </div>`
+            }
+            responseObj = {
+                User: req.User,
+                HTMLContent: htmlContent,
+                adminRights: adminRights
+            };
+        }
+        else {
+            responseObj = {
+                User: req.User,
+                HTMLContent: htmlContent,
+            };
+        }
         res.json(responseObj)
     })
 })
 
 
 app.post('/token', (req, res) => {
-  
+
     const refreshToken = req.body.token;
-    if (refreshToken == null) return res.sendStatus(401)  
+    if (refreshToken == null) return res.sendStatus(401)
     pool.query(checkIfRefreshTokenIsInDatabase, [refreshToken], (err, results) => {
         if (err) {
-            console.error(err); 
+            console.error(err);
             return res.sendStatus(401)
         }
         else if (results.length > 0) {
             jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
-               
+
                 if (err) return res.sendStatus(403)
                 const accessToken = generateAccessToken({ user })
                 res.json({ accessToken: accessToken })
@@ -505,11 +523,148 @@ app.delete('/logout', (req, res) => {
     res.sendStatus(204)
 })
 
+app.get('/UserInfo', (req, res) => {
+    pool.query('SELECT * FROM userinfo', (error, results) => {
+        if (error) {
+            return console.log(error)
+        }
+        for (let i = 0; i < results.length; i++) {
+            for (let j = 0; j < files.length; j++) {
+                if (files[j].includes(results[i].Location)) {
+                    results[i].FlagPath = files[j];
+                    break;
+                }
+                else {
+                    results[i].FlagPath = 'xx Unknown.svg';
+                }
+            }
+        }
+        let data = results;
+        for (let i = 0; i < data.length; i++) {
+            row += ` <tr>
+        <td>${data[i].First_Name} ${data[i].Last_Name}</td>
+        <td>${data[i].Email}</td>
+        <td>${data[i].Skype}</td>
+        <td>
+            <img src="Images/Flags/${data[i].FlagPath}" alt=""> ${data[i].Location}
+        </td>
+        <td>${data[i].timeZone}</td>
+        <td>${data[i].Role}</td>
+        <td>
+            <img src="Images/admin-profile-icon-edit.svg" alt="">
+            <img src="Images/admin-profile-icon-card.svg" alt="">
+        </td>
+    </tr>
+        `;
+        }
+
+    });
+    res.send(row);
+    console.log('Sent Data');
+})
+
+app.post('/ClockAmount', (req, res) => {
+    console.log('hi');
+    let clockAmount;
+    let times = [];
+    let clockFrame = '';
+    pool.query('SELECT DISTINCT userinfo.timeZone FROM userinfo', (error, results) => {
+        if (error) {
+            return res.sendStatus(401)
+        }
+        if (results.length > 0) {
+
+            clockAmount = results.length;
+            for (let i = 0; i < clockAmount; i++) {
+                times.push({
+                    Place: results[i].timeZone.split('/')[1],
+                    PlaceFullName: results[i].timeZone,
+                    Hour: formatInTimeZone(today, results[i].timeZone, 'HH'),
+                    Minute: formatInTimeZone(today, results[i].timeZone, 'mm'),
+                    Second: formatInTimeZone(today, results[i].timeZone, 'ss'),
+                    Day: formatInTimeZone(today, results[i].timeZone, 'EEEE')
+                })
+                clockFrame += ` <div class="clock-Frame">
+            <div class="${formatInTimeZone(today, results[i].timeZone, 'aa') === 'AM' ? 'clock' : 'clock-Dark'}">
+
+                <div class="middle">
+                    <img src="Images/${formatInTimeZone(today, results[i].timeZone, 'aa') === 'AM' ? 'all-users-text.svg' : 'all-users-home-text.svg'}" alt="">
+                    <div class="hour"></div>
+                    <div class="minute"></div>
+                    <div class="second"></div>
+                </div>
+
+            </div>
+
+            <p class="Name-Of-Place"></p>
+            <p class="Day-Of-Week"></p>
+        </div>`
+            }
+            res.json({ TimeZones: times, clockFrame: clockFrame });
+        }
+    });
+})
+
+app.post('/ZmanimApi', async (req, res) => {
+    try {
+//         let cityOfLocation = req.body.location.split('/')[1]
+//        let resultsOfCity= cities.filter(city => city.name.match(cityOfLocation));
+// console.log(resultsOfCity);
+
+        console.log(req.body.location);
+        let start = [];
+        let end = [];
+        let StartOfHoliday = false;
+        let StartDate = req.body.Date;
+        let splitDate = StartDate.split('-');
+        let EndDate = (Number(splitDate[0]) + 1) + '-01-01';
+        let response = await fetch(`https://www.hebcal.com/hebcal?v=1&cfg=json&mf=off&maj=on&start=${StartDate}&end=${EndDate}&geo=city&city=Belgrade`);
+        let responsedata = await response.json();
+        let data = responsedata.items;
+        console.log(data);
+        for (let i = 0; i < data.length; i++) {
+
+
+            if ('memo' in data[i]) {
+                if (data[i].category === "candles" && StartOfHoliday === false) {
+                    start.push(data[i]);
+                    StartOfHoliday = true;
+                }
+                if (data[i].category === "havdalah") {
+                    end.push(data[i]);
+                    StartOfHoliday = false;
+                }
+            }
+            else {
+                if (data[i].category === "candles") {
+                    start.push(data[i]);
+                }
+                else if (data[i].category === "havdalah") {
+                    end.push(data[i]);
+                }
+            }
+        }
+
+        let event = {
+            start: start,
+            end: end,
+        }
+        res.json({ event })
+    }
+    catch (error) {
+        console.error(error)
+    }
+
+})
+
+
 
 /////functions
+
 function generateAccessToken(User) {
     return jwt.sign(User, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' })
 }
+
 async function generateRefreshToken(User) {
     let oldRefreshToken = await checkForRefreshToken(User.id);
     if (oldRefreshToken != null) {
@@ -530,7 +685,6 @@ async function generateRefreshToken(User) {
 
 }
 function authenticateToken(req, res, next) {
-    console.log('hi');
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
     if (token == null) {
@@ -568,63 +722,6 @@ async function checkForRefreshToken(id) {
     });
 }
 
-app.listen(port, () => {
-    console.log("listening on port " + port);
-})
-
-
-////
-app.get('/UserInfo', (req, res) => {
-    pool.query('SELECT * FROM userinfo', (error, results) => {
-        if (error) {
-            return console.log(error)
-        }
-        for (let i = 0; i < results.length; i++) {
-            for (let j = 0; j < files.length; j++) {
-                if (files[j].includes(results[i].Location)) {
-                    results[i].FlagPath = files[j];
-                    break;
-                }
-                else {
-                    results[i].FlagPath = 'xx Unknown.svg';
-                }
-            }
-        }
-        let data = results;
-        for (let i = 0; i < data.length; i++) {
-            row += ` <tr>
-        <td>${data[i].First_Name} ${data[i].Last_Name}</td>
-        <td>${data[i].Email}</td>
-        <td>${data[i].Skype}</td>
-        <td>
-            <img src="Images/Flags/${data[i].FlagPath}" alt=""> ${data[i].Location}
-        </td>
-        <td>${data[i].timeZone}</td>
-        <td>${data[i].Role}</td>
-        <td>
-            <img src="Images/admin-profile-icon-edit.svg" alt="">
-            <img src="Images/admin-profile-icon-card.svg" alt="">
-        </td>
-    </tr>
-        `;
-        }
-    });
-    res.send(row);
-    console.log('Sent Data');
-})
-app.post('/ClockAmount', (req, res) => {
-    clockAmount = req.body.Amount;
-    for (let i = 0; i < clockAmount; i++) {
-        times.push({
-            Place: timeZone[i].name,
-            Hour: formatInTimeZone(today, timeZone[i].name, 'HH'),
-            Minute: formatInTimeZone(today, timeZone[i].name, 'mm'),
-            Second: formatInTimeZone(today, timeZone[i].name, 'ss'),
-            Day: formatInTimeZone(today, timeZone[i].name, 'EEEE')
-        })
-    }
-    res.send(times);
-})
 function getCountries() {
 
     let countryIntials = [];
@@ -639,6 +736,7 @@ function getCountries() {
         }
     }
 }
+
 function getFlagNames() {
     for (let i = 0; i < FinalCountryIntialArray.length; i++) {
         for (let j = 0; j < files.length; j++) {
@@ -649,3 +747,13 @@ function getFlagNames() {
 
     }
 }
+
+////
+
+app.listen(port, () => {
+    console.log("listening on port " + port);
+})
+
+
+
+
