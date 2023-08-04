@@ -384,6 +384,18 @@
     .Content.hidden {
         display: none;
     }
+
+    .location-borders {
+        cursor: pointer;
+    }
+
+    .location-borders:hover {
+        border-color: #009AFE;
+    }
+
+    .Hidden-Location-Id {
+        display: none;
+    }
 </style>
 
 <body>
@@ -549,13 +561,14 @@
     </main>
     <script src="JsFiles/clock.js"></script>
     <script src="JsFiles/ZmanimApi.js"></script>
+    <script src="JsFiles/Main.js"></script>
     <script src="JsFiles/Mobile-Menu.js"></script>
     <script src="JsFiles/Menu.js"></script>
     <script>
         const plusIcon = document.getElementsByClassName('Plus-Icon');
         const contentDiv = document.getElementsByClassName('Content');
         const nameTitle = document.getElementById('User-Name-Time');
-        let dataOfUser = JSON.parse(localStorage.getItem('User'));
+        let dataOfUser = JSON.parse(localStorage.getItem('User')).User;
         let User = dataOfUser;
 
 

@@ -1,7 +1,6 @@
 
 checkForCookies();
 async function checkForCookies() {
-    console.log('hi');
     let Token = getCookie('token');
     if (Token == null) {
         return console.log('no cookie');
@@ -9,6 +8,7 @@ async function checkForCookies() {
     let jsonToken = {
         token: Token
     }
+    console.log(Token);
     let response = await fetch('http://localhost:3000/token', {
         method: 'POST',
         headers: {
@@ -17,6 +17,7 @@ async function checkForCookies() {
         body: JSON.stringify(jsonToken)
     })
     let data = await response.json();
+    console.log(data.accessToken);
     if (data.status === 403) {
         return console.log('no data returned');
     }
@@ -33,7 +34,6 @@ async function checkForCookies() {
         }
         else {
             localStorage.removeItem('User');
-            console.log(dataHomePage);
             localStorage.setItem('User', JSON.stringify(dataHomePage.User));
             document.open();
             document.write(dataHomePage.HTMLContent);

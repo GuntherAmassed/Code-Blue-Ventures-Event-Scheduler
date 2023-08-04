@@ -3,10 +3,9 @@ const ArrowLeft = document.getElementById('Arrow-Left');
 const StartOfEvent = document.getElementById('Start-of-Event');
 const EndOfEvent = document.getElementById('End-Of-Event');
 const NameOfEvent = document.getElementById('Event-Name');
-let EventTimes = {
-    start: [],
-    end: []
-};
+const LocationOptions = document.getElementsByClassName('location-borders');
+const LocationIdFromOptions = document.getElementsByClassName('Hidden-Location-Id');
+let EventTimes;
 let startCounter = 0;
 let endCounter = 0;
 let Shabbos = '';
@@ -14,11 +13,12 @@ let timeExtracted = '';
 let holiday = false;
 let nextYear = 0;
 let StartingPlace = true;
+let MyLocation;
 
 ArrowRight.addEventListener('click', async () => {
     if ((EventTimes.end.length - 10) === startCounter) {
         nextYear++;
-        await ZmanFetch();
+        await ZmanFetch(MyLocation);
     }
     getStartAndEndOfEvent(EventTimes);
 })
@@ -32,7 +32,10 @@ ArrowLeft.addEventListener('click', async () => {
     getStartAndEndOfEvent(EventTimes);
 })
 
+
 async function ZmanFetch(location) {
+    console.log(location);
+    MyLocation = location;
     let MyDate;
     if (nextYear === 0) {
         let date = new Date();
@@ -53,6 +56,10 @@ async function ZmanFetch(location) {
         body: JSON.stringify({ Date: MyDate, location: location })
     });
     let responseData = await response.json();
+    EventTimes = {
+        start: [],
+        end: []
+    };
     for (let i = 0; i < responseData.event.start.length; i++) {
         EventTimes.start.push(responseData.event.start[i]);
     }
@@ -100,10 +107,25 @@ function getStartAndEndOfEvent(event) {
 
 function getTime(date) {
     let time = new Date(date);
-    console.log(date);
     let now = new Date(date).toLocaleDateString('en-us', { weekday: "short", month: "long", day: "numeric" });
     timeExtracted = `${now}, ${time.getHours() - 12}:${time.getMinutes() > 9 ? time.getMinutes() : `0` + time.getMinutes()}pm ${time.getFullYear()}`;
     return timeExtracted;
+}
+async function addClickEventForLocation() {
+    for (let i = 0; i < LocationOptions.length; i++) {
+        LocationOptions[i].addEventListener('click', async () => {
+            LocationOptions[i].style.borderColor = '#009AFE';
+            startCounter = 0;
+            endCounter = 0;
+            nextYear = 0;
+            await ZmanFetch(LocationIdFromOptions[i].innerHTML);
+            for (let j = 0; j < LocationOptions.length; j++) {
+                if (LocationOptions[j] !== LocationOptions[i]) {
+                    LocationOptions[j].style.borderColor = '#929BA3'
+                }
+            }
+        })
+    }
 }
 
 

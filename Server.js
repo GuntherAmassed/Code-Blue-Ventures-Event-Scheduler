@@ -490,7 +490,7 @@ app.get('/HomePage', authenticateToken, (req, res) => {
         }
         else {
             responseObj = {
-                User: req.user,
+                User: req.User,
                 HTMLContent: htmlContent,
             };
         }
@@ -569,6 +569,7 @@ app.post('/ClockAmount', (req, res) => {
     let clockAmount;
     let times = [];
     let clockFrame = '';
+    let locationFrame = '';
 
     pool.query('SELECT lt.timeZone,lt.GeoName_Id,lt.Country,lt.City_Name FROM locationtable lt JOIN userinfo ON userinfo.location_Id=lt.GeoName_Id  GROUP BY userinfo.location_Id;', (error, results) => {
         if (error) {
@@ -576,7 +577,6 @@ app.post('/ClockAmount', (req, res) => {
         }
         if (results.length > 0) {
             clockAmount = results.length;
-            console.log(clockAmount);
             for (let i = 0; i < clockAmount; i++) {
                 let CountryTest = lookup.byInternet(results[i].Country);
                 if (CountryTest == null) {
@@ -611,15 +611,17 @@ app.post('/ClockAmount', (req, res) => {
             <p class="Name-Of-City"></p>
             <p class="Day-Of-Week"></p>
         </div>`
+                locationFrame += ` <div class="location-borders">${results[i].City_Name} - ${CountryTest}<span class="Hidden-Location-Id">${results[i].GeoName_Id}</span></div>`
+
             }
-            res.json({ TimeZones: times, clockFrame: clockFrame });
+            res.json({ TimeZones: times, clockFrame: clockFrame, locationFrame: locationFrame});
         }
     });
 })
 
 app.post('/ZmanimApi', async (req, res) => {
     try {
-
+       
         let start = [];
         let end = [];
         let StartOfHoliday = false;
@@ -629,7 +631,8 @@ app.post('/ZmanimApi', async (req, res) => {
         let response = await fetch(`https://www.hebcal.com/hebcal?v=1&cfg=json&mf=off&maj=on&start=${StartDate}&end=${EndDate}&geo=geoname&geonameid=${req.body.location}`);
         let responsedata = await response.json();
         let data = responsedata.items;
-        console.log(data);
+        console.log(responsedata);
+
         for (let i = 0; i < data.length; i++) {
 
 
@@ -652,12 +655,29 @@ app.post('/ZmanimApi', async (req, res) => {
                 }
             }
         }
+        console.log();
+        pool.query(`SELECT lt.timeZone FROM locationtable lt WHERE lt.GeoName_Id=?;`, [req.body.location], (error, results) => {
+            if (error) {
+                console.error(error)
+            }
+            else if (results.length > 0) {
+                let timezoneofuser = results[0].timeZone;
+                for (let i = 0; i < start.length; i++) {
+                    start[i].date = formatInTimeZone(start[i].date, timezoneofuser, 'yyyy-MM-dd HH:mm')
+                }
+                for (let i = 0; i < end.length; i++) {
+                    end[i].date = formatInTimeZone(end[i].date, timezoneofuser, 'yyyy-MM-dd HH:mm')
+                }
 
-        let event = {
-            start: start,
-            end: end,
-        }
-        res.json({ event })
+                let event = {
+                    start: start,
+                    end: end,
+                }
+                res.json({ event,timeForUser: formatInTimeZone(new Date(), timezoneofuser, 'hh:mm:ss aa')})
+            }
+        })
+        console.log(start[0]);
+
     }
     catch (error) {
         console.error(error)
@@ -698,22 +718,19 @@ function authenticateToken(req, res, next) {
     if (token == null) {
         return res.sendStatus(401)
     }
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET,  (err, user) => {
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
         try {
             if (err) {
                 console.log(err.message);
                 res.sendStatus(403);
             }
             else {
-                let userInfo = {
-                    First_Name: user.First_Name,
-                    Last_Name: user.Last_Name,
-                    id: user.id,
-                    Location_Id: user.Location_Id,
-                    Role: user.Role,
+                if ('user' in user) {
+                    req.User = { User: user.user };
                 }
-                console.log(userInfo);
-                req.User = user;
+                else {
+                    req.User = { User: user };
+                }
                 next();
             }
         }

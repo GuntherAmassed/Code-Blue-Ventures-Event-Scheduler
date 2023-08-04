@@ -9,15 +9,8 @@ const LocationFrameRow = document.getElementById('row-location-frame');
 
 const urlClockAmount = 'http://localhost:3000/ClockAmount';
 
-let LocationOfUser = JSON.parse(localStorage.getItem('User'));
-console.log(LocationOfUser);
-let LocationActive = LocationOfUser.Location_Id;
 
-async function Exucute() {
-  await ClockStart(urlClockAmount);
-  await ZmanFetch(LocationActive)
-}
-Exucute();
+
 
 async function ClockStart(urlClockAmount) {
   let response = await fetch(urlClockAmount, {
@@ -27,7 +20,7 @@ async function ClockStart(urlClockAmount) {
     },
   });
   let data = await response.json();
-  PopulateLocationTable(data.TimeZones);
+  LocationFrameRow.innerHTML = data.locationFrame;
   StartClocks(data);
 }
 
@@ -56,12 +49,6 @@ function StartClocks(data) {
       SECONDHAND[i].style.transform = "rotate(" + secPosition + "deg)";
     };
     setInterval(runClock, 1000);
-  }
-}
-
-function PopulateLocationTable(Places) {
-  for (let i = 0; i < Places.length; i++) {
-    LocationFrameRow.innerHTML += ` <div class="location-borders">${Places[i].PlaceOfCity}</div>`
   }
 }
 
