@@ -105,17 +105,7 @@ function getTime(date) {
     timeExtracted = `${now}, ${time.getHours() - 12}:${time.getMinutes() > 9 ? time.getMinutes() : `0` + time.getMinutes()}pm ${time.getFullYear()}`;
     return timeExtracted;
 }
-// const { DateTime } = require('luxon');
 
-// const originalTimeString = '2023-08-05T20:00:00+02:00';
-// const originalDateTime = DateTime.fromISO(originalTimeString);
-
-// console.log('Original Date and Time:', originalDateTime.toString());
-
-// // Convert to a different time zone (e.g., Eastern Daylight Time)
-// const convertedDateTime = originalDateTime.setZone('America/New_York');
-
-// console.log('Converted Date and Time:', convertedDateTime.toString());
 
 
 

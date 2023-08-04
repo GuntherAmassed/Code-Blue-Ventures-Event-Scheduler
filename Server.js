@@ -403,6 +403,8 @@ const pool = createPool({
     database: 'loginforzunta'
 });
 const cities = require('all-the-cities');
+const lookup = require('country-code-lookup')
+// const { DateTime } = require('luxon');
 
 
 
@@ -438,20 +440,19 @@ app.post('/LogIn', (req, res) => {
         else if (results.length > 0) {
             try {
                 response.error = false;
-                let User = {
+                let user = {
                     id: results[0].Id,
                     First_Name: results[0].First_Name,
                     Last_Name: results[0].Last_Name,
                     Skype: results[0].Skype,
-                    Location: results[0].Location,
-                    timeZone: results[0].timeZone,
+                    Location_Id: results[0].location_Id,
                     Role: results[0].Role,
                 };
                 if (req.body.rememberMe === true) {
-                    res.json({ accessToken: generateAccessToken(User), refreshToken: await generateRefreshToken(User) })
+                    res.json({ accessToken: generateAccessToken(user), refreshToken: await generateRefreshToken(user) })
                 }
                 else {
-                    res.json({ accessToken: generateAccessToken(User) })
+                    res.json({ accessToken: generateAccessToken(user) })
                 }
             }
             catch (err) {
@@ -489,7 +490,7 @@ app.get('/HomePage', authenticateToken, (req, res) => {
         }
         else {
             responseObj = {
-                User: req.User,
+                User: req.user,
                 HTMLContent: htmlContent,
             };
         }
@@ -524,13 +525,13 @@ app.delete('/logout', (req, res) => {
 })
 
 app.get('/UserInfo', (req, res) => {
-    pool.query('SELECT * FROM userinfo', (error, results) => {
+    pool.query('SELECT * FROM locationtable lt JOIN userinfo ON userinfo.location_Id=lt.GeoName_Id ', async (error, results) => {
         if (error) {
             return console.log(error)
         }
         for (let i = 0; i < results.length; i++) {
             for (let j = 0; j < files.length; j++) {
-                if (files[j].includes(results[i].Location)) {
+                if (files[j].split(' ')[0].includes(results[i].Country.toLowerCase())) {
                     results[i].FlagPath = files[j];
                     break;
                 }
@@ -546,7 +547,7 @@ app.get('/UserInfo', (req, res) => {
         <td>${data[i].Email}</td>
         <td>${data[i].Skype}</td>
         <td>
-            <img src="Images/Flags/${data[i].FlagPath}" alt=""> ${data[i].Location}
+            <img src="Images/Flags/${data[i].FlagPath}" alt=""> ${data[i].City_Name}
         </td>
         <td>${data[i].timeZone}</td>
         <td>${data[i].Role}</td>
@@ -557,28 +558,38 @@ app.get('/UserInfo', (req, res) => {
     </tr>
         `;
         }
-
+        res.send(row);
+        console.log('Sent Data');
     });
-    res.send(row);
-    console.log('Sent Data');
+
+
 })
 
 app.post('/ClockAmount', (req, res) => {
-    console.log('hi');
     let clockAmount;
     let times = [];
     let clockFrame = '';
-    pool.query('SELECT DISTINCT userinfo.timeZone FROM userinfo', (error, results) => {
+
+    pool.query('SELECT lt.timeZone,lt.GeoName_Id,lt.Country,lt.City_Name FROM locationtable lt JOIN userinfo ON userinfo.location_Id=lt.GeoName_Id  GROUP BY userinfo.location_Id;', (error, results) => {
         if (error) {
             return res.sendStatus(401)
         }
         if (results.length > 0) {
-
             clockAmount = results.length;
+            console.log(clockAmount);
             for (let i = 0; i < clockAmount; i++) {
+                let CountryTest = lookup.byInternet(results[i].Country);
+                if (CountryTest == null) {
+                    CountryTest = results[i].Country;
+                    console.log('null!');
+                }
+                else {
+                    CountryTest = CountryTest.country
+                }
                 times.push({
-                    Place: results[i].timeZone.split('/')[1],
-                    PlaceFullName: results[i].timeZone,
+                    timeZone: results[i].timeZone,
+                    PlaceOfCity: results[i].City_Name,
+                    PlaceOfCountry: CountryTest,
                     Hour: formatInTimeZone(today, results[i].timeZone, 'HH'),
                     Minute: formatInTimeZone(today, results[i].timeZone, 'mm'),
                     Second: formatInTimeZone(today, results[i].timeZone, 'ss'),
@@ -596,7 +607,8 @@ app.post('/ClockAmount', (req, res) => {
 
             </div>
 
-            <p class="Name-Of-Place"></p>
+            <p class="Name-Of-Country"></p>
+            <p class="Name-Of-City"></p>
             <p class="Day-Of-Week"></p>
         </div>`
             }
@@ -607,18 +619,14 @@ app.post('/ClockAmount', (req, res) => {
 
 app.post('/ZmanimApi', async (req, res) => {
     try {
-//         let cityOfLocation = req.body.location.split('/')[1]
-//        let resultsOfCity= cities.filter(city => city.name.match(cityOfLocation));
-// console.log(resultsOfCity);
 
-        console.log(req.body.location);
         let start = [];
         let end = [];
         let StartOfHoliday = false;
         let StartDate = req.body.Date;
         let splitDate = StartDate.split('-');
         let EndDate = (Number(splitDate[0]) + 1) + '-01-01';
-        let response = await fetch(`https://www.hebcal.com/hebcal?v=1&cfg=json&mf=off&maj=on&start=${StartDate}&end=${EndDate}&geo=city&city=Belgrade`);
+        let response = await fetch(`https://www.hebcal.com/hebcal?v=1&cfg=json&mf=off&maj=on&start=${StartDate}&end=${EndDate}&geo=geoname&geonameid=${req.body.location}`);
         let responsedata = await response.json();
         let data = responsedata.items;
         console.log(data);
@@ -661,18 +669,18 @@ app.post('/ZmanimApi', async (req, res) => {
 
 /////functions
 
-function generateAccessToken(User) {
-    return jwt.sign(User, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' })
+function generateAccessToken(user) {
+    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' })
 }
 
-async function generateRefreshToken(User) {
-    let oldRefreshToken = await checkForRefreshToken(User.id);
+async function generateRefreshToken(user) {
+    let oldRefreshToken = await checkForRefreshToken(user.id);
     if (oldRefreshToken != null) {
         return oldRefreshToken;
     }
-    let token = jwt.sign(User, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '90d' });
+    let token = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '90d' });
     return new Promise((resolve, reject) => {
-        pool.query(refreshTokenAdd, [token, User.id], (err) => {
+        pool.query(refreshTokenAdd, [token, user.id], (err) => {
             if (err) {
                 reject(err);
             }
@@ -690,14 +698,22 @@ function authenticateToken(req, res, next) {
     if (token == null) {
         return res.sendStatus(401)
     }
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, User) => {
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET,  (err, user) => {
         try {
             if (err) {
                 console.log(err.message);
                 res.sendStatus(403);
             }
             else {
-                req.User = User;
+                let userInfo = {
+                    First_Name: user.First_Name,
+                    Last_Name: user.Last_Name,
+                    id: user.id,
+                    Location_Id: user.Location_Id,
+                    Role: user.Role,
+                }
+                console.log(userInfo);
+                req.User = user;
                 next();
             }
         }

@@ -1,7 +1,8 @@
 const HOURHAND = document.getElementsByClassName("hour");
 const MINUTEHAND = document.getElementsByClassName("minute");
 const SECONDHAND = document.getElementsByClassName("second");
-const NameOfPlace = document.getElementsByClassName("Name-Of-Place");
+const NameOfCity = document.getElementsByClassName("Name-Of-City");
+const NameOfCountry = document.getElementsByClassName("Name-Of-Country");
 const DayOfWeek = document.getElementsByClassName("Day-Of-Week");
 const clockFrameRow = document.getElementById('row-clock-frame-box');
 const LocationFrameRow = document.getElementById('row-location-frame');
@@ -9,9 +10,10 @@ const LocationFrameRow = document.getElementById('row-location-frame');
 const urlClockAmount = 'http://localhost:3000/ClockAmount';
 
 let LocationOfUser = JSON.parse(localStorage.getItem('User'));
-let LocationActive = LocationOfUser.user.timeZone;
+console.log(LocationOfUser);
+let LocationActive = LocationOfUser.Location_Id;
 
-async function Exucute(){
+async function Exucute() {
   await ClockStart(urlClockAmount);
   await ZmanFetch(LocationActive)
 }
@@ -39,7 +41,8 @@ function StartClocks(data) {
     let min = TimeZones[i].Minute;
     let sec = TimeZones[i].Second;
     let Day = TimeZones[i].Day;
-    NameOfPlace[i].innerHTML = TimeZones[i].Place;
+    NameOfCity[i].innerHTML = TimeZones[i].PlaceOfCity
+    NameOfCountry[i].innerHTML = TimeZones[i].PlaceOfCountry;
     DayOfWeek[i].innerHTML = Day;
     let hrPosition = (hr * 360) / 12 + (min * (360 / 60)) / 12;
     let minPosition = (min * 360) / 60 + (sec * (360 / 60)) / 60;
@@ -57,8 +60,8 @@ function StartClocks(data) {
 }
 
 function PopulateLocationTable(Places) {
-  for(let i =0; i<Places.length; i++){
-    LocationFrameRow.innerHTML+=` <div class="location-borders">${Places[i].Place}</div>`
+  for (let i = 0; i < Places.length; i++) {
+    LocationFrameRow.innerHTML += ` <div class="location-borders">${Places[i].PlaceOfCity}</div>`
   }
 }
 

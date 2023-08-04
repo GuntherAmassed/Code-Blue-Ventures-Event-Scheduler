@@ -32,6 +32,8 @@ async function checkForCookies() {
             console.log('no data returned');
         }
         else {
+            localStorage.removeItem('User');
+            console.log(dataHomePage);
             localStorage.setItem('User', JSON.stringify(dataHomePage.User));
             document.open();
             document.write(dataHomePage.HTMLContent);

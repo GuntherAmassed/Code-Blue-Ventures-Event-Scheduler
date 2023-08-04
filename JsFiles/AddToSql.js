@@ -11,16 +11,16 @@ const crytpo = require('crypto');
 const InsertLocations = 'INSERT INTO locationtable (location,timezones) VALUES (?, ?)';
 const createUserQuery = 'INSERT INTO userinfo (Email, First_Name, Last_Name, Skype, timeZone, Password, Role) VALUES (?, ?, ?, ?, ?, ? ,?)';
 const updateUserRefreshToken = `UPDATE userinfo SET userinfo.Refresh_Token=? WHERE userinfo.Email=?;`;
+const insertlocationId = `UPDATE userinfo SET location_Id =? WHERE Id=?;`
+
 const pool = createPool({
     host: 'localhost',
     user: 'root',
     password: '',
     database: 'loginforzunta'
 });
-const Cities = {
-
-}
-
+const { find } = require('geo-tz')
+const Allcities = require('all-the-cities');
 class RandomNameGenerator {
     constructor() {
         this.firstName = ["Adam", "Alex", "Aaron", "Ben", "Carl", "Dan", "David", "Edward", "Fred", "Frank", "George", "Hal", "Hank", "Ike", "John", "Jack", "Joe", "Larry", "Monte", "Matthew", "Mark", "Nathan", "Otto", "Paul", "Peter", "Roger", "Roger", "Steve", "Thomas", "Tim", "Ty", "Victor", "Walter"];
@@ -46,10 +46,27 @@ function getCountries(lines) {
     for (let i = 0; i < countryIntials.length; i++) {
         let country = ct.getCountry(countryIntials[i].toUpperCase());
         if (country !== null) {
-                console.log(country);
-            // FinalCountryIntialArray.push(country);
+
+            FinalCountryIntialArray.push(country);
         }
     }
+
+    for (let j = 0; j < lines.length; j++) {
+        for (let i = 0; i < FinalCountryIntialArray.length; i++) {
+
+            if (FinalCountryIntialArray[i].id === lines[j].split(/[-|]/g)[0]) {
+                pool.query('INSERT INTO city_of_time_zone (City,Country) VALUES(?,?);', [lines[j].split('|')[0], FinalCountryIntialArray[i].name], (error) => {
+                    if (error) {
+                        console.log(error.message);
+                        return;
+                    }
+                    console.log('Inserted');
+                })
+
+            }
+        }
+    }
+
 }
 function addUsersToDataBase() {
     for (let i = 0; i < 1000; i++) {
@@ -111,18 +128,80 @@ function addRefreshTokensToDatabase() {
     })
 }
 
-function addCitiesToDatabase() {
-    pool.query('SELECT DISTINCT userinfo.timeZone FROM userinfo', (error, results) => {
+async function addCitiesToDatabase(lines) {
+    pool.query('SELECT DISTINCT locationtable.timeZones FROM locationtable', async (error, results) => {
 
         if (error) {
             console.error(error)
         }
+        let timezone = results;
         if (results.length > 0) {
-            pool.query()
+            for (let j = 0; j < lines.length; j++) {
+                for (let i = 0; i < timezone.length; i++) {
+                    let spitTimeZone = timezone[i].timeZones.split('/');
+                    for (let q = 0; q < spitTimeZone.length; q++) {
+                        if (spitTimeZone[q].includes(lines[j].split(/[-|]/g)[1].replace(' ', '_'))) {
+                            await insert(lines[j].split('|')[0].replace(' ', '_'), timezone[i].timeZones)
+                        }
+                    }
+                }
+            }
         }
     })
 
 }
+function insertLocations(GeoNameId, TimeZone, Country, City) {
+    pool.query('INSERT INTO locationtable (GeoName_Id,timeZone,Country,City_Name) VALUES(?,?,?,?);', [GeoNameId, TimeZone, Country, City], async (error) => {
+        if (error) {
+            console.log(error.message);
+            return;
+        }
+        console.log('Inserted');
+    })
+}
+async function doit() {
+    for (let i = 0; i < Allcities.length; i++) {
+        await insertLocations(Allcities[i].cityId, find(Allcities[i].loc.coordinates[1], Allcities[i].loc.coordinates[0])[0], Allcities[i].country, Allcities[i].name.replace(' ', '_'));
+    }
+}
+function UpdateUserLocation() {
+    let GeoName_Id;
+    pool.query('SELECT GeoName_Id FROM `locationtable`;', (error, results) => {
+        if (error) {
+            console.error(error.message);
+        }
+
+        if (results.length > 0) {
+            GeoName_Id = results;
+            pool.query('SELECT Id FROM`userinfo`;', (error, results) => {
+                if (error) {
+                    console.error(error.message);
+                }
+                if (results.length > 0) {
+                    let UserId = results;
+                    console.log(GeoName_Id[Math.floor(Math.random() * GeoName_Id.length)].GeoName_Id);
+                    for (let i = 0; i < UserId.length; i++) {
+                        pool.query(insertlocationId, [`${GeoName_Id[Math.floor(Math.random() * GeoName_Id.length)].GeoName_Id}`, UserId[i].Id], (error) => {
+                            if (error) {
+                                console.log(error.message);
+                                return;
+                            }
+                            console.log('Inserted');
+                        })
+                    }
+
+                }
+
+
+
+            })
+
+        }
+
+    })
+
+}
+
 let cities =
     `AD-Andorra La Vella|3041563
 AE-Abu Dhabi|292968
@@ -534,5 +613,6 @@ ZA-Pretoria|964137
 ZM-Lusaka|909137 
 ZW-Harare|890299`;
 const lines = cities.split('\n');
+// getCountries(lines);
+// addCitiesToDatabase(lines)
 
-console.log(lines);

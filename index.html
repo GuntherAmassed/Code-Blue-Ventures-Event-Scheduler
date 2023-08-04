@@ -407,6 +407,7 @@
                 }
             }
             else {
+
                 document.cookie = `token = ${data.refreshToken}; expires=Wed, 05 Aug 2024 23:00:00 UTC;`;
                 try {
                     let redirectResponse = await fetch('http://localhost:3000/HomePage', {
@@ -416,7 +417,8 @@
                         },
                     });
                     let redirectResponseData = await redirectResponse.json();
-                    localStorage.setItem('User', JSON.stringify(redirectResponse.User))
+                    console.log(redirectResponseData.User);
+                    localStorage.setItem('User', JSON.stringify(redirectResponseData.User));
                     document.open();
                     document.write(redirectResponseData.HTMLContent);
                     document.close();
