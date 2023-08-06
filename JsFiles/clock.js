@@ -8,10 +8,6 @@ const clockFrameRow = document.getElementById('row-clock-frame-box');
 const LocationFrameRow = document.getElementById('row-location-frame');
 
 const urlClockAmount = 'http://localhost:3000/ClockAmount';
-
-
-
-
 async function ClockStart(urlClockAmount) {
   let response = await fetch(urlClockAmount, {
     method: 'POST',

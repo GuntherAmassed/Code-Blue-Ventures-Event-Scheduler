@@ -422,8 +422,22 @@ const checkIfUserHasRefreshToken = `SELECT * FROM Refresh_Token WHERE refresh_to
 getCountries();
 getFlagNames();
 /////listeners
-app.get('', (req, res) => {
-
+app.post('/MyProfile', (req, res) => {
+    pool.query('SELECT lt.City_Name, us.Email,us.First_Name,us.Last_Name,us.Skype FROM locationtable lt JOIN userinfo us on us.location_Id = lt.GeoName_Id WHERE us.Id=?;', [req.body.Id], (error, results) => {
+        if (error) {
+            console.error(error)
+        }
+        else if (results.length > 0) {
+            let userInfo = {
+                Email: results[0].Email,
+                First_Name: results[0].First_Name,
+                Last_Name: results[0].Last_Name,
+                Skype: results[0].Skype,
+                City: results[0].City_Name
+            }
+            res.json(userInfo)
+        }
+    })
 })
 
 app.post('/LogIn', (req, res) => {
@@ -614,14 +628,14 @@ app.post('/ClockAmount', (req, res) => {
                 locationFrame += ` <div class="location-borders">${results[i].City_Name} - ${CountryTest}<span class="Hidden-Location-Id">${results[i].GeoName_Id}</span></div>`
 
             }
-            res.json({ TimeZones: times, clockFrame: clockFrame, locationFrame: locationFrame});
+            res.json({ TimeZones: times, clockFrame: clockFrame, locationFrame: locationFrame });
         }
     });
 })
 
 app.post('/ZmanimApi', async (req, res) => {
     try {
-       
+
         let start = [];
         let end = [];
         let StartOfHoliday = false;
@@ -631,7 +645,6 @@ app.post('/ZmanimApi', async (req, res) => {
         let response = await fetch(`https://www.hebcal.com/hebcal?v=1&cfg=json&mf=off&maj=on&start=${StartDate}&end=${EndDate}&geo=geoname&geonameid=${req.body.location}`);
         let responsedata = await response.json();
         let data = responsedata.items;
-        console.log(responsedata);
 
         for (let i = 0; i < data.length; i++) {
 
@@ -655,13 +668,21 @@ app.post('/ZmanimApi', async (req, res) => {
                 }
             }
         }
-        console.log();
-        pool.query(`SELECT lt.timeZone FROM locationtable lt WHERE lt.GeoName_Id=?;`, [req.body.location], (error, results) => {
+        pool.query(`SELECT lt.timeZone, lt.City_Name, lt.Country FROM locationtable lt WHERE lt.GeoName_Id=?;`, [req.body.location], (error, results) => {
             if (error) {
                 console.error(error)
             }
             else if (results.length > 0) {
+                let CountryTest = lookup.byInternet(results[0].Country);
+                if (CountryTest == null) {
+                    CountryTest = results[0].Country;
+                    console.log('null!');
+                }
+                else {
+                    CountryTest = CountryTest.country
+                }
                 let timezoneofuser = results[0].timeZone;
+                let CityOfUser = results[0].City_Name + '-' + CountryTest;
                 for (let i = 0; i < start.length; i++) {
                     start[i].date = formatInTimeZone(start[i].date, timezoneofuser, 'yyyy-MM-dd HH:mm')
                 }
@@ -673,10 +694,9 @@ app.post('/ZmanimApi', async (req, res) => {
                     start: start,
                     end: end,
                 }
-                res.json({ event,timeForUser: formatInTimeZone(new Date(), timezoneofuser, 'hh:mm:ss aa')})
+                res.json({ event, timeForUser: new Date(formatInTimeZone(new Date(), timezoneofuser, 'yyyy-MM-dd hh:mm:ss aa')), CityOfUser: CityOfUser })
             }
         })
-        console.log(start[0]);
 
     }
     catch (error) {

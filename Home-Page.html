@@ -567,16 +567,6 @@
     <script>
         const plusIcon = document.getElementsByClassName('Plus-Icon');
         const contentDiv = document.getElementsByClassName('Content');
-        const nameTitle = document.getElementById('User-Name-Time');
-        let dataOfUser = JSON.parse(localStorage.getItem('User')).User;
-        let User = dataOfUser;
-
-
-        console.log(User);
-        nameTitle.innerHTML = ` <span> Hello,</span>${User.First_Name} ${User.Last_Name}_
-                <p>
-                    New York Est-s <span>11:18am</span>
-                </p>`;
         for (let i = 0; i < plusIcon.length; i++) {
             plusIcon[i].addEventListener('click', function () {
                 contentDiv[i].classList.toggle('hidden');
