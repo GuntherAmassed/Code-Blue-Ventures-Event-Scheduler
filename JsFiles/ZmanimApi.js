@@ -6,7 +6,7 @@ const NameOfEvent = document.getElementById('Event-Name');
 const LocationOptions = document.getElementsByClassName('location-borders');
 const LocationIdFromOptions = document.getElementsByClassName('Hidden-Location-Id');
 const nameTitle = document.getElementById('User-Name-Time');
-
+let dataOfUser;
 let EventTimes;
 let startCounter = 0;
 let endCounter = 0;
@@ -15,9 +15,7 @@ let timeExtracted = '';
 let holiday = false;
 let nextYear = 0;
 let StartingPlace = true;
-let MyLocation;
-let dataOfUser = JSON.parse(localStorage.getItem('User')).User;
-let User = dataOfUser;
+let MyLocation={};
 
 ArrowRight.addEventListener('click', async () => {
     if ((EventTimes.end.length - 10) === startCounter) {
@@ -37,9 +35,12 @@ ArrowLeft.addEventListener('click', async () => {
 })
 
 
-async function ZmanFetch(location) {
-    console.log(location);
-    MyLocation = location;
+async function ZmanFetch(data) {
+    if ('user' in data) {
+        dataOfUser = data;
+        MyLocation.Location = data.user.Location_Id;
+    }
+    console.log(data);
     let MyDate;
     if (nextYear === 0) {
         let date = new Date();
@@ -58,18 +59,18 @@ async function ZmanFetch(location) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ Date: MyDate, location: location })
+        body: JSON.stringify({ Date: MyDate, location: MyLocation.Location })
     });
     let responseData = await response.json();
     let timeForUserRedone = new Date(responseData.timeForUser).toLocaleDateString('en-us', { weekday: "short" });
-    nameTitle.innerHTML='';
-    nameTitle.innerHTML += `  <span> Hello,</span>${User.First_Name} ${User.Last_Name}_
+    nameTitle.innerHTML = '';
+    nameTitle.innerHTML += `  <span> Hello,</span>${dataOfUser.user.First_Name} ${dataOfUser.user.Last_Name}_
      <p>
     ${responseData.CityOfUser} <span> ${timeForUserRedone} </span><span id="clock-of-user"></span>
     </p>`;
     let clockOfUser = document.getElementById('clock-of-user');
-    clockOfUser.innerHTML='';
-    setClockOfUser(new Date(responseData.timeForUser),clockOfUser);
+    clockOfUser.innerHTML = '';
+    setClockOfUser(new Date(responseData.timeForUser), clockOfUser);
     EventTimes = {
         start: [],
         end: []
@@ -132,7 +133,8 @@ async function addClickEventForLocation() {
             startCounter = 0;
             endCounter = 0;
             nextYear = 0;
-            await ZmanFetch(LocationIdFromOptions[i].innerHTML);
+            MyLocation.Location=LocationIdFromOptions[i].innerHTML
+            await ZmanFetch(MyLocation);
             for (let j = 0; j < LocationOptions.length; j++) {
                 if (LocationOptions[j] !== LocationOptions[i]) {
                     LocationOptions[j].style.borderColor = '#929BA3'
@@ -141,7 +143,7 @@ async function addClickEventForLocation() {
         })
     }
 }
-function setClockOfUser(timeForUser,clockOfUser) {
+function setClockOfUser(timeForUser, clockOfUser) {
     let FullTime;
     let SecondOfUser = timeForUser.getSeconds();
     let MinuteOfUser = timeForUser.getMinutes();

@@ -16,380 +16,6 @@ var path = require('path');
 let dirName = 'C:/Users/Moshe Stern/Desktop/Figma Api/ZuntaTimes';
 const jwt = require('jsonwebtoken');
 app.use(express.static(dirName));
-const timeZone = [
-    {
-        "offset": "GMT-12:00",
-        "name": "Etc/GMT-12"
-    },
-    {
-        "offset": "GMT-11:00",
-        "name": "Etc/GMT-11"
-    },
-    {
-        "offset": "GMT-11:00",
-        "name": "Pacific/Midway"
-    },
-    {
-        "offset": "GMT-10:00",
-        "name": "America/Adak"
-    },
-    {
-        "offset": "GMT-09:00",
-        "name": "America/Anchorage"
-    },
-    {
-        "offset": "GMT-09:00",
-        "name": "Pacific/Gambier"
-    },
-    {
-        "offset": "GMT-08:00",
-        "name": "America/Dawson_Creek"
-    },
-    {
-        "offset": "GMT-08:00",
-        "name": "America/Ensenada"
-    },
-    {
-        "offset": "GMT-08:00",
-        "name": "America/Los_Angeles"
-    },
-    {
-        "offset": "GMT-07:00",
-        "name": "America/Chihuahua"
-    },
-    {
-        "offset": "GMT-07:00",
-        "name": "America/Denver"
-    },
-    {
-        "offset": "GMT-06:00",
-        "name": "America/Belize"
-    },
-    {
-        "offset": "GMT-06:00",
-        "name": "America/Cancun"
-    },
-    {
-        "offset": "GMT-06:00",
-        "name": "America/Chicago"
-    },
-    {
-        "offset": "GMT-06:00",
-        "name": "Chile/EasterIsland"
-    },
-    {
-        "offset": "GMT-05:00",
-        "name": "America/Bogota"
-    },
-    {
-        "offset": "GMT-05:00",
-        "name": "America/Havana"
-    },
-    {
-        "offset": "GMT-05:00",
-        "name": "America/New_York"
-    },
-    {
-        "offset": "GMT-04:30",
-        "name": "America/Caracas"
-    },
-    {
-        "offset": "GMT-04:00",
-        "name": "America/Campo_Grande"
-    },
-    {
-        "offset": "GMT-04:00",
-        "name": "America/Glace_Bay"
-    },
-    {
-        "offset": "GMT-04:00",
-        "name": "America/Goose_Bay"
-    },
-    {
-        "offset": "GMT-04:00",
-        "name": "America/Santiago"
-    },
-    {
-        "offset": "GMT-04:00",
-        "name": "America/La_Paz"
-    },
-    {
-        "offset": "GMT-03:00",
-        "name": "America/Argentina/Buenos_Aires"
-    },
-    {
-        "offset": "GMT-03:00",
-        "name": "America/Montevideo"
-    },
-    {
-        "offset": "GMT-03:00",
-        "name": "America/Araguaina"
-    },
-    {
-        "offset": "GMT-03:00",
-        "name": "America/Godthab"
-    },
-    {
-        "offset": "GMT-03:00",
-        "name": "America/Miquelon"
-    },
-    {
-        "offset": "GMT-03:00",
-        "name": "America/Sao_Paulo"
-    },
-    {
-        "offset": "GMT-03:30",
-        "name": "America/St_Johns"
-    },
-    {
-        "offset": "GMT-02:00",
-        "name": "America/Noronha"
-    },
-    {
-        "offset": "GMT-01:00",
-        "name": "Atlantic/Cape_Verde"
-    },
-    {
-        "offset": "GMT",
-        "name": "Europe/Belfast"
-    },
-    {
-        "offset": "GMT",
-        "name": "Africa/Abidjan"
-    },
-    {
-        "offset": "GMT",
-        "name": "Europe/Dublin"
-    },
-    {
-        "offset": "GMT",
-        "name": "Europe/Lisbon"
-    },
-    {
-        "offset": "GMT",
-        "name": "Europe/London"
-    },
-    {
-        "offset": "UTC",
-        "name": "UTC"
-    },
-    {
-        "offset": "GMT+01:00",
-        "name": "Africa/Algiers"
-    },
-    {
-        "offset": "GMT+01:00",
-        "name": "Africa/Windhoek"
-    },
-    {
-        "offset": "GMT+01:00",
-        "name": "Atlantic/Azores"
-    },
-    {
-        "offset": "GMT+01:00",
-        "name": "Atlantic/Stanley"
-    },
-    {
-        "offset": "GMT+01:00",
-        "name": "Europe/Amsterdam"
-    },
-    {
-        "offset": "GMT+01:00",
-        "name": "Europe/Belgrade"
-    },
-    {
-        "offset": "GMT+01:00",
-        "name": "Europe/Brussels"
-    },
-    {
-        "offset": "GMT+02:00",
-        "name": "Africa/Cairo"
-    },
-    {
-        "offset": "GMT+02:00",
-        "name": "Africa/Blantyre"
-    },
-    {
-        "offset": "GMT+02:00",
-        "name": "Asia/Beirut"
-    },
-    {
-        "offset": "GMT+02:00",
-        "name": "Asia/Damascus"
-    },
-    {
-        "offset": "GMT+02:00",
-        "name": "Asia/Gaza"
-    },
-    {
-        "offset": "GMT+02:00",
-        "name": "Asia/Jerusalem"
-    },
-    {
-        "offset": "GMT+03:00",
-        "name": "Africa/Addis_Ababa"
-    },
-    {
-        "offset": "GMT+03:00",
-        "name": "Asia/Riyadh89"
-    },
-    {
-        "offset": "GMT+03:00",
-        "name": "Europe/Minsk"
-    },
-    {
-        "offset": "GMT+03:30",
-        "name": "Asia/Tehran"
-    },
-    {
-        "offset": "GMT+04:00",
-        "name": "Asia/Dubai"
-    },
-    {
-        "offset": "GMT+04:00",
-        "name": "Asia/Yerevan"
-    },
-    {
-        "offset": "GMT+04:00",
-        "name": "Europe/Moscow"
-    },
-    {
-        "offset": "GMT+04:30",
-        "name": "Asia/Kabul"
-    },
-    {
-        "offset": "GMT+05:00",
-        "name": "Asia/Tashkent"
-    },
-    {
-        "offset": "GMT+05:30",
-        "name": "Asia/Kolkata"
-    },
-    {
-        "offset": "GMT+05:45",
-        "name": "Asia/Katmandu"
-    },
-    {
-        "offset": "GMT+06:00",
-        "name": "Asia/Dhaka"
-    },
-    {
-        "offset": "GMT+06:00",
-        "name": "Asia/Yekaterinburg"
-    },
-    {
-        "offset": "GMT+06:30",
-        "name": "Asia/Rangoon"
-    },
-    {
-        "offset": "GMT+07:00",
-        "name": "Asia/Bangkok"
-    },
-    {
-        "offset": "GMT+07:00",
-        "name": "Asia/Novosibirsk"
-    },
-    {
-        "offset": "GMT+08:00",
-        "name": "Etc/GMT+8"
-    },
-    {
-        "offset": "GMT+08:00",
-        "name": "Asia/Hong_Kong"
-    },
-    {
-        "offset": "GMT+08:00",
-        "name": "Asia/Krasnoyarsk"
-    },
-    {
-        "offset": "GMT+08:00",
-        "name": "Australia/Perth"
-    },
-    {
-        "offset": "GMT+08:45",
-        "name": "Australia/Eucla"
-    },
-    {
-        "offset": "GMT+09:00",
-        "name": "Asia/Irkutsk"
-    },
-    {
-        "offset": "GMT+09:00",
-        "name": "Asia/Seoul"
-    },
-    {
-        "offset": "GMT+09:00",
-        "name": "Asia/Tokyo"
-    },
-    {
-        "offset": "GMT+09:30",
-        "name": "Australia/Adelaide"
-    },
-    {
-        "offset": "GMT+09:30",
-        "name": "Australia/Darwin"
-    },
-    {
-        "offset": "GMT+09:30",
-        "name": "Pacific/Marquesas"
-    },
-    {
-        "offset": "GMT+10:00",
-        "name": "Etc/GMT+10"
-    },
-    {
-        "offset": "GMT+10:00",
-        "name": "Australia/Brisbane"
-    },
-    {
-        "offset": "GMT+10:00",
-        "name": "Australia/Hobart"
-    },
-    {
-        "offset": "GMT+10:00",
-        "name": "Asia/Yakutsk"
-    },
-    {
-        "offset": "GMT+10:30",
-        "name": "Australia/Lord_Howe"
-    },
-    {
-        "offset": "GMT+11:00",
-        "name": "Asia/Vladivostok"
-    },
-    {
-        "offset": "GMT+11:30",
-        "name": "Pacific/Norfolk"
-    },
-    {
-        "offset": "GMT+12:00",
-        "name": "Etc/GMT+12"
-    },
-    {
-        "offset": "GMT+12:00",
-        "name": "Asia/Anadyr"
-    },
-    {
-        "offset": "GMT+12:00",
-        "name": "Asia/Magadan"
-    },
-    {
-        "offset": "GMT+12:00",
-        "name": "Pacific/Auckland"
-    },
-    {
-        "offset": "GMT+12:45",
-        "name": "Pacific/Chatham"
-    },
-    {
-        "offset": "GMT+13:00",
-        "name": "Pacific/Tongatapu"
-    },
-    {
-        "offset": "GMT+14:00",
-        "name": "Pacific/Kiritimati"
-    }
-];
 const fs = require('fs');
 const { error } = require('console');
 const { json } = require('body-parser');
@@ -484,53 +110,64 @@ app.post('/LogIn', (req, res) => {
 
 app.get('/HomePage', authenticateToken, (req, res) => {
     let responseObj;
-    fs.readFile(path.join(dirName, '/Home-Page.html'), 'utf8', (err, htmlContent) => {
-        if (err) {
-            return res.status(500).send('Error reading the HTML file.');
-        }
-
-        if (req.User.Role === 'Admin') {
-            let adminRights = {
-                Mobile: `<p id="user-Desktop-Admin"><img src="public/images/admin-profile-icon-user.svg" alt=""> user</p>`,
-                Desktop: ` <div id="Users-Mobile-admin">
+    if (req.User.Role === 'Admin') {
+        let adminRights = {
+            Mobile: `<p id="user-Desktop-Admin"><img src="public/images/admin-profile-icon-user.svg" alt=""> user</p>`,
+            Desktop: ` <div id="Users-Mobile-admin">
                 <p id="user-Mobile"><img src="public/images/admin-profile-icon-users.svg" alt="">Users</p>
                  </div>`
-            }
-            responseObj = {
-                User: req.User,
-                HTMLContent: htmlContent,
-                adminRights: adminRights
-            };
         }
-        else {
-            responseObj = {
-                User: req.User,
-                HTMLContent: htmlContent,
-            };
-        }
-        res.json(responseObj)
-    })
+        responseObj = {
+            User: req.User,
+            adminRights: adminRights,
+        };
+    }
+    else {
+        responseObj = {
+            User: req.User,
+        };
+    }
+    res.json(responseObj)
+
 })
 
 
-app.post('/token', (req, res) => {
-
+app.post('/token', async (req, res) => {
     const refreshToken = req.body.token;
     if (refreshToken == null) return res.sendStatus(401)
-    pool.query(checkIfRefreshTokenIsInDatabase, [refreshToken], (err, results) => {
-        if (err) {
-            console.error(err);
-            return res.sendStatus(401)
-        }
-        else if (results.length > 0) {
-            jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+    let checkDataBase = async () => {
+        return await new Promise((resolve, reject) => {
 
-                if (err) return res.sendStatus(403)
-                const accessToken = generateAccessToken({ user })
-                res.json({ accessToken: accessToken })
+            pool.query(checkIfRefreshTokenIsInDatabase, [refreshToken], (err, results) => {
+                if (err) {
+                    reject(er)
+                }
+                else if (results.length > 0) {
+                    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+                        if (err) {
+                            reject(err)
+                        }
+                        const accessToken = generateAccessToken({ user })
+                        let data={
+                            accessToken,
+                            user
+                        }
+                        resolve(data)
+                    })
+                }
+                else {
+                    reject(null);
+                }
+
             })
-        }
-    })
+        })
+    }
+    try {
+        let data = await checkDataBase();
+        res.json({ accessToken: data.accessToken,user:data.user});
+    } catch (error) {
+        res.status(403).json({ error: 'An error occurred.' });
+    }
 })
 
 app.delete('/logout', (req, res) => {

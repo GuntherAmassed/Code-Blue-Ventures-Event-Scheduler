@@ -53,3 +53,6 @@
         min-height: 600px;
     }
 }
+#user-Desktop-Admin {
+    display: none;
+}

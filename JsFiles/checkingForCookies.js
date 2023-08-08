@@ -1,45 +1,34 @@
 
-checkForCookies();
 async function checkForCookies() {
     let Token = getCookie('token');
     if (Token == null) {
-        return console.log('no cookie');
+        console.log('no cookie');
+        return;
     }
     let jsonToken = {
         token: Token
     }
-    console.log(Token);
-    let response = await fetch('http://localhost:3000/token', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(jsonToken)
-    })
-    let data = await response.json();
-    console.log(data.accessToken);
-    if (data.status === 403) {
-        return console.log('no data returned');
-    }
-    else {
-        let responseHomePage = await fetch('http://localhost:3000/HomePage', {
-            method: 'GET',
+    try {
+        let response = await fetch('http://localhost:3000/token', {
+            method: 'POST',
             headers: {
-                'Authorization': `Bearer ${data.accessToken}`
-            }
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(jsonToken)
         })
-        let dataHomePage = await responseHomePage.json();
-        if (dataHomePage == null) {
-            console.log('no data returned');
+        let responsedata = await response.json();
+        let data = {
+            accessToken: responsedata.accessToken,
+            user: responsedata.user
         }
-        else {
-            localStorage.removeItem('User');
-            localStorage.setItem('User', JSON.stringify(dataHomePage.User));
-            document.open();
-            document.write(dataHomePage.HTMLContent);
-            document.close();
-        }
+        return data;
+
+    } catch (error) {
+        console.log(error);
+        return null
     }
+
+
 }
 function getCookie(cname) {
     let name = cname + "=";
@@ -55,3 +44,13 @@ function getCookie(cname) {
     }
     return "";
 }
+async function checkLogIn() {
+    let userLoggedIn = await checkForCookies();
+    if (userLoggedIn.accessToken == null) {
+        window.location.href = 'index.html'
+    }
+    else {
+        return userLoggedIn;
+    }
+}
+checkLogIn()

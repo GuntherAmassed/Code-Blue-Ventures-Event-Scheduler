@@ -2,7 +2,7 @@
     position: relative;
     display: flex;
     justify-content: space-between;
-    align-items: center; 
+    align-items: center;
     height: 15%;
 }
 
@@ -14,7 +14,7 @@
 #Menu-Mobile-Frame img:last-child {
     align-self: normal;
     margin: 0;
-   
+
 }
 
 #Mobile-Frame {
@@ -88,5 +88,9 @@
 
 img {
     width: max-content;
+}
+
+#Menu-Mobile-Frame-Extended div:nth-child(2) div:first-child {
+    display: none;
 }
 

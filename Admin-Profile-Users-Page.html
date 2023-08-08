@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <script src="JsFiles/checkingForCookies.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
@@ -180,7 +181,7 @@
 
 
 
-       thead tr{
+        thead tr {
             border: 0;
         }
 
@@ -204,9 +205,10 @@
             padding: 1.5em;
         }
 
-       
 
-        table td,th {
+
+        table td,
+        th {
             width: 7%;
         }
     }
@@ -406,7 +408,7 @@
     <div class="Frame-Menu" id="Menu-Desktop">
         <div class="container">
             <img src="Images/CODEBLUE TIME.svg" alt="">
-            <p id="user"><img src="public/images/admin-profile-icon-user.svg" alt=""> user</p>
+            <p id="user-Desktop-Admin"><img src="public/images/admin-profile-icon-user.svg" alt=""> user</p>
             <p id="home"><img src="public/images/admin-profile-icon-home.svg" alt=""> home</p>
             <p id="My-Profile"><img src="public/images/admin-profile-icon-users.svg" alt="">My Profile</p>
         </div>
@@ -424,7 +426,7 @@
                 <img id="ExIcon" src="Images/admin-profile-icon-outline-close.svg" alt="">
             </div>
             <div>
-                <div>
+                <div id="user-Mobile-Frame">
                     <p id="user-Mobile"><img src="public/images/admin-profile-icon-users.svg" alt="">Users</p>
                 </div>
                 <div>
@@ -466,6 +468,7 @@
             </tbody>
         </table>
     </Main>
+    <script src="JsFiles/appending.js"></script>
     <script src="JsFiles/PopulateTable.js"></script>
     <script src="jsFiles/Mobile-Menu.js"></script>
     <script src="jsFiles/Menu.js"></script>
