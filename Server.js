@@ -40,7 +40,8 @@ let fileNames = [];
 let row = '';
 const LogInQuery = `SELECT * FROM userinfo us WHERE us.Email=? AND us.Password=?;`;
 const refreshTokenAdd = `INSERT INTO refresh_token(Refresh_Tokens,Id) VALUES(?,?);`;
-const checkIfRefreshTokenIsInDatabase = `SELECT * FROM Refresh_Token WHERE Refresh_Token.Refresh_Tokens=?;`;
+const updateRefreshToken = `UPDATE refresh_token SET Refresh_Tokens=? WHERE id=?`
+const checkIfRefreshTokenIsInDatabase = `SELECT * FROM refresh_token WHERE Refresh_Tokens=?;`;
 const checkIfUserHasRefreshToken = `SELECT * FROM Refresh_Token WHERE refresh_token.id=?;`
 
 /////calling
@@ -88,12 +89,8 @@ app.post('/LogIn', (req, res) => {
                     Location_Id: results[0].location_Id,
                     Role: results[0].Role,
                 };
-                if (req.body.rememberMe === true) {
-                    res.json({ accessToken: generateAccessToken(user), refreshToken: await generateRefreshToken(user) })
-                }
-                else {
-                    res.json({ accessToken: generateAccessToken(user) })
-                }
+
+                res.json({ accessToken: await generateRefreshTokenShort(user) })
             }
             catch (err) {
                 console.error(err);
@@ -108,51 +105,31 @@ app.post('/LogIn', (req, res) => {
 })
 
 
-app.get('/HomePage', authenticateToken, (req, res) => {
-    let responseObj;
-    if (req.User.Role === 'Admin') {
-        let adminRights = {
-            Mobile: `<p id="user-Desktop-Admin"><img src="public/images/admin-profile-icon-user.svg" alt=""> user</p>`,
-            Desktop: ` <div id="Users-Mobile-admin">
-                <p id="user-Mobile"><img src="public/images/admin-profile-icon-users.svg" alt="">Users</p>
-                 </div>`
-        }
-        responseObj = {
-            User: req.User,
-            adminRights: adminRights,
-        };
-    }
-    else {
-        responseObj = {
-            User: req.User,
-        };
-    }
-    res.json(responseObj)
-
-})
 
 
 app.post('/token', async (req, res) => {
-    const refreshToken = req.body.token;
-    if (refreshToken == null) return res.sendStatus(401)
+    const Token = req.body.token;
+    if (Token == null) return res.sendStatus(401)
     let checkDataBase = async () => {
         return await new Promise((resolve, reject) => {
 
-            pool.query(checkIfRefreshTokenIsInDatabase, [refreshToken], (err, results) => {
+            pool.query(checkIfRefreshTokenIsInDatabase, [Token], (err, results) => {
                 if (err) {
+                    console.log(err);
                     reject(er)
+
                 }
                 else if (results.length > 0) {
-                    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+                    jwt.verify(Token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
                         if (err) {
+                            console.log(err);
                             reject(err)
                         }
-                        const accessToken = generateAccessToken({ user })
-                        let data={
-                            accessToken,
+                        let data = {
                             user
                         }
                         resolve(data)
+
                     })
                 }
                 else {
@@ -164,9 +141,10 @@ app.post('/token', async (req, res) => {
     }
     try {
         let data = await checkDataBase();
-        res.json({ accessToken: data.accessToken,user:data.user});
+        res.json({ user: data.user });
     } catch (error) {
-        res.status(403).json({ error: 'An error occurred.' });
+        console.log(error);
+        res.json(null)
     }
 })
 
@@ -345,56 +323,106 @@ app.post('/ZmanimApi', async (req, res) => {
 
 
 /////functions
-
-function generateAccessToken(user) {
-    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' })
-}
-
 async function generateRefreshToken(user) {
+    let newToken;
     let oldRefreshToken = await checkForRefreshToken(user.id);
     if (oldRefreshToken != null) {
-        return oldRefreshToken;
-    }
-    let token = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '90d' });
-    return new Promise((resolve, reject) => {
-        pool.query(refreshTokenAdd, [token, user.id], (err) => {
-            if (err) {
-                reject(err);
+        jwt.verify(oldRefreshToken, process.env.ACCESS_TOKEN_SECRET, async (err) => {
+            try {
+                if (err) {
+                    newToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' });
+                    let updateToken = async () => {
+                        return await new Promise((resolve, reject) => {
+                            pool.query(updateRefreshToken, [newToken, user.id], (err) => {
+                                if (err) {
+                                    reject(err)
+                                }
+                                else {
+                                    resolve(newToken)
+                                }
+                            })
+                        })
+                    }
+                    newToken = await updateToken;
+                }
+                else {
+                    newToken = oldRefreshToken
+                }
             }
-            else {
-                resolve(token);
+            catch (error) {
+                console.error(error);
             }
         })
-    })
+        return newToken
+
+    }
+    else {
+        let token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' });
+        return new Promise((resolve, reject) => {
+            pool.query(refreshTokenAdd, [token, user.id], (err) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve(token);
+                }
+            })
+        })
+    }
 
 
 }
-function authenticateToken(req, res, next) {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
-    if (token == null) {
-        return res.sendStatus(401)
-    }
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-        try {
-            if (err) {
-                console.log(err.message);
-                res.sendStatus(403);
-            }
-            else {
-                if ('user' in user) {
-                    req.User = { User: user.user };
+
+
+async function generateRefreshTokenShort(user) {
+    let newToken;
+    let oldRefreshToken = await checkForRefreshToken(user.id);
+    if (oldRefreshToken != null) {
+        jwt.verify(oldRefreshToken, process.env.ACCESS_TOKEN_SECRET, async (err) => {
+            try {
+                if (err) {
+                    newToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' });
+                    let updateToken = async () => {
+                        return await new Promise((resolve, reject) => {
+                            pool.query(updateRefreshToken, [newToken, user.id], (err) => {
+                                if (err) {
+                                    reject(err)
+                                }
+                                else {
+                                    resolve(newToken)
+                                }
+                            })
+                        })
+                    }
+                    newToken = await updateToken();
                 }
                 else {
-                    req.User = { User: user };
+                    newToken = oldRefreshToken
                 }
-                next();
             }
-        }
-        catch (error) {
-            console.log(error);
-        }
-    })
+            catch (error) {
+                console.error(error);
+            }
+        })
+        return newToken
+
+    }
+    else {
+        let token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' });  console.log(token);
+        return new Promise((resolve, reject) => {
+            pool.query(refreshTokenAdd, [token, user.id], (err) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve(token);
+                }
+            })
+        })
+      
+    }
+
+
 }
 
 async function checkForRefreshToken(id) {

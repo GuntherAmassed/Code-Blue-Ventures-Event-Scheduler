@@ -8,6 +8,7 @@ async function checkForCookies() {
     let jsonToken = {
         token: Token
     }
+    console.log(jsonToken);
     try {
         let response = await fetch('http://localhost:3000/token', {
             method: 'POST',
@@ -16,12 +17,16 @@ async function checkForCookies() {
             },
             body: JSON.stringify(jsonToken)
         })
-        let responsedata = await response.json();
-        let data = {
-            accessToken: responsedata.accessToken,
-            user: responsedata.user
+        let data = await response.json();
+        if (data == null) {
+            console.log(data);
+            return data
         }
-        return data;
+        let userdata = {
+            user: data.user,
+            token: jsonToken
+        }
+        return userdata;
 
     } catch (error) {
         console.log(error);
@@ -46,8 +51,13 @@ function getCookie(cname) {
 }
 async function checkLogIn() {
     let userLoggedIn = await checkForCookies();
-    if (userLoggedIn.accessToken == null) {
+    if (userLoggedIn == null) {
         window.location.href = 'index.html'
+    }
+    else if(userLoggedIn != null) {
+        if (userLoggedIn.user == null) {
+            window.location.href = 'index.html'
+        }
     }
     else {
         return userLoggedIn;

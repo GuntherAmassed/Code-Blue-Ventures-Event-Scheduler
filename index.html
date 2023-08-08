@@ -353,7 +353,6 @@
     </div>
     <script>
         async function checkForCookies() {
-          
             let Token = getCookie('token');
             if (Token == null) {
                 console.log('no cookie');
@@ -361,9 +360,7 @@
             }
             let jsonToken = {
                 token: Token
-            } 
-            console.log(jsonToken);
-             console.log('hi');
+            }
             try {
                 let response = await fetch('http://localhost:3000/token', {
                     method: 'POST',
@@ -373,15 +370,20 @@
                     body: JSON.stringify(jsonToken)
                 })
                 let data = await response.json();
-                console.log(data);
-                if (data.status === 403) {
-
+                if (data == null) {
+                    return data
                 }
-                return data.accessToken;
+                let userdata = {
+                    user: data.user,
+                    token: jsonToken
+                }
+                return userdata;
+
             } catch (error) {
                 console.log(error);
-                return
+                return null
             }
+
 
         }
         function getCookie(cname) {
@@ -399,21 +401,13 @@
             return "";
         }
 
+
+
         tryLogin();
         async function tryLogin() {
-            let responseHomePage = await fetch('http://localhost:3000/HomePage', {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${await checkForCookies()}`
-                }
-            })
-            let dataHomePage = await responseHomePage.json();
-            if (dataHomePage == null) {
-                console.log('no data returned');
-            }
-            else {
-                localStorage.removeItem('User');
-                localStorage.setItem('User', JSON.stringify(dataHomePage.User));
+            let userLoggedIn = await checkForCookies();
+            console.log(userLoggedIn);
+            if (userLoggedIn != null) {
                 window.location.href = 'Home-Page.html'
             }
         }
@@ -446,9 +440,6 @@
             window.location.href = "Reset.html";
         })
         async function LogIn() {
-            console.log(window.location.href);
-
-            console.log(window.location.href);
             let UserData = {
                 Password: Password.value,
                 Email: Email.value,
@@ -462,6 +453,7 @@
                 body: JSON.stringify(UserData)
             });
             let data = await response.json();
+
             if ('error' in data) {
                 if (data.error === true) {
                     for (error of errors) {
@@ -477,23 +469,9 @@
                 }
             }
             else {
-                document.cookie = `token = ${data.refreshToken}; expires=Wed, 05 Aug 2024 23:00:00 UTC;`;
-                try {
-                    let redirectResponse = await fetch('http://localhost:3000/HomePage', {
-                        method: 'GET',
-                        headers: {
-                            'Authorization': `Bearer ${data.accessToken}`
-                        },
-                    });
-                    let redirectResponseData = await redirectResponse.json();
-                    if (redirectResponse) {
-                        window.location.href = 'Home-Page.html'
-                    }
-
-                }
-                catch (error) {
-                    console.error(error.message);
-                }
+                console.log(data);
+                document.cookie = `token = ${data.accessToken}; expires=Wed, 05 Aug 2024 23:00:00 UTC;`;
+                window.location.href = 'Home-Page.html'
             }
         }
     </script>
