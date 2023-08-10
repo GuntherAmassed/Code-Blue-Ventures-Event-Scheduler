@@ -19,3 +19,10 @@ Content-Type: application/json
     "Email":"Aaron360@gmail.com",
     "rememberMe":true
 }
+####
+POST http://localhost:3000/ClockAmount
+Content-Type: application/json
+
+{
+
+}

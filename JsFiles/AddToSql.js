@@ -2,6 +2,10 @@ const ct = require('countries-and-timezones');
 const fs = require('fs');
 require('dotenv').config()
 const jwt = require('jsonwebtoken');
+const lookup = require('country-code-lookup')
+let Country = require('country-state-city').Country;
+let State = require('country-state-city').State;
+let City = require('country-state-city').City;
 
 let files = fs.readdirSync('C:/Users/Moshe Stern/Desktop/Figma Api/ZuntaTimes/Images/Flags');
 const { createPool } = require('mysql2');
@@ -21,6 +25,7 @@ const pool = createPool({
 });
 const { find } = require('geo-tz')
 const Allcities = require('all-the-cities');
+const { resolve } = require('path');
 class RandomNameGenerator {
     constructor() {
         this.firstName = ["Adam", "Alex", "Aaron", "Ben", "Carl", "Dan", "David", "Edward", "Fred", "Frank", "George", "Hal", "Hank", "Ike", "John", "Jack", "Joe", "Larry", "Monte", "Matthew", "Mark", "Nathan", "Otto", "Paul", "Peter", "Roger", "Roger", "Steve", "Thomas", "Tim", "Ty", "Victor", "Walter"];
@@ -69,7 +74,7 @@ function getCountries(lines) {
 
 }
 function addUsersToDataBase() {
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < 1; i++) {
         let Name = nameGenerator.GenerateName();
         let values = [`${Name[0]}${i}@gmail.com`, Name[0], Name[1], 1234, FinalCountryIntialArray[Math.floor(Math.random() * FinalCountryIntialArray.length)].timezones[0], '1234', 'test'];
         pool.query(createUserQuery, [`${Name[0]}${i}@gmail.com`, Name[0], Name[1], 1234, FinalCountryIntialArray[Math.floor(Math.random() * FinalCountryIntialArray.length)].timezones[0], '1234', 'test'], (error) => {
@@ -150,20 +155,40 @@ async function addCitiesToDatabase(lines) {
     })
 
 }
-function insertLocations(GeoNameId, TimeZone, Country, City) {
-    pool.query('INSERT INTO locationtable (GeoName_Id,timeZone,Country,City_Name) VALUES(?,?,?,?);', [GeoNameId, TimeZone, Country, City], async (error) => {
-        if (error) {
-            console.log(error.message);
-            return;
-        }
-        console.log('Inserted');
-    })
-}
 async function doit() {
-    for (let i = 0; i < Allcities.length; i++) {
-        await insertLocations(Allcities[i].cityId, find(Allcities[i].loc.coordinates[1], Allcities[i].loc.coordinates[0])[0], Allcities[i].country, Allcities[i].name.replace(' ', '_'));
+    let insertLocations = async (timeZone, GeoNameId, CountryFull, StateFull, CityName) => {
+        return await new Promise((resolve, reject) => {
+            pool.query('INSERT INTO locationtable (timeZone,GeoName_Id,Country_Full_Name,State,City_Name) VALUES(?,?,?,?,?)', [timeZone, GeoNameId, CountryFull, StateFull, CityName], (error, results) => {
+                if (error) {
+                    console.log(error.message);
+                    reject()
+                    return;
+                }
+                else {
+                    console.log('inserted');
+                    resolve()
+
+                }
+
+            })
+        })
+
     }
+    for (let i = 0; i < Allcities.length; i++) {
+        for (let j = 0; j < City.getAllCities().length; j++) {
+            if (City.getAllCities()[j].longitude == Allcities[i].loc.coordinates[0] && City.getAllCities()[j].latitude == Allcities[i].loc.coordinates[1]) {
+                // console.log(City.getAllCities()[1].name, State.getStateByCodeAndCountry(City.getAllCities()[1].stateCode, City.getAllCities()[1].countryCode).name, Country.getCountryByCode(City.getAllCities()[1].countryCode).name);
+                await insertLocations(find(Allcities[i].loc.coordinates[1], Allcities[i].loc.coordinates[0])[0], Allcities[i].cityId, Country.getCountryByCode(City.getAllCities()[j].countryCode).name, State.getStateByCodeAndCountry(City.getAllCities()[j].stateCode, City.getAllCities()[j].countryCode).name, Allcities[i].name)
+                break;
+            }
+        }
+
+    }
+
+
 }
+
+
 function UpdateUserLocation() {
     let GeoName_Id;
     pool.query('SELECT GeoName_Id FROM `locationtable`;', (error, results) => {
@@ -201,7 +226,35 @@ function UpdateUserLocation() {
     })
 
 }
+function addAdminCode() {
 
+
+
+    pool.query('SELECT DISTINCT Country FROM `locationtable`;', async (err, results) => {
+        if (err) {
+            console.log(err);
+        }
+        else if (results.length > 0) {
+            for (let i = 0; i < results.length; i++) {
+                let statesOfCountry = State.getStatesOfCountry(results[i].Country);
+                for (let j = 0; j < statesOfCountry.length; j++) {
+                    let citiesOfStateCountry = City.getCitiesOfState(results[i].Country, statesOfCountry[j]);
+                    for (let k = 0; k < citiesOfStateCountry.length; k++) {
+
+
+
+                    }
+                }
+
+            }
+        }
+        else {
+            console.log('no results');
+        }
+    })
+
+}
+UpdateUserLocation()
 let cities =
     `AD-Andorra La Vella|3041563
 AE-Abu Dhabi|292968

@@ -10,17 +10,10 @@ app.use(cors());
 app.use(express.json());
 const { formatInTimeZone } = require('date-fns-tz');
 const today = new Date();
-let clockAmount = '';
-const crytpo = require('crypto');
-var path = require('path');
 let dirName = 'C:/Users/Moshe Stern/Desktop/Figma Api/ZuntaTimes';
 const jwt = require('jsonwebtoken');
 app.use(express.static(dirName));
 const fs = require('fs');
-const { error } = require('console');
-const { json } = require('body-parser');
-const { finished } = require('stream');
-const { reject } = require('bcrypt/promises');
 let files = fs.readdirSync(`Images/Flags`);
 const pool = createPool({
     host: 'localhost',
@@ -28,13 +21,7 @@ const pool = createPool({
     password: '',
     database: 'loginforzunta'
 });
-const cities = require('all-the-cities');
-const lookup = require('country-code-lookup')
-// const { DateTime } = require('luxon');
 
-
-
-let FirstTime = true;
 let FinalCountryIntialArray = [];
 let fileNames = [];
 let row = '';
@@ -45,12 +32,71 @@ const checkIfRefreshTokenIsInDatabase = `SELECT * FROM refresh_token WHERE Refre
 const checkIfUserHasRefreshToken = `SELECT * FROM Refresh_Token WHERE refresh_token.id=?;`
 
 /////calling
-
 getCountries();
 getFlagNames();
 /////listeners
-app.post('/MyProfile', (req, res) => {
-    pool.query('SELECT lt.City_Name, us.Email,us.First_Name,us.Last_Name,us.Skype FROM locationtable lt JOIN userinfo us on us.location_Id = lt.GeoName_Id WHERE us.Id=?;', [req.body.Id], (error, results) => {
+app.post('/GetStates', (req, res) => {
+    pool.query(`SELECT DISTINCT lt.State FROM locationtable lt WHERE  lt.Country_Full_Name=? ORDER BY lt.State ASC;`, [req.body.Country], (err, results) => {
+        if (err) {
+            console.error(err)
+        }
+        else if (results.length > 0) {
+            let HtmlLocationCitiesFromCountriesFromDataBase = '';
+            for (let i = 0; i < results.length; i++) {
+                HtmlLocationCitiesFromCountriesFromDataBase += `<p class="State-Location">${results[i].State}</p>`
+            }
+            res.json({ StatesForCountry: HtmlLocationCitiesFromCountriesFromDataBase })
+        }
+        else {
+            console.log('no data');
+        }
+
+    })
+})
+app.post('/GetCities', (req, res) => {
+  
+    pool.query(`SELECT lt.City_Name FROM locationtable lt WHERE lt.State=? AND lt.Country_Full_Name=? ORDER BY lt.City_Name ASC;`, [req.body.State, req.body.Country], (err, results) => {
+        if (err) {
+            console.error(err)
+        }
+        else if (results.length > 0) {
+            let HtmlLocationCitiesFromCountriesFromDataBase = '';
+            for (let i = 0; i < results.length; i++) {
+                HtmlLocationCitiesFromCountriesFromDataBase += `<p class="City-Location">${results[i].City_Name}</p>`
+            }
+            res.json({ CitiesForCountry: HtmlLocationCitiesFromCountriesFromDataBase })
+        }
+        else {
+            console.log('no data');
+        }
+
+    })
+})
+app.post('/GetLocationId', (req, res) => {
+    pool.query(`SELECT lt.GeoName_Id FROM locationtable lt WHERE lt.City_Name=? AND lt.State=? AND lt.Country_Full_Name=?`, [req.body.City, req.body.States, req.body.Country], (err, results) => {
+        if (err) {
+            console.error(err)
+        }
+        else if (results.length === 1) {
+            let HtmlLocationCitiesFromCountriesFromDataBase = '';
+            for (let i = 0; i < results.length; i++) {
+                HtmlLocationCitiesFromCountriesFromDataBase += `<p class="ID-Location">${results[i].GeoName_Id}</p>`
+            }
+            res.json({ IdForCountry: HtmlLocationCitiesFromCountriesFromDataBase })
+        }
+        else if (results.length > 1) {
+            console.log('too much ids');
+        }
+        else {
+            console.log('no data');
+        }
+
+    })
+})
+
+
+app.post('/Locations', (req, res) => {
+    pool.query('SELECT lt.City_Name,lt.State,lt.Country_Full_Name,lt.GeoName_Id, us.Email,us.First_Name,us.Last_Name,us.Skype FROM locationtable lt JOIN userinfo us on us.location_Id = lt.GeoName_Id WHERE us.Id=?;', [req.body.Id], async (error, results) => {
         if (error) {
             console.error(error)
         }
@@ -60,15 +106,54 @@ app.post('/MyProfile', (req, res) => {
                 First_Name: results[0].First_Name,
                 Last_Name: results[0].Last_Name,
                 Skype: results[0].Skype,
-                City: results[0].City_Name
+                City: results[0].City_Name,
+                State: results[0].State,
+                Country: results[0].Country_Full_Name,
+                LocationID: results[0].GeoName_Id
             }
-            res.json(userInfo)
+            let queryLocations = async () => {
+                return await new Promise((resolve, reject) => {
+                    pool.query('SELECT lt.Country_Full_Name,lt.timeZone FROM locationtable lt GROUP BY lt.Country_Full_Name ORDER BY `lt`.`Country_Full_Name` ASC;', (err, results) => {
+                        if (err) {
+                            reject(err)
+                        }
+                        else if (results.length > 0) {
+                            resolve(results)
+                        }
+                        else {
+                            reject({ error: 'no results' })
+                        }
+                    })
+                })
+            }
+            let LocationCitiesFromDataBase = await queryLocations();
+            if (LocationCitiesFromDataBase.length > 0) {
+                let HtmlLocationCitiesFromDataBase = ''
+                for (let i = 0; i < LocationCitiesFromDataBase.length; i++) {
+                    for (let j = 0; j < files.length; j++) {
+                        if (files[j].split(' ')[0].includes(ct.getCountryForTimezone(LocationCitiesFromDataBase[i].timeZone).id.toLowerCase())) {
+                            LocationCitiesFromDataBase[i].FlagPath = files[j];
+                            break;
+                        }
+                        else {
+                            LocationCitiesFromDataBase[i].FlagPath = 'xx Unknown.svg';
+                        }
+                    }
+
+
+                    HtmlLocationCitiesFromDataBase += `
+                <p class="Location"><img id="Location-Image" src="Images/Flags/${LocationCitiesFromDataBase[i].FlagPath}" alt="">  ${LocationCitiesFromDataBase[i].Country_Full_Name} </p>`
+
+                }
+                res.json({ userInfo: userInfo, HtmlLocationCitiesFromDataBase: HtmlLocationCitiesFromDataBase })
+            }
+
         }
     })
 })
 
 app.post('/LogIn', (req, res) => {
-    pool.query(LogInQuery, [req.body.Email, req.body.Password], async (error, results, fields) => {
+    pool.query(LogInQuery, [req.body.Email, req.body.Password], async (error, results) => {
         let response = {
             error: true,
             message: '',
@@ -89,8 +174,12 @@ app.post('/LogIn', (req, res) => {
                     Location_Id: results[0].location_Id,
                     Role: results[0].Role,
                 };
-
-                res.json({ accessToken: await generateRefreshTokenShort(user) })
+                if (req.body.rememberMe === true) {
+                    res.json({ accessToken: await generateRefreshToken(user) })
+                }
+                else {
+                    res.json({ accessToken: await generateRefreshTokenShort(user) })
+                }
             }
             catch (err) {
                 console.error(err);
@@ -116,7 +205,7 @@ app.post('/token', async (req, res) => {
             pool.query(checkIfRefreshTokenIsInDatabase, [Token], (err, results) => {
                 if (err) {
                     console.log(err);
-                    reject(er)
+                    reject(err)
 
                 }
                 else if (results.length > 0) {
@@ -149,7 +238,7 @@ app.post('/token', async (req, res) => {
 })
 
 app.delete('/logout', (req, res) => {
-    refreshTokens = refreshTokens.filter(token => token !== req.body.token)
+    // refreshTokens = refreshTokens.filter(token => token !== req.body.token)
     res.sendStatus(204)
 })
 
@@ -199,26 +288,19 @@ app.post('/ClockAmount', (req, res) => {
     let times = [];
     let clockFrame = '';
     let locationFrame = '';
-
-    pool.query('SELECT lt.timeZone,lt.GeoName_Id,lt.Country,lt.City_Name FROM locationtable lt JOIN userinfo ON userinfo.location_Id=lt.GeoName_Id  GROUP BY userinfo.location_Id;', (error, results) => {
+    pool.query('SELECT lt.State, lt.timeZone,lt.GeoName_Id,lt.Country_Full_Name,lt.City_Name FROM locationtable lt JOIN userinfo ON userinfo.location_Id=lt.GeoName_Id  GROUP BY userinfo.location_Id;', (error, results) => {
         if (error) {
             return res.sendStatus(401)
         }
         if (results.length > 0) {
             clockAmount = results.length;
             for (let i = 0; i < clockAmount; i++) {
-                let CountryTest = lookup.byInternet(results[i].Country);
-                if (CountryTest == null) {
-                    CountryTest = results[i].Country;
-                    console.log('null!');
-                }
-                else {
-                    CountryTest = CountryTest.country
-                }
+
                 times.push({
                     timeZone: results[i].timeZone,
                     PlaceOfCity: results[i].City_Name,
-                    PlaceOfCountry: CountryTest,
+                    PlaceOfCountry: results[i].Country_Full_Name,
+                    PlaceOfState: results[i].State,
                     Hour: formatInTimeZone(today, results[i].timeZone, 'HH'),
                     Minute: formatInTimeZone(today, results[i].timeZone, 'mm'),
                     Second: formatInTimeZone(today, results[i].timeZone, 'ss'),
@@ -240,7 +322,7 @@ app.post('/ClockAmount', (req, res) => {
             <p class="Name-Of-City"></p>
             <p class="Day-Of-Week"></p>
         </div>`
-                locationFrame += ` <div class="location-borders">${results[i].City_Name} - ${CountryTest}<span class="Hidden-Location-Id">${results[i].GeoName_Id}</span></div>`
+                locationFrame += ` <div class="location-borders">${results[i].City_Name} - ${results[i].State} - ${results[i].Country_Full_Name}<span class="Hidden-Location-Id">${results[i].GeoName_Id}</span></div>`
 
             }
             res.json({ TimeZones: times, clockFrame: clockFrame, locationFrame: locationFrame });
@@ -250,7 +332,6 @@ app.post('/ClockAmount', (req, res) => {
 
 app.post('/ZmanimApi', async (req, res) => {
     try {
-
         let start = [];
         let end = [];
         let StartOfHoliday = false;
@@ -260,7 +341,6 @@ app.post('/ZmanimApi', async (req, res) => {
         let response = await fetch(`https://www.hebcal.com/hebcal?v=1&cfg=json&mf=off&maj=on&start=${StartDate}&end=${EndDate}&geo=geoname&geonameid=${req.body.location}`);
         let responsedata = await response.json();
         let data = responsedata.items;
-
         for (let i = 0; i < data.length; i++) {
 
 
@@ -283,21 +363,13 @@ app.post('/ZmanimApi', async (req, res) => {
                 }
             }
         }
-        pool.query(`SELECT lt.timeZone, lt.City_Name, lt.Country FROM locationtable lt WHERE lt.GeoName_Id=?;`, [req.body.location], (error, results) => {
+        pool.query(`SELECT lt.timeZone, lt.City_Name, lt.Country_Full_Name FROM locationtable lt WHERE lt.GeoName_Id=?;`, [req.body.location], (error, results) => {
             if (error) {
                 console.error(error)
             }
             else if (results.length > 0) {
-                let CountryTest = lookup.byInternet(results[0].Country);
-                if (CountryTest == null) {
-                    CountryTest = results[0].Country;
-                    console.log('null!');
-                }
-                else {
-                    CountryTest = CountryTest.country
-                }
                 let timezoneofuser = results[0].timeZone;
-                let CityOfUser = results[0].City_Name + '-' + CountryTest;
+                let CityOfUser = results[0].City_Name + '-' + results[0].Country_Full_Name;
                 for (let i = 0; i < start.length; i++) {
                     start[i].date = formatInTimeZone(start[i].date, timezoneofuser, 'yyyy-MM-dd HH:mm')
                 }
@@ -310,6 +382,10 @@ app.post('/ZmanimApi', async (req, res) => {
                     end: end,
                 }
                 res.json({ event, timeForUser: new Date(formatInTimeZone(new Date(), timezoneofuser, 'yyyy-MM-dd hh:mm:ss aa')), CityOfUser: CityOfUser })
+            }
+            else{
+                console.log('s');
+
             }
         })
 
@@ -330,7 +406,7 @@ async function generateRefreshToken(user) {
         jwt.verify(oldRefreshToken, process.env.ACCESS_TOKEN_SECRET, async (err) => {
             try {
                 if (err) {
-                    newToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' });
+                    newToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '90d' });
                     let updateToken = async () => {
                         return await new Promise((resolve, reject) => {
                             pool.query(updateRefreshToken, [newToken, user.id], (err) => {
@@ -343,7 +419,7 @@ async function generateRefreshToken(user) {
                             })
                         })
                     }
-                    newToken = await updateToken;
+                    newToken = await updateToken();
                 }
                 else {
                     newToken = oldRefreshToken
@@ -357,7 +433,7 @@ async function generateRefreshToken(user) {
 
     }
     else {
-        let token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' });
+        let token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '90d' });
         return new Promise((resolve, reject) => {
             pool.query(refreshTokenAdd, [token, user.id], (err) => {
                 if (err) {
@@ -408,7 +484,7 @@ async function generateRefreshTokenShort(user) {
 
     }
     else {
-        let token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' });  console.log(token);
+        let token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' }); console.log(token);
         return new Promise((resolve, reject) => {
             pool.query(refreshTokenAdd, [token, user.id], (err) => {
                 if (err) {
@@ -419,7 +495,7 @@ async function generateRefreshTokenShort(user) {
                 }
             })
         })
-      
+
     }
 
 
@@ -471,7 +547,6 @@ function getFlagNames() {
 app.listen(port, () => {
     console.log("listening on port " + port);
 })
-
 
 
 

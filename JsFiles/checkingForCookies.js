@@ -19,7 +19,6 @@ async function checkForCookies() {
         })
         let data = await response.json();
         if (data == null) {
-            console.log(data);
             return data
         }
         let userdata = {

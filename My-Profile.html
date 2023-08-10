@@ -270,7 +270,10 @@
 
     #Drop-Down-Locations {
         position: absolute;
-        padding-top: 1em;
+        box-sizing: border-box;
+        padding: 1.5em;
+        padding-top: 0;
+        padding-bottom: 0;
         overflow: auto;
         width: 100%;
         height: 256px;
@@ -280,18 +283,37 @@
 
     #Drop-Down-Locations p {
         cursor: pointer;
-        margin-bottom: 2em;
-        padding-left: 2em;
+        padding: 1em;
         gap: 2em;
         display: flex;
         color: white;
         align-items: end;
+        border-bottom: 1px solid gray;
+
+    }
+
+    #Drop-Down-Locations p:last-of-type {
+        border: 0;
+    }
+
+
+    #Drop-Down-Locations p img {
+        width: 1rem;
+    }
+
+    #Location-Image {
+        width: 1rem;
     }
 
     #Current-Location {
         display: flex;
+        gap: .5em;
+    }
+
+    #Current-Location span {
+        color: gray;
+        display: flex;
         gap: 1em;
-        color: white;
     }
 
     .hidden {
@@ -299,8 +321,13 @@
     }
 
     ::-webkit-scrollbar {
-        width: 2px;
-        height: 2px;
+        width: 10px;
+    }
+
+    *::-webkit-scrollbar-thumb {
+        background: #888;
+        height: 10%;
+        border-radius: 3rem;
     }
 
     #user-Mobile-Frame {
@@ -309,6 +336,15 @@
 
     #user-Desktop-Admin {
         display: none;
+    }
+
+    #Location-Id-For-Country-name {
+        display: none;
+    }
+
+    input {
+        margin: .3em;
+        align-items: center;
     }
 </style>
 
@@ -359,7 +395,7 @@
                 <div id="Password-Div">
                     <label for="">
                         First Name
-                        <input id="Password" type="text" placeholder="">
+                        <input id="First-Name" type="text" placeholder="">
                     </label>
 
                     <img class="password-Hidden" src="Images/admin-profile-icon-outline-close.svg" alt=""></img>
@@ -367,36 +403,34 @@
                 <div id="Password-Div">
                     <label for="">
                         Last Name
-                        <input id="Password" type="text" placeholder="">
+                        <input id="Last-Name" type="text" placeholder="">
                     </label>
                     <img class="password-Hidden" src="Images/admin-profile-icon-outline-close.svg" alt=""></img>
                 </div>
             </div>
             <div id="Password-Div">
-                <label for="">Email<input id="Password" type="text" placeholder=""></label>
+                <label for="">Email<input id="Email" type="text" placeholder=""></label>
                 <img class="password-Hidden" src="Images/admin-profile-icon-outline-close.svg" alt=""></img>
             </div>
             <div id="Password-Div">
-                <label for=""> Skype<input id="Password" type="text" placeholder=""></label>
+                <label for=""> Skype<input id="Skype" type="text" placeholder=""></label>
                 <img class="password-Hidden" src="Images/admin-profile-icon-outline-close.svg" alt=""></img>
             </div>
             <div id="Password-Div">
-                <label for="">Location<div id="Current-Location"></div></label>
+                <label for="">Location
+                    <div id="Current-Location">
+                        <span id="Country-For-User"></span>
+                        <span id="State-For-Country-name"></span>
+                        <span id="City-For-Country-name"></span>
+                        <span id="Location-Id-For-Country-name"></span>
+                    </div>
+
+                </label>
                 <img id="Drop-Down-Icon" src="public/images/icon-outline-arrow-down.svg" alt="">
                 <img class="password-Hidden" id="password-Hidden-DropDown"
                     src="Images/admin-profile-icon-outline-close.svg" alt=""></img>
                 <div id="Drop-Down-Locations" class="hidden">
-                    <p class="Location"><img src="public/images/nz-new-zealand.svg" alt=""> New York, USA</p>
-                    <p class="Location"><img src="public/images/nz-new-zealand.svg" alt=""> New York, USA</p>
-                    <p class="Location"><img src="public/images/nz-new-zealand.svg" alt=""> New York, USA</p>
-                    <p class="Location"><img src="public/images/nz-new-zealand.svg" alt=""> New York, USA</p>
-                    <p class="Location"><img src="public/images/nz-new-zealand.svg" alt=""> New York, USA</p>
-                    <p class="Location"><img src="public/images/nz-new-zealand.svg" alt=""> New York, USA</p>
-                    <p class="Location"><img src="public/images/nz-new-zealand.svg" alt=""> New York, USA</p>
-                    <p class="Location"><img src="public/images/nz-new-zealand.svg" alt=""> New York, USA</p>
-                    <p class="Location"><img src="public/images/nz-new-zealand.svg" alt=""> New York, USA</p>
-                    <p class="Location"><img src="public/images/nz-new-zealand.svg" alt=""> New York, USA</p>
-                    <p class="Location"><img src="public/images/nz-new-zealand.svg" alt=""> New York, USA</p>
+
                 </div>
             </div>
             <div class="container">
@@ -412,13 +446,21 @@
     <script src="JsFiles/Mobile-Menu.js"></script>
     <script src="JsFiles/Menu.js"></script>
     <script>
-        var inputs = document.getElementsByTagName('input');
-        var ExIconInput = document.getElementsByClassName('password-Hidden');
-        var ExIconLocation = document.getElementById('password-Hidden-DropDown');
-        var DropDownIcon = document.getElementById('Drop-Down-Icon');
-        var DropDownLocations = document.getElementById('Drop-Down-Locations');
-        var Locations = document.getElementsByClassName('Location');
-        var CurrentLocation = document.getElementById('Current-Location');
+        populateLocation()
+        const FirstName = document.getElementById('First-Name');
+        const LastName = document.getElementById('Last-Name');
+        const Skype = document.getElementById('Skype');
+        const Email = document.getElementById('Email');
+        const State = document.getElementById('State-For-Country-name');
+        const LocationId = document.getElementById('Location-Id-For-Country-name');
+        const inputs = document.getElementsByTagName('input');
+        const ExIconInput = document.getElementsByClassName('password-Hidden');
+        const ExIconLocation = document.getElementById('password-Hidden-DropDown');
+        const DropDownIcon = document.getElementById('Drop-Down-Icon');
+        const DropDownLocations = document.getElementById('Drop-Down-Locations');
+        const CurrentLocation = document.getElementById('Country-For-User');
+        const CurrentCityLocation = document.getElementById('City-For-Country-name');
+
         for (let i = 0; i < inputs.length; i++) {
             inputs[i].addEventListener('input', () => {
                 if (inputs[i].value.trim() !== '') {
@@ -430,6 +472,7 @@
             ExIconInput[i].addEventListener('click', () => {
                 inputs[i].value = '';
                 inputs[i].classList.remove('input-padding');
+                inputs[i].style.margin = '0'
             })
         }
         DropDownIcon.addEventListener('click', () => {
@@ -441,14 +484,125 @@
             }
             DropDownLocations.classList.toggle('hidden');
         })
-        for (let i = 0; i < Locations.length; i++) {
-            Locations[i].addEventListener('click', () => {
-                CurrentLocation.innerHTML = Locations[i].innerHTML;
-            })
-        }
+
         ExIconLocation.addEventListener('click', () => {
             CurrentLocation.innerHTML = '';
+            CurrentCityLocation.innerHTML = '';
+            State.innerHTML = ''
+            LocationId.innerHTML = ''
+            populateLocation()
         })
+        async function populateLocation() {
+            let UserId = await checkForCookies();
+            if (UserId == null) {
+                console.error('No Id available');
+                return
+            }
+            let response = await fetch('http://localhost:3000/Locations', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ Id: UserId.user.id })
+            })
+            let responseData = await response.json();
+
+            if (responseData == null) {
+                console.error('No Data available');
+                return
+            }
+            DropDownLocations.innerHTML = responseData.HtmlLocationCitiesFromDataBase;
+            FirstName.value = responseData.userInfo.First_Name;
+            LastName.value = responseData.userInfo.Last_Name;
+            Email.value = responseData.userInfo.Skype;
+            CurrentLocation.value = responseData.userInfo.Country;
+            State.value = responseData.userInfo.State;
+            CurrentCityLocation.value = responseData.userInfo.City;
+            LocationId.value = responseData.userInfo.LocationID;
+            Skype.value = responseData.userInfo.Skype;
+
+            const Locations = document.getElementsByClassName('Location');
+            for (let i = 0; i < Locations.length; i++) {
+                Locations[i].addEventListener('click', () => {
+                    CurrentLocation.innerHTML = Locations[i].innerHTML;
+                    CurrentCityLocation.innerHTML = '';
+                    State.innerHTML = ''
+                    LocationId.innerHTML = ''
+                    getStatesForCountry(Locations[i].textContent);
+                })
+            }
+        }
+        async function getIdForCountry(City, State, Country) {
+            let CountryTrim = Country.trim();
+            let StateTrim = State.trim()
+            let CityTrim = City.trim()
+            let response = await fetch('http://localhost:3000/GetCities', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ Country: CountryTrim, State: StateTrim, City: CityTrim })
+            })
+            let responseData = await response.json()
+            if (responseData == null) {
+                console.log('no cities');
+            }
+            const LocationId = document.getElementsByClassName('ID-Location');
+            for (let i = 0; i < LocationId.length; i++) {
+                LocationId[i].addEventListener('click', () => {
+                    LocationId.innerHTML = LocationId[i].innerHTML;
+                })
+            }
+        }
+        async function getCitiesForCountry(StateCountry, Country) {
+            let CountryTrim = Country.trim();
+            let StateTrim = StateCountry.trim()
+            let response = await fetch('http://localhost:3000/GetCities', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ Country: CountryTrim, State: StateTrim })
+            })
+            let responseData = await response.json()
+            if (responseData == null) {
+                console.log('no cities');
+            }
+            DropDownLocations.innerHTML = responseData.CitiesForCountry;
+            const LocationCities = document.getElementsByClassName('City-Location');
+            for (let i = 0; i < LocationCities.length; i++) {
+                LocationCities[i].addEventListener('click', () => {
+                    CurrentCityLocation.innerHTML = LocationCities[i].innerHTML;
+                    getIdForCountry(LocationCities[i].textContent, State.textContent, CurrentLocation.textContent)
+                })
+            }
+        }
+        async function getStatesForCountry(Country) {
+            let CountryTrim = Country.trim();
+            let response = await fetch('http://localhost:3000/GetStates', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ Country: CountryTrim })
+            })
+            let responseData = await response.json()
+            if (responseData == null) {
+                console.log('no cities');
+            }
+            console.log(responseData);
+            DropDownLocations.innerHTML = responseData.StatesForCountry;
+            const LocatioStates = document.getElementsByClassName('State-Location');
+            for (let i = 0; i < LocatioStates.length; i++) {
+                LocatioStates[i].addEventListener('click', () => {
+                    State.innerHTML = LocatioStates[i].innerHTML;
+                    console.log(LocatioStates[i].textContent, CurrentLocation.textContent);
+                    getCitiesForCountry(LocatioStates[i].textContent, CurrentLocation.textContent)
+                })
+            }
+        }
+
+
     </script>
 
 </body>

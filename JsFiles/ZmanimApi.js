@@ -15,7 +15,7 @@ let timeExtracted = '';
 let holiday = false;
 let nextYear = 0;
 let StartingPlace = true;
-let MyLocation={};
+let MyLocation = {};
 
 ArrowRight.addEventListener('click', async () => {
     if ((EventTimes.end.length - 10) === startCounter) {
@@ -37,16 +37,15 @@ ArrowLeft.addEventListener('click', async () => {
 
 async function ZmanFetch(data) {
     if ('user' in data) {
-        dataOfUser = data;
+        dataOfUser = data.user;
         MyLocation.Location = data.user.Location_Id;
     }
-    console.log(data);
     let MyDate;
     if (nextYear === 0) {
         let date = new Date();
         MyDate = (date.getFullYear()) + '-';
-        MyDate += (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1) + '-';
-        MyDate += date.getDate() + 1 > 9 ? date.getDate() : '0' + date.getDate();
+        MyDate += (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) + '-' : (date.getMonth() + 1);
+        MyDate += date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
     }
     else {
         let date = new Date();
@@ -64,7 +63,7 @@ async function ZmanFetch(data) {
     let responseData = await response.json();
     let timeForUserRedone = new Date(responseData.timeForUser).toLocaleDateString('en-us', { weekday: "short" });
     nameTitle.innerHTML = '';
-    nameTitle.innerHTML += `  <span> Hello,</span>${dataOfUser.user.First_Name} ${dataOfUser.user.Last_Name}_
+    nameTitle.innerHTML += `  <span> Hello,</span>${dataOfUser.First_Name} ${dataOfUser.Last_Name}_
      <p>
     ${responseData.CityOfUser} <span> ${timeForUserRedone} </span><span id="clock-of-user"></span>
     </p>`;
@@ -133,7 +132,7 @@ async function addClickEventForLocation() {
             startCounter = 0;
             endCounter = 0;
             nextYear = 0;
-            MyLocation.Location=LocationIdFromOptions[i].innerHTML
+            MyLocation.Location = LocationIdFromOptions[i].innerHTML
             await ZmanFetch(MyLocation);
             for (let j = 0; j < LocationOptions.length; j++) {
                 if (LocationOptions[j] !== LocationOptions[i]) {
