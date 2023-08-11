@@ -446,6 +446,7 @@
     <script src="JsFiles/Mobile-Menu.js"></script>
     <script src="JsFiles/Menu.js"></script>
     <script>
+        let firstTime = true;
         populateLocation()
         const FirstName = document.getElementById('First-Name');
         const LastName = document.getElementById('Last-Name');
@@ -512,14 +513,17 @@
                 return
             }
             DropDownLocations.innerHTML = responseData.HtmlLocationCitiesFromDataBase;
-            FirstName.value = responseData.userInfo.First_Name;
-            LastName.value = responseData.userInfo.Last_Name;
-            Email.value = responseData.userInfo.Skype;
-            CurrentLocation.value = responseData.userInfo.Country;
-            State.value = responseData.userInfo.State;
-            CurrentCityLocation.value = responseData.userInfo.City;
-            LocationId.value = responseData.userInfo.LocationID;
-            Skype.value = responseData.userInfo.Skype;
+            if (firstTime) {
+                firstTime = false;
+                FirstName.value = responseData.userInfo.First_Name;
+                LastName.value = responseData.userInfo.Last_Name;
+                Email.value = responseData.userInfo.Skype;
+                CurrentLocation.innerHTML = `<img id="Location-Image" src="Images/Flags/${responseData.userInfo.FlagPath}" alt="">` + responseData.userInfo.Country;
+                State.innerHTML = responseData.userInfo.State;
+                CurrentCityLocation.innerHTML = responseData.userInfo.City;
+                LocationId.value = responseData.userInfo.LocationID;
+                Skype.value = responseData.userInfo.Skype;
+            }
 
             const Locations = document.getElementsByClassName('Location');
             for (let i = 0; i < Locations.length; i++) {

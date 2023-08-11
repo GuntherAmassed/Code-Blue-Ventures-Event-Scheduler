@@ -13,7 +13,7 @@ let FinalCountryIntialArray = [];
 let fileNames = [];
 const crytpo = require('crypto');
 const InsertLocations = 'INSERT INTO locationtable (location,timezones) VALUES (?, ?)';
-const createUserQuery = 'INSERT INTO userinfo (Email, First_Name, Last_Name, Skype, timeZone, Password, Role) VALUES (?, ?, ?, ?, ?, ? ,?)';
+const createUserQuery = 'INSERT INTO userinfo (Email, First_Name, Last_Name, Skype, timeZone, Password, Role,location_Id) VALUES (?, ?, ?, ?, ?, ? ,?,?)';
 const updateUserRefreshToken = `UPDATE userinfo SET userinfo.Refresh_Token=? WHERE userinfo.Email=?;`;
 const insertlocationId = `UPDATE userinfo SET location_Id =? WHERE Id=?;`
 
@@ -74,18 +74,36 @@ function getCountries(lines) {
 
 }
 function addUsersToDataBase() {
-    for (let i = 0; i < 1; i++) {
-        let Name = nameGenerator.GenerateName();
-        let values = [`${Name[0]}${i}@gmail.com`, Name[0], Name[1], 1234, FinalCountryIntialArray[Math.floor(Math.random() * FinalCountryIntialArray.length)].timezones[0], '1234', 'test'];
-        pool.query(createUserQuery, [`${Name[0]}${i}@gmail.com`, Name[0], Name[1], 1234, FinalCountryIntialArray[Math.floor(Math.random() * FinalCountryIntialArray.length)].timezones[0], '1234', 'test'], (error) => {
-            if (error) {
-                console.error(error);
-                console.log(values);
-            } else {
-                console.log(Name[0] + ' ' + Name[1] + ' ' + 'Inserted');
-            }
-        })
-    }
+    pool.query('SELECT DISTINCT lt.timeZone FROM locationstable lt', (err, results) => {
+        if (err) {
+            console.error(err)
+        }
+        else if (results.length > 0) {
+            let timeZone = results;
+            pool.query('SELECT DISTINCT lt.GeoName_Id FROM locationstable lt', (err, results) => {
+                if (err) {
+                    console.error(err)
+
+                }
+                else if (results.length > 0) {
+                    for (let i = 0; i < 100; i++) {
+                        let Name = nameGenerator.GenerateName();
+                        pool.query(createUserQuery, [`${Name[0]}${i}@gmail.com`, Name[0], Name[1], 1234, timeZone[Math.floor(Math.random() * timeZone.length)].timeZone, '1234', 'test',results[Math.floor(Math.random() * results.length)].GeoName_Id], (error) => {
+                            if (error) {
+                                console.error(error);
+                            } else {
+                                console.log(Name[0] + ' ' + Name[1] + ' ' + 'Inserted');
+                            }
+                        })
+                    }
+                }
+
+
+            })
+
+        }
+    })
+
 }
 function addTimezonesToDataBase() {
 
@@ -158,7 +176,7 @@ async function addCitiesToDatabase(lines) {
 async function doit() {
     let insertLocations = async (timeZone, GeoNameId, CountryFull, StateFull, CityName) => {
         return await new Promise((resolve, reject) => {
-            pool.query('INSERT INTO locationtable (timeZone,GeoName_Id,Country_Full_Name,State,City_Name) VALUES(?,?,?,?,?)', [timeZone, GeoNameId, CountryFull, StateFull, CityName], (error, results) => {
+            pool.query('INSERT INTO locationstable (timeZone,GeoName_Id,Country_Full_Name,State,City_Name) VALUES(?,?,?,?,?)', [timeZone, GeoNameId, CountryFull, StateFull, CityName], (error, results) => {
                 if (error) {
                     console.log(error.message);
                     reject()
@@ -254,7 +272,9 @@ function addAdminCode() {
     })
 
 }
-UpdateUserLocation()
+// doit()
+addUsersToDataBase()
+// UpdateUserLocation()
 let cities =
     `AD-Andorra La Vella|3041563
 AE-Abu Dhabi|292968

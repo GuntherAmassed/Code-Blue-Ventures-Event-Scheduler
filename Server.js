@@ -36,7 +36,7 @@ getCountries();
 getFlagNames();
 /////listeners
 app.post('/GetStates', (req, res) => {
-    pool.query(`SELECT DISTINCT lt.State FROM locationtable lt WHERE  lt.Country_Full_Name=? ORDER BY lt.State ASC;`, [req.body.Country], (err, results) => {
+    pool.query(`SELECT DISTINCT lt.State FROM locationstable lt WHERE  lt.Country_Full_Name=? ORDER BY lt.State ASC;`, [req.body.Country], (err, results) => {
         if (err) {
             console.error(err)
         }
@@ -54,8 +54,8 @@ app.post('/GetStates', (req, res) => {
     })
 })
 app.post('/GetCities', (req, res) => {
-  
-    pool.query(`SELECT lt.City_Name FROM locationtable lt WHERE lt.State=? AND lt.Country_Full_Name=? ORDER BY lt.City_Name ASC;`, [req.body.State, req.body.Country], (err, results) => {
+
+    pool.query(`SELECT lt.City_Name FROM locationstable lt WHERE lt.State=? AND lt.Country_Full_Name=? ORDER BY lt.City_Name ASC;`, [req.body.State, req.body.Country], (err, results) => {
         if (err) {
             console.error(err)
         }
@@ -73,7 +73,7 @@ app.post('/GetCities', (req, res) => {
     })
 })
 app.post('/GetLocationId', (req, res) => {
-    pool.query(`SELECT lt.GeoName_Id FROM locationtable lt WHERE lt.City_Name=? AND lt.State=? AND lt.Country_Full_Name=?`, [req.body.City, req.body.States, req.body.Country], (err, results) => {
+    pool.query(`SELECT lt.GeoName_Id FROM locationstable lt WHERE lt.City_Name=? AND lt.State=? AND lt.Country_Full_Name=?`, [req.body.City, req.body.States, req.body.Country], (err, results) => {
         if (err) {
             console.error(err)
         }
@@ -96,11 +96,21 @@ app.post('/GetLocationId', (req, res) => {
 
 
 app.post('/Locations', (req, res) => {
-    pool.query('SELECT lt.City_Name,lt.State,lt.Country_Full_Name,lt.GeoName_Id, us.Email,us.First_Name,us.Last_Name,us.Skype FROM locationtable lt JOIN userinfo us on us.location_Id = lt.GeoName_Id WHERE us.Id=?;', [req.body.Id], async (error, results) => {
+    pool.query('SELECT lt.City_Name,lt.State,lt.Country_Full_Name,lt.GeoName_Id,us.timeZone, us.Email,us.First_Name,us.Last_Name,us.Skype FROM locationstable lt JOIN userinfo us on us.location_Id = lt.GeoName_Id WHERE us.Id=?;', [req.body.Id], async (error, results) => {
         if (error) {
             console.error(error)
         }
         else if (results.length > 0) {
+            for (let j = 0; j < files.length; j++) {
+                if (files[j].split(' ')[0].includes(ct.getCountryForTimezone(results[0].timeZone).id.toLowerCase())) {
+                    results[0].FlagPath = files[j];
+                    break;
+                }
+                else {
+                    results[0].FlagPath = 'xx Unknown.svg';
+                }
+            }
+            console.log(results[0].FlagPath);
             let userInfo = {
                 Email: results[0].Email,
                 First_Name: results[0].First_Name,
@@ -109,11 +119,12 @@ app.post('/Locations', (req, res) => {
                 City: results[0].City_Name,
                 State: results[0].State,
                 Country: results[0].Country_Full_Name,
-                LocationID: results[0].GeoName_Id
+                LocationID: results[0].GeoName_Id,
+                FlagPath: results[0].FlagPath
             }
             let queryLocations = async () => {
                 return await new Promise((resolve, reject) => {
-                    pool.query('SELECT lt.Country_Full_Name,lt.timeZone FROM locationtable lt GROUP BY lt.Country_Full_Name ORDER BY `lt`.`Country_Full_Name` ASC;', (err, results) => {
+                    pool.query('SELECT lt.Country_Full_Name,lt.timeZone FROM locationstable lt GROUP BY lt.Country_Full_Name ORDER BY `lt`.`Country_Full_Name` ASC;', (err, results) => {
                         if (err) {
                             reject(err)
                         }
@@ -243,13 +254,13 @@ app.delete('/logout', (req, res) => {
 })
 
 app.get('/UserInfo', (req, res) => {
-    pool.query('SELECT * FROM locationtable lt JOIN userinfo ON userinfo.location_Id=lt.GeoName_Id ', async (error, results) => {
+    pool.query('SELECT * FROM locationstable lt JOIN userinfo ON userinfo.location_Id=lt.GeoName_Id ', async (error, results) => {
         if (error) {
             return console.log(error)
         }
         for (let i = 0; i < results.length; i++) {
             for (let j = 0; j < files.length; j++) {
-                if (files[j].split(' ')[0].includes(results[i].Country.toLowerCase())) {
+                if (files[j].split(' ')[0].includes(ct.getCountryForTimezone(results[i].timeZone).id.toLowerCase())) {
                     results[i].FlagPath = files[j];
                     break;
                 }
@@ -288,7 +299,7 @@ app.post('/ClockAmount', (req, res) => {
     let times = [];
     let clockFrame = '';
     let locationFrame = '';
-    pool.query('SELECT lt.State, lt.timeZone,lt.GeoName_Id,lt.Country_Full_Name,lt.City_Name FROM locationtable lt JOIN userinfo ON userinfo.location_Id=lt.GeoName_Id  GROUP BY userinfo.location_Id;', (error, results) => {
+    pool.query('SELECT lt.State, lt.timeZone,lt.GeoName_Id,lt.Country_Full_Name,lt.City_Name FROM locationstable lt JOIN userinfo ON userinfo.location_Id=lt.GeoName_Id  GROUP BY userinfo.location_Id;', (error, results) => {
         if (error) {
             return res.sendStatus(401)
         }
@@ -363,13 +374,13 @@ app.post('/ZmanimApi', async (req, res) => {
                 }
             }
         }
-        pool.query(`SELECT lt.timeZone, lt.City_Name, lt.Country_Full_Name FROM locationtable lt WHERE lt.GeoName_Id=?;`, [req.body.location], (error, results) => {
+        pool.query(`SELECT lt.timeZone, lt.City_Name,lt.State, lt.Country_Full_Name FROM locationstable lt WHERE lt.GeoName_Id=?;`, [req.body.location], (error, results) => {
             if (error) {
                 console.error(error)
             }
             else if (results.length > 0) {
                 let timezoneofuser = results[0].timeZone;
-                let CityOfUser = results[0].City_Name + '-' + results[0].Country_Full_Name;
+                let CityOfUser = results[0].City_Name + ' - ' + results[0].State + ' - ' + results[0].Country_Full_Name;
                 for (let i = 0; i < start.length; i++) {
                     start[i].date = formatInTimeZone(start[i].date, timezoneofuser, 'yyyy-MM-dd HH:mm')
                 }
@@ -383,8 +394,8 @@ app.post('/ZmanimApi', async (req, res) => {
                 }
                 res.json({ event, timeForUser: new Date(formatInTimeZone(new Date(), timezoneofuser, 'yyyy-MM-dd hh:mm:ss aa')), CityOfUser: CityOfUser })
             }
-            else{
-                console.log('s');
+            else {
+                console.log('no data');
 
             }
         })
