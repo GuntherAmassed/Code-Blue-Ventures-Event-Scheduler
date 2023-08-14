@@ -7,8 +7,8 @@ var MyProfileMobile = document.getElementById("My-Profile-Mobile");
 var homeMobile = document.getElementById("home-Mobile");
 var userMobile = document.getElementById("user-Mobile");
 
-logOut.addEventListener('click', () => {
-    window.location.href = "index.html"
+logOut.addEventListener('click', async () => {
+    await LogOutToken()
 })
 MyProfile.addEventListener('click', () => {
     window.location.href = "My-Profile.html"
@@ -26,8 +26,8 @@ userMobile.addEventListener('click', () => {
 
 })
 
-logOutMobile.addEventListener('click', () => {
-    window.location.href = "index.html"
+logOutMobile.addEventListener('click', async () => {
+    await LogOutToken()
 })
 MyProfileMobile.addEventListener('click', () => {
     window.location.href = "My-Profile.html"

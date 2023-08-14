@@ -24,7 +24,6 @@ const pool = createPool({
 
 let FinalCountryIntialArray = [];
 let fileNames = [];
-let row = '';
 const LogInQuery = `SELECT * FROM userinfo us WHERE us.Email=? AND us.Password=?;`;
 const refreshTokenAdd = `INSERT INTO refresh_token(Refresh_Tokens,Id) VALUES(?,?);`;
 const updateRefreshToken = `UPDATE refresh_token SET Refresh_Tokens=? WHERE id=?`
@@ -73,14 +72,14 @@ app.post('/GetCities', (req, res) => {
     })
 })
 app.post('/GetLocationId', (req, res) => {
-    pool.query(`SELECT lt.GeoName_Id FROM locationstable lt WHERE lt.City_Name=? AND lt.State=? AND lt.Country_Full_Name=?`, [req.body.City, req.body.States, req.body.Country], (err, results) => {
+    pool.query(`SELECT lt.GeoName_Id FROM locationstable lt WHERE lt.City_Name=? AND lt.State=? AND lt.Country_Full_Name=?`, [req.body.City, req.body.State, req.body.Country], (err, results) => {
         if (err) {
             console.error(err)
         }
         else if (results.length === 1) {
             let HtmlLocationCitiesFromCountriesFromDataBase = '';
             for (let i = 0; i < results.length; i++) {
-                HtmlLocationCitiesFromCountriesFromDataBase += `<p class="ID-Location">${results[i].GeoName_Id}</p>`
+                HtmlLocationCitiesFromCountriesFromDataBase += results[i].GeoName_Id
             }
             res.json({ IdForCountry: HtmlLocationCitiesFromCountriesFromDataBase })
         }
@@ -88,6 +87,7 @@ app.post('/GetLocationId', (req, res) => {
             console.log('too much ids');
         }
         else {
+            res.json(null)
             console.log('no data');
         }
 
@@ -96,13 +96,13 @@ app.post('/GetLocationId', (req, res) => {
 
 
 app.post('/Locations', (req, res) => {
-    pool.query('SELECT lt.City_Name,lt.State,lt.Country_Full_Name,lt.GeoName_Id,us.timeZone, us.Email,us.First_Name,us.Last_Name,us.Skype FROM locationstable lt JOIN userinfo us on us.location_Id = lt.GeoName_Id WHERE us.Id=?;', [req.body.Id], async (error, results) => {
+    pool.query('SELECT us.Role,lt.Country,lt.City_Name,lt.State,lt.Country_Full_Name,lt.GeoName_Id,us.timeZone, us.Email,us.First_Name,us.Last_Name,us.Skype FROM locationstable lt JOIN userinfo us on us.location_Id = lt.GeoName_Id WHERE us.Id=?;', [req.body.Id], async (error, results) => {
         if (error) {
             console.error(error)
         }
         else if (results.length > 0) {
             for (let j = 0; j < files.length; j++) {
-                if (files[j].split(' ')[0].includes(ct.getCountryForTimezone(results[0].timeZone).id.toLowerCase())) {
+                if (files[j].split(' ')[0].includes(results[0].Country.toLowerCase())) {
                     results[0].FlagPath = files[j];
                     break;
                 }
@@ -110,7 +110,6 @@ app.post('/Locations', (req, res) => {
                     results[0].FlagPath = 'xx Unknown.svg';
                 }
             }
-            console.log(results[0].FlagPath);
             let userInfo = {
                 Email: results[0].Email,
                 First_Name: results[0].First_Name,
@@ -120,11 +119,12 @@ app.post('/Locations', (req, res) => {
                 State: results[0].State,
                 Country: results[0].Country_Full_Name,
                 LocationID: results[0].GeoName_Id,
-                FlagPath: results[0].FlagPath
+                FlagPath: results[0].FlagPath,
+                Role: results[0].Role
             }
             let queryLocations = async () => {
                 return await new Promise((resolve, reject) => {
-                    pool.query('SELECT lt.Country_Full_Name,lt.timeZone FROM locationstable lt GROUP BY lt.Country_Full_Name ORDER BY `lt`.`Country_Full_Name` ASC;', (err, results) => {
+                    pool.query('SELECT lt.Country,lt.Country_Full_Name,lt.timeZone FROM locationstable lt GROUP BY lt.Country_Full_Name ORDER BY `lt`.`Country_Full_Name` ASC;', (err, results) => {
                         if (err) {
                             reject(err)
                         }
@@ -142,7 +142,7 @@ app.post('/Locations', (req, res) => {
                 let HtmlLocationCitiesFromDataBase = ''
                 for (let i = 0; i < LocationCitiesFromDataBase.length; i++) {
                     for (let j = 0; j < files.length; j++) {
-                        if (files[j].split(' ')[0].includes(ct.getCountryForTimezone(LocationCitiesFromDataBase[i].timeZone).id.toLowerCase())) {
+                        if (files[j].split(' ')[0].includes(LocationCitiesFromDataBase[i].Country.toLowerCase())) {
                             LocationCitiesFromDataBase[i].FlagPath = files[j];
                             break;
                         }
@@ -248,13 +248,22 @@ app.post('/token', async (req, res) => {
     }
 })
 
-app.delete('/logout', (req, res) => {
-    // refreshTokens = refreshTokens.filter(token => token !== req.body.token)
-    res.sendStatus(204)
+app.delete('/logout', authenticate, (req, res) => {
+    pool.query('DELETE FROM refresh_token WHERE Id=?;', [req.user.id], (error) => {
+        if (error) {
+            console.error(error)
+        }
+        else {
+            console.log('deleted');
+            res.json('deleted')
+        }
+    })
+
 })
 
 app.get('/UserInfo', (req, res) => {
-    pool.query('SELECT * FROM locationstable lt JOIN userinfo ON userinfo.location_Id=lt.GeoName_Id ', async (error, results) => {
+    let row = '';
+    pool.query('SELECT * FROM locationstable lt JOIN userinfo ON userinfo.location_Id=lt.GeoName_Id ORDER BY userinfo.First_Name; ', async (error, results) => {
         if (error) {
             return console.log(error)
         }
@@ -273,7 +282,7 @@ app.get('/UserInfo', (req, res) => {
         for (let i = 0; i < data.length; i++) {
             row += ` <tr>
         <td>${data[i].First_Name} ${data[i].Last_Name}</td>
-        <td>${data[i].Email}</td>
+        <td>${data[i].Email}<span class= "Id-Of-User hidden">${data[i].Id}</span></td>
         <td>${data[i].Skype}</td>
         <td>
             <img src="Images/Flags/${data[i].FlagPath}" alt=""> ${data[i].City_Name}
@@ -281,8 +290,8 @@ app.get('/UserInfo', (req, res) => {
         <td>${data[i].timeZone}</td>
         <td>${data[i].Role}</td>
         <td>
-            <img src="Images/admin-profile-icon-edit.svg" alt="">
-            <img src="Images/admin-profile-icon-card.svg" alt="">
+            <img class="Edit-User" src="Images/admin-profile-icon-edit.svg" alt="">
+            <img class="Delete-User" src="Images/admin-profile-icon-card.svg" alt="">
         </td>
     </tr>
         `;
@@ -407,41 +416,98 @@ app.post('/ZmanimApi', async (req, res) => {
 
 })
 
+app.post('/SaveChanges', authenticate, (req, res) => {
+    pool.query('SELECT timeZone FROM `locationstable` WHERE GeoName_Id=?;', [req.body.LocationId], (err, results) => {
+        if (err) {
+            console.log(err);
+        }
+        else if (results.length > 0) {
+            pool.query('UPDATE userinfo SET Email=?,First_Name=?,Last_Name=?,Skype=?, timeZone=?, location_Id=? WHERE Id=?', [req.body.Email, req.body.FirstName, req.body.LastName, req.body.Skype, results[0].timeZone, req.body.LocationId, req.user.id], async (err) => {
+                if (err) {
+                    console.error(err)
+                    res.json(null)
+                }
+                else {
+                    let user = {
+                        id: req.user.id,
+                        First_Name: req.body.FirstName,
+                        Last_Name: req.body.LastName,
+                        Skype: req.body.Skype,
+                        Location_Id: req.body.LocationId,
+                        Role: req.user.Role
+                    }
+                    let token = await generateRefreshToken(user)
+                    console.log(token);
+                    res.json({ token })
+                }
+            })
+        }
 
-
+    })
+})
+app.post('/AddUser', authenticate, (req, res) => {
+    pool.query('SELECT timeZone FROM `locationstable` WHERE GeoName_Id=?;', [req.body.LocationId], (err, results) => {
+        if (err) {
+            console.log(err);
+        }
+        else if (results.length > 0) {
+            pool.query('INSERT INTO userinfo (Email, First_Name, Last_Name, Skype, timeZone, Password, Role,location_Id) VALUES (?, ?, ?, ?, ?, ? ,? ,?);', [req.body.Email, req.body.FirstName, req.body.LastName, req.body.Skype, results[0].timeZone, '', req.body.Role, req.body.LocationId], (err) => {
+                if (err) {
+                    console.error(err)
+                    res.json(null)
+                }
+                else {
+                    console.log("added");
+                    res.json('added')
+                }
+            })
+        }
+    })
+})
+app.post('/DeleteUser', (req, res) => {
+    pool.query('DELETE FROM userinfo WHERE Id=?', [req.body.Id], (err) => {
+        if (err) {
+            console.log(err);
+            res.json(null)
+        }
+        else {
+            console.log('Deleted');
+            res.json('Deleted')
+        }
+    })
+})
 /////functions
+function authenticate(req, res, next) {
+    jwt.verify(req.body.token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) {
+            console.error(err)
+            res.json(err)
+        }
+        else {
+            req.user = user;
+            next()
+        }
+    })
+}
 async function generateRefreshToken(user) {
     let newToken;
     let oldRefreshToken = await checkForRefreshToken(user.id);
     if (oldRefreshToken != null) {
-        jwt.verify(oldRefreshToken, process.env.ACCESS_TOKEN_SECRET, async (err) => {
-            try {
-                if (err) {
-                    newToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '90d' });
-                    let updateToken = async () => {
-                        return await new Promise((resolve, reject) => {
-                            pool.query(updateRefreshToken, [newToken, user.id], (err) => {
-                                if (err) {
-                                    reject(err)
-                                }
-                                else {
-                                    resolve(newToken)
-                                }
-                            })
-                        })
+        newToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '90d' });
+        let updateToken = async () => {
+            return await new Promise((resolve, reject) => {
+                pool.query(updateRefreshToken, [newToken, user.id], (err) => {
+                    if (err) {
+                        reject(err)
                     }
-                    newToken = await updateToken();
-                }
-                else {
-                    newToken = oldRefreshToken
-                }
-            }
-            catch (error) {
-                console.error(error);
-            }
-        })
+                    else {
+                        resolve(newToken)
+                    }
+                })
+            })
+        }
+        newToken = await updateToken();
         return newToken
-
     }
     else {
         let token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '90d' });
@@ -456,8 +522,6 @@ async function generateRefreshToken(user) {
             })
         })
     }
-
-
 }
 
 

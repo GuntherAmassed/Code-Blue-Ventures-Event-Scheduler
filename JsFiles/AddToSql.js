@@ -88,7 +88,7 @@ function addUsersToDataBase() {
                 else if (results.length > 0) {
                     for (let i = 0; i < 100; i++) {
                         let Name = nameGenerator.GenerateName();
-                        pool.query(createUserQuery, [`${Name[0]}${i}@gmail.com`, Name[0], Name[1], 1234, timeZone[Math.floor(Math.random() * timeZone.length)].timeZone, '1234', 'test',results[Math.floor(Math.random() * results.length)].GeoName_Id], (error) => {
+                        pool.query(createUserQuery, [`${Name[0]}${i}@gmail.com`, Name[0], Name[1], 1234, timeZone[Math.floor(Math.random() * timeZone.length)].timeZone, '1234', 'test', results[Math.floor(Math.random() * results.length)].GeoName_Id], (error) => {
                             if (error) {
                                 console.error(error);
                             } else {
@@ -245,22 +245,30 @@ function UpdateUserLocation() {
 
 }
 function addAdminCode() {
+    let query = async (Country, Country_Full_Name) => {
+        return await new Promise((resolve, reject) => {
+            pool.query('UPDATE locationstable SET Country =? WHERE Country_Full_Name=?', [Country, Country_Full_Name], (err) => {
+                if (err) {
+                    console.log(err);
+                    reject()
+                }
+                else {
+                    console.log('inserted');
+                    resolve()
+                }
+            })
+        })
+    }
 
-
-
-    pool.query('SELECT DISTINCT Country FROM `locationtable`;', async (err, results) => {
+    pool.query('SELECT DISTINCT Country_Full_Name FROM locationstable ', async (err, results) => {
         if (err) {
             console.log(err);
         }
         else if (results.length > 0) {
             for (let i = 0; i < results.length; i++) {
-                let statesOfCountry = State.getStatesOfCountry(results[i].Country);
-                for (let j = 0; j < statesOfCountry.length; j++) {
-                    let citiesOfStateCountry = City.getCitiesOfState(results[i].Country, statesOfCountry[j]);
-                    for (let k = 0; k < citiesOfStateCountry.length; k++) {
-
-
-
+                for (let j = 0; j < Country.getAllCountries().length; j++) {
+                    if (Country.getAllCountries()[j].name === results[i].Country_Full_Name) {
+                        await query(Country.getAllCountries()[j].isoCode, results[i].Country_Full_Name)
                     }
                 }
 
@@ -272,8 +280,9 @@ function addAdminCode() {
     })
 
 }
+// addAdminCode()
 // doit()
-addUsersToDataBase()
+// addUsersToDataBase()
 // UpdateUserLocation()
 let cities =
     `AD-Andorra La Vella|3041563

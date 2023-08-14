@@ -10,11 +10,9 @@ let dataOfUser;
 let EventTimes;
 let startCounter = 0;
 let endCounter = 0;
-let Shabbos = '';
 let timeExtracted = '';
 let holiday = false;
 let nextYear = 0;
-let StartingPlace = true;
 let MyLocation = {};
 
 ArrowRight.addEventListener('click', async () => {

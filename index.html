@@ -351,58 +351,8 @@
     <div class="Planet-Container">
         <div class="ellipse"></div>
     </div>
+    <script src="JsFiles/checkingForCookies.js"></script>
     <script>
-        async function checkForCookies() {
-            let Token = getCookie('token');
-            if (Token == null) {
-                console.log('no cookie');
-                return;
-            }
-            let jsonToken = {
-                token: Token
-            }
-            try {
-                let response = await fetch('http://localhost:3000/token', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(jsonToken)
-                })
-                let data = await response.json();
-                if (data == null) {
-                    return data
-                }
-                let userdata = {
-                    user: data.user,
-                    token: jsonToken
-                }
-                return userdata;
-
-            } catch (error) {
-                console.log(error);
-                return null
-            }
-
-
-        }
-        function getCookie(cname) {
-            let name = cname + "=";
-            let ca = document.cookie.split(';');
-            for (let i = 0; i < ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) == ' ') {
-                    c = c.substring(1);
-                }
-                if (c.indexOf(name) == 0) {
-                    return c.substring(name.length, c.length);
-                }
-            }
-            return "";
-        }
-
-
-
         tryLogin();
         async function tryLogin() {
             let userLoggedIn = await checkForCookies();
@@ -469,7 +419,6 @@
                 }
             }
             else {
-                console.log(data);
                 document.cookie = `token = ${data.accessToken}; expires=Wed, 05 Aug 2024 23:00:00 UTC;`;
                 window.location.href = 'Home-Page.html'
             }

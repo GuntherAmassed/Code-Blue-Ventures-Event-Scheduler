@@ -8,7 +8,6 @@ async function checkForCookies() {
     let jsonToken = {
         token: Token
     }
-    console.log(jsonToken);
     try {
         let response = await fetch('http://localhost:3000/token', {
             method: 'POST',
@@ -31,8 +30,6 @@ async function checkForCookies() {
         console.log(error);
         return null
     }
-
-
 }
 function getCookie(cname) {
     let name = cname + "=";
@@ -53,7 +50,7 @@ async function checkLogIn() {
     if (userLoggedIn == null) {
         window.location.href = 'index.html'
     }
-    else if(userLoggedIn != null) {
+    else if (userLoggedIn != null) {
         if (userLoggedIn.user == null) {
             window.location.href = 'index.html'
         }
@@ -62,4 +59,31 @@ async function checkLogIn() {
         return userLoggedIn;
     }
 }
-checkLogIn()
+async function LogOutToken() {
+    let Token = getCookie('token');
+    if (Token == null) {
+        console.log('no cookie');
+        return;
+    }
+    let jsonToken = {
+        token: Token
+    }
+    let response = await fetch('http://localhost:3000/logout', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(jsonToken)
+    })
+    let data = await response.json();
+    console.log(data);
+    if (data == null) {
+        return data
+    }
+    else{
+        console.log(data);
+        window.location.href='index.html'
+    }
+ 
+
+}

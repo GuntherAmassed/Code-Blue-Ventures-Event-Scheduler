@@ -3,6 +3,7 @@
 
 <head>
     <script src="JsFiles/checkingForCookies.js"></script>
+    <script src="JsFiles/CheckLogin.js"></script>
     <script>
         async function checkifAdmin() {
             let admin = await checkForCookies()
@@ -56,6 +57,7 @@
 
 
     body {
+        position: relative;
         color: var(--placeholders, #929BA3);
         background: var(--background-dark, #02121F);
         font-size: 0.875rem;
@@ -266,7 +268,7 @@
         }
 
         button {
-            width: 100px;
+            width: 110px;
         }
 
 
@@ -411,6 +413,200 @@
 
 
     }
+
+    #Add-Edit-User {
+        position: absolute;
+        align-self: center;
+        justify-self: center;
+        flex-direction: column;
+        justify-content: normal;
+        align-items: center;
+        z-index: 10;
+        flex-grow: 1;
+        margin: .5em;
+        max-width: 521px;
+        min-height: 567px;
+        flex-shrink: 0;
+        background: var(--background-dark, #02121F);
+        box-shadow: 0px 4px 100px 0px rgba(0, 154, 254, 0.07);
+        gap: 2em;
+        padding: 2em;
+        box-sizing: border-box;
+    }
+
+    form {
+        gap: 3em;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        flex-grow: 1;
+    }
+
+    form div {
+        width: 100%;
+        gap: 1em;
+    }
+
+    label {
+        margin: .1em;
+        width: 100%;
+    }
+
+    #Current-Location,
+    #Current-Role,
+    input,
+    .Error-Message {
+        padding: .1em;
+
+        outline: none;
+        background-color: transparent;
+        border: 0;
+        font-size: 1rem;
+        font-family: Trade Gothic LT Std;
+        line-height: 0.875rem;
+        letter-spacing: 0.035rem;
+        color: gray;
+        width: 100%;
+        border-bottom: 1px solid #009AFE;
+    }
+
+    .Drop-Down-Locations {
+        position: absolute;
+        flex-direction: column;
+        z-index: 1;
+        top: 0;
+        box-sizing: border-box;
+        padding: 1.5em;
+        padding-top: 0;
+        padding-bottom: 0;
+        overflow: auto;
+        width: 100%;
+        height: 150px;
+        background: var(--background-blue, #091C2E);
+        box-shadow: 5px 4px 100px 0px rgba(3, 16, 24, 0.40);
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .dropDown-Div {
+        width: 100%;
+        position: absolute;
+        position: relative;
+    }
+
+    label {
+        position: relative;
+    }
+
+    #Current-Location,
+    #Current-Role {
+
+        padding: .5em;
+        border-bottom: 1px solid var(--primary, #009AFE);
+    }
+
+    .Drop-Down-Icon {
+        position: absolute;
+        right: 0;
+    }
+
+    #Add-Edit-User-Closer {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+
+    #exIconLocationClose-Hidden-DropDown {
+        position: absolute;
+        right: 20px;
+    }
+
+    .Drop-Down-Locations p {
+        cursor: pointer;
+        padding: 1em;
+        gap: 2em;
+        display: flex;
+        color: white;
+        align-items: end;
+        border-bottom: 1px solid gray;
+
+    }
+
+    .Drop-Down-Locations p:last-of-type {
+        border: 0;
+    }
+
+    #Role {
+        height: 80px;
+    }
+
+    .Drop-Down-Locations p img {
+        width: 1rem;
+    }
+
+    #Location-Image {
+        width: 1rem;
+    }
+
+    #Current-Location {
+        display: flex;
+        justify-content: normal;
+        gap: .5em;
+    }
+
+    #Current-Location span {
+        color: gray;
+        display: flex;
+        gap: .5em;
+    }
+
+    .Error-Message {
+        position: absolute;
+        display: none;
+        justify-content: normal;
+        gap: .5em;
+        padding: 1em;
+        color: #FF2D6C;
+        text-transform: capitalize;
+        align-items: end;
+        border: 0;
+    }
+
+    .Error-Message img {
+        width: 1em;
+    }
+
+    #email-error-container {
+        position: absolute;
+        top: -10px;
+        position: relative;
+    }
+
+    button {
+        cursor: pointer;
+    }
+
+    .Delete-User,
+    .Edit-User,
+    .Drop-Down-Icon,
+    #exIconLocationClose-Hidden-DropDown,
+    #Add-Edit-User-Closer {
+        cursor: pointer;
+    }
+
+    @media screen and (width<1000px) {
+        body {
+            display: grid;
+        }
+
+        #Add-Edit-User {
+            top: 10%;
+
+        }
+    }
 </style>
 
 <body>
@@ -418,10 +614,10 @@
         <div class="container">
             <img src="Images/CODEBLUE TIME.svg" alt="">
             <p id="user-Desktop-Admin"><img src="public/images/admin-profile-icon-user.svg" alt=""> user</p>
-            <p id="home"><img src="public/images/admin-profile-icon-home.svg" alt=""> home</p>
+            <p id="home"><img src="public/images/admin-profile-icon-home.svg" alt="">home</p>
             <p id="My-Profile"><img src="public/images/admin-profile-icon-users.svg" alt="">My Profile</p>
         </div>
-        <p id="log-out"><img src="public/images/admin-profile-icon-exit.svg" alt=""> log out</p>
+        <p id="log-out"><img src="public/images/admin-profile-icon-exit.svg" alt="">log out</p>
     </div>
     <Main>
         <div id="Menu-Mobile-Frame">
@@ -457,7 +653,7 @@
                 <h1><span>users</span>_</h1>
                 <div class="Button-Container">
                     <img src="Images/admin-profile-icon-search.svg" alt="">
-                    <button>Add user</button>
+                    <button id="Add-User">Add user</button>
                 </div>
             </div>
         </header>
@@ -477,10 +673,429 @@
             </tbody>
         </table>
     </Main>
+    <div id="Add-Edit-User" class="hidden">
+        <img id="Add-Edit-User-Closer" src="Images/admin-profile-icon-outline-close.svg" alt=""></img>
+        <h1><span class="Edit-Or-Add"></span>_</h1>
+        <form action="">
+            <div>
+                <label for="">
+                    First Name
+                    <input type="text" name="" id="First-Name">
+                </label>
+                <label for="">
+                    Last Name
+                    <input type="text" name="" id="Last-Name">
+                </label>
+            </div>
+
+            <label for="">
+                Email*
+
+                <input type="" name="" id="Email">
+                <div id="email-error-container">
+                    <div id="Email-error" class="Error-Message">
+                    </div>
+                </div>
+            </label>
+
+
+
+            <label for="">
+                Skype
+                <input type="text" name="" id="Skype">
+            </label>
+
+            <label for="">Location*
+                <img class="Drop-Down-Icon" src="public/images/icon-outline-arrow-down.svg" alt="">
+                <img id="exIconLocationClose-Hidden-DropDown" src="Images/admin-profile-icon-outline-close.svg" alt="">
+
+                <div id="Current-Location">
+                    <div id="Location-error" class="Error-Message">
+
+                    </div>
+                    <span id="Country-For-User"></span>
+                    <span id="State-For-Country-name"></span>
+                    <span id="City-For-Country-name"></span>
+                    <span id="Location-Id-For-Country-name"></span>
+
+                </div>
+                <div class="dropDown-Div">
+                    <div class="Drop-Down-Locations hidden">
+
+                    </div>
+                </div>
+            </label>
+            <label for="">Role*
+                <img class="Drop-Down-Icon" src="public/images/icon-outline-arrow-down.svg" alt="">
+                <div id="Current-Role">
+                    <div id="Role-error" class="Error-Message">
+
+                    </div>
+                </div>
+                <div class="dropDown-Div">
+                    <div id="Role" class="Drop-Down-Locations hidden">
+                        <p class="Option">Admin</p>
+                        <p class="Option">User</p>
+                    </div>
+                </div>
+            </label>
+            <button class="Edit-Or-Add">
+
+            </button>
+        </form>
+    </div>
+
+    <script>
+        let edit = false;
+        const Role = document.getElementById('Current-Role');
+        const optionRole = document.getElementsByClassName('Option');
+        const FirstName = document.getElementById('First-Name');
+        const LastName = document.getElementById('Last-Name');
+        const Skype = document.getElementById('Skype');
+        const Email = document.getElementById('Email');
+        const State = document.getElementById('State-For-Country-name');
+        const LocationId = document.getElementById('Location-Id-For-Country-name');
+        const inputs = document.getElementsByTagName('input');
+        const ExIconInput = document.getElementsByClassName('password-Hidden');
+        const ExIconLocation = document.getElementById('exIconLocationClose-Hidden-DropDown');
+        const DropDownIcon = document.getElementsByClassName('Drop-Down-Icon');
+        const DropDownLocations = document.getElementsByClassName('Drop-Down-Locations');
+        const CurrentLocation = document.getElementById('Country-For-User');
+        const CurrentCityLocation = document.getElementById('City-For-Country-name');
+        const AddUser = document.getElementById('Add-User');
+        const AddEditUserPage = document.getElementById('Add-Edit-User');
+        const AddEditUserPageCloser = document.getElementById('Add-Edit-User-Closer');
+        const editOrAdd = document.getElementsByClassName('Edit-Or-Add');
+        const errors = document.getElementsByClassName('Error-Message');
+        const LocationError = document.getElementById('Location-error')
+        const RoleError = document.getElementById('Role-error')
+        const EmailError = document.getElementById('Email-error');
+
+
+        for (let i = 0; i < inputs.length; i++) {
+            inputs[i].addEventListener('click', () => {
+                for (error of errors) {
+                    error.style.display = 'none'
+                }
+            })
+        }
+        for (let i = 0; i < optionRole.length; i++) {
+            optionRole[i].addEventListener('click', () => {
+                Role.innerHTML = optionRole[i].innerHTML;
+            })
+        }
+        AddUser.addEventListener('click', () => {
+            AddEditUserPage.classList.remove('hidden');
+            editOrAdd[0].textContent = 'Add User';
+            editOrAdd[1].textContent = 'Add User';
+            edit = false;
+            populateLocation()
+            editOrAdd[1].removeEventListener('click', async (e) => {
+                e.preventDefault()
+                await SaveChanges();
+            });
+            editOrAdd[1].addEventListener('click', async (e) => {
+                e.preventDefault()
+                await AddUserToDatabase()
+            })
+        })
+        AddEditUserPageCloser.addEventListener('click', () => {
+            AddEditUserPage.classList.add('hidden');
+        })
+        for (let i = 0; i < DropDownIcon.length; i++) {
+            DropDownIcon[i].addEventListener('click', () => {
+                for (error of errors) {
+                    error.style.display = 'none'
+                }
+                if (DropDownIcon[i].src.endsWith("arrow-down.svg")) {
+                    DropDownIcon[i].src = "public/images/icon-outline-arrow-up.svg"
+                }
+                else {
+                    DropDownIcon[i].src = "public/images/icon-outline-arrow-down.svg"
+                }
+
+                DropDownLocations[i].classList.toggle('hidden');
+            })
+        }
+
+        ExIconLocation.addEventListener('click', () => {
+            CurrentLocation.innerHTML = '';
+            CurrentCityLocation.innerHTML = '';
+            State.innerHTML = ''
+            LocationId.innerHTML = ''
+            for (error of errors) {
+                error.style.display = 'none'
+            }
+            populateLocation()
+        })
+        async function populateLocation(id) {
+            console.log(id);
+            let UserId = await checkForCookies();
+            if (UserId == null) {
+                console.error('No Id available');
+                return
+            }
+            let response = await fetch('http://localhost:3000/Locations', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ Id: id })
+            })
+            let responseData = await response.json();
+
+            if (responseData == null) {
+                console.error('No Data available');
+                return
+            }
+            DropDownLocations[0].innerHTML = responseData.HtmlLocationCitiesFromDataBase;
+            if (edit) {
+                FirstName.value = responseData.userInfo.First_Name;
+                LastName.value = responseData.userInfo.Last_Name;
+                Email.value = responseData.userInfo.Email;
+                CurrentLocation.innerHTML = `<img id="Location-Image" src="Images/Flags/${responseData.userInfo.FlagPath}" alt="">` + responseData.userInfo.Country;
+                State.innerHTML = responseData.userInfo.State;
+                CurrentCityLocation.innerHTML = responseData.userInfo.City;
+                LocationId.value = responseData.userInfo.LocationID;
+                Skype.value = responseData.userInfo.Skype;
+                Role.textContent = responseData.userInfo.Role;
+            }
+            else {
+                FirstName.value = ''
+                LastName.value = ''
+                Email.value = ''
+                CurrentLocation.innerHTML = ''
+                State.innerHTML = ''
+                CurrentCityLocation.innerHTML = ''
+                LocationId.value = ''
+                Skype.value = ''
+                Role.textContent = ''
+            }
+
+            const Locations = document.getElementsByClassName('Location');
+            for (let i = 0; i < Locations.length; i++) {
+                Locations[i].addEventListener('click', () => {
+                    CurrentLocation.innerHTML = Locations[i].innerHTML;
+                    CurrentCityLocation.innerHTML = '';
+                    State.innerHTML = ''
+                    LocationId.innerHTML = ''
+                    getStatesForCountry(Locations[i].textContent);
+                })
+            }
+        }
+        async function getIdForCountry(City, State, Country) {
+            let CountryTrim = Country.trim();
+            let StateTrim = State.trim()
+            let CityTrim = City.trim()
+            let response = await fetch('http://localhost:3000/GetLocationId', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ Country: CountryTrim, State: StateTrim, City: CityTrim })
+            })
+            let responseData = await response.json()
+            if (responseData == null) {
+                console.log('no cities');
+            }
+            LocationId.value = responseData.IdForCountry
+            console.log(responseData.IdForCountry);
+
+        }
+        async function getCitiesForCountry(StateCountry, Country) {
+            let CountryTrim = Country.trim();
+            let StateTrim = StateCountry.trim()
+            let response = await fetch('http://localhost:3000/GetCities', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ Country: CountryTrim, State: StateTrim })
+            })
+            let responseData = await response.json()
+            if (responseData == null) {
+                console.log('no cities');
+            }
+            DropDownLocations[0].innerHTML = responseData.CitiesForCountry;
+            const LocationCities = document.getElementsByClassName('City-Location');
+            for (let i = 0; i < LocationCities.length; i++) {
+                LocationCities[i].addEventListener('click', () => {
+                    CurrentCityLocation.innerHTML = LocationCities[i].innerHTML;
+                    getIdForCountry(LocationCities[i].textContent, State.textContent, CurrentLocation.textContent)
+                })
+            }
+        }
+        async function getStatesForCountry(Country) {
+            let CountryTrim = Country.trim();
+            let response = await fetch('http://localhost:3000/GetStates', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ Country: CountryTrim })
+            })
+            let responseData = await response.json()
+            if (responseData == null) {
+                console.log('no cities');
+            }
+            console.log(responseData);
+            DropDownLocations[0].innerHTML = responseData.StatesForCountry;
+            const LocatioStates = document.getElementsByClassName('State-Location');
+            for (let i = 0; i < LocatioStates.length; i++) {
+                LocatioStates[i].addEventListener('click', () => {
+                    State.innerHTML = LocatioStates[i].innerHTML;
+                    console.log(LocatioStates[i].textContent, CurrentLocation.textContent);
+                    getCitiesForCountry(LocatioStates[i].textContent, CurrentLocation.textContent)
+                })
+            }
+        }
+        async function SaveChanges() {
+            let error = false;
+
+            if (Email.value === '') {
+                EmailError.style.display = 'flex'
+                EmailError.innerHTML = '<img src="public/images/icon-outline-error.svg" alt=""> <p>Required</p>'
+                error = true;
+            }
+            if (LocationId.value == null) {
+                LocationError.style.display = 'flex'
+                LocationError.innerHTML = '<img src="public/images/icon-outline-error.svg" alt="">  <p>Required</p>'
+                error = true;
+            }
+            if (Role.textContent == null) {
+                console.log(Role.value, Role);
+                RoleError.style.display = 'flex'
+                RoleError.innerHTML = ' <img src="public/images/icon-outline-error.svg" alt=""> <p>Required</p>'
+                error = true;
+            }
+            if (error) {
+                return
+            }
+            else if (!error) {
+                let token = getCookie('token');
+                if (token == null) {
+                    console.log('no cookie');
+                    return;
+                }
+                let response = await fetch('http://localhost:3000/SaveChanges', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        token,
+                        FirstName: FirstName.value,
+                        LastName: LastName.value,
+                        Email: Email.value,
+                        LocationId: LocationId.value,
+                        Skype: Skype.value
+                    })
+                })
+
+                let responseData = await response.json()
+                if (responseData == null) {
+                    console.log('didnt Save');
+                }
+                else {
+                    console.log('Saved');
+                    document.cookie = `token = ${responseData.token}; expires=Wed, 05 Aug 2024 23:00:00 UTC;`;
+                    location.reload()
+                }
+            }
+
+        }
+
+        async function AddUserToDatabase() {
+            let error = false;
+
+            if (Email.value === '') {
+                EmailError.style.display = 'flex'
+                EmailError.innerHTML = '<img src="public/images/icon-outline-error.svg" alt=""> <p>Required</p>'
+                error = true;
+            }
+            if (LocationId.value == null) {
+                LocationError.style.display = 'flex'
+                LocationError.innerHTML = '<img src="public/images/icon-outline-error.svg" alt="">  <p>Required</p>'
+                error = true;
+            }
+            if (Role.textContent == null) {
+                console.log(Role.value, Role);
+                RoleError.style.display = 'flex'
+                RoleError.innerHTML = ' <img src="public/images/icon-outline-error.svg" alt=""> <p>Required</p>'
+                error = true;
+            }
+            if (error) {
+                return
+            }
+            else if (!error) {
+                let token = getCookie('token');
+                if (token == null) {
+                    console.log('no cookie');
+                    return;
+                }
+                let response = await fetch('http://localhost:3000/AddUser', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        token,
+                        FirstName: FirstName.value,
+                        LastName: LastName.value,
+                        Email: Email.value,
+                        LocationId: LocationId.value,
+                        Skype: Skype.value,
+                        Role: Role.textContent
+                    })
+                })
+
+                let responseData = await response.json()
+                if (responseData == null) {
+                    console.log('didnt add');
+                }
+                else {
+                    console.log('added');
+                    location.reload()
+                }
+            }
+
+        }
+        async function deleteUserFromDatabase(Id) {
+            let token = getCookie('token');
+            if (token == null) {
+                console.log('no cookie');
+                return;
+            }
+            let response = await fetch('http://localhost:3000/DeleteUser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    token,
+                    Id: Id,
+                })
+
+            })
+            let responseData = await response.json()
+            if (responseData == null) {
+                console.log('didnt Delete');
+            }
+            else {
+                console.log('deleted');
+                location.reload()
+            }
+        }
+
+
+
+    </script>
     <script src="JsFiles/appending.js"></script>
     <script src="JsFiles/PopulateTable.js"></script>
     <script src="jsFiles/Mobile-Menu.js"></script>
     <script src="jsFiles/Menu.js"></script>
+
+
 </body>
 
 </html>
