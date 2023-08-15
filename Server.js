@@ -34,6 +34,24 @@ const checkIfUserHasRefreshToken = `SELECT * FROM Refresh_Token WHERE refresh_to
 getCountries();
 getFlagNames();
 /////listeners
+app.post('/ChangePassword', authenticate, (req, res) => {
+    if (req.body.NewPassword === req.body.ConfirmNewPassword) {
+        pool.query('UPDATE userinfo SET Password=? WHERE Email=? AND Password=?', [req.body.NewPassword, req.body.Email, req.body.OldPassword], async (err) => {
+            if (err) {
+                console.error(err)
+                res.json(null)
+            }
+            else {
+                console.log('Changed');
+                res.json('Changed')
+            }
+        })
+    }
+    else {
+        res.json(null)
+    }
+
+})
 app.post('/GetStates', (req, res) => {
     pool.query(`SELECT DISTINCT lt.State FROM locationstable lt WHERE  lt.Country_Full_Name=? ORDER BY lt.State ASC;`, [req.body.Country], (err, results) => {
         if (err) {
@@ -96,6 +114,8 @@ app.post('/GetLocationId', (req, res) => {
 
 
 app.post('/Locations', (req, res) => {
+    let HtmlLocationCitiesFromDataBase = '';
+    let userInfo = '';
     pool.query('SELECT us.Role,lt.Country,lt.City_Name,lt.State,lt.Country_Full_Name,lt.GeoName_Id,us.timeZone, us.Email,us.First_Name,us.Last_Name,us.Skype FROM locationstable lt JOIN userinfo us on us.location_Id = lt.GeoName_Id WHERE us.Id=?;', [req.body.Id], async (error, results) => {
         if (error) {
             console.error(error)
@@ -110,7 +130,7 @@ app.post('/Locations', (req, res) => {
                     results[0].FlagPath = 'xx Unknown.svg';
                 }
             }
-            let userInfo = {
+            userInfo = {
                 Email: results[0].Email,
                 First_Name: results[0].First_Name,
                 Last_Name: results[0].Last_Name,
@@ -122,43 +142,43 @@ app.post('/Locations', (req, res) => {
                 FlagPath: results[0].FlagPath,
                 Role: results[0].Role
             }
-            let queryLocations = async () => {
-                return await new Promise((resolve, reject) => {
-                    pool.query('SELECT lt.Country,lt.Country_Full_Name,lt.timeZone FROM locationstable lt GROUP BY lt.Country_Full_Name ORDER BY `lt`.`Country_Full_Name` ASC;', (err, results) => {
-                        if (err) {
-                            reject(err)
-                        }
-                        else if (results.length > 0) {
-                            resolve(results)
-                        }
-                        else {
-                            reject({ error: 'no results' })
-                        }
-                    })
-                })
-            }
-            let LocationCitiesFromDataBase = await queryLocations();
-            if (LocationCitiesFromDataBase.length > 0) {
-                let HtmlLocationCitiesFromDataBase = ''
-                for (let i = 0; i < LocationCitiesFromDataBase.length; i++) {
-                    for (let j = 0; j < files.length; j++) {
-                        if (files[j].split(' ')[0].includes(LocationCitiesFromDataBase[i].Country.toLowerCase())) {
-                            LocationCitiesFromDataBase[i].FlagPath = files[j];
-                            break;
-                        }
-                        else {
-                            LocationCitiesFromDataBase[i].FlagPath = 'xx Unknown.svg';
-                        }
+
+
+        }
+        let queryLocations = async () => {
+            return await new Promise((resolve, reject) => {
+                pool.query('SELECT lt.Country,lt.Country_Full_Name,lt.timeZone FROM locationstable lt GROUP BY lt.Country_Full_Name ORDER BY `lt`.`Country_Full_Name` ASC;', (err, results) => {
+                    if (err) {
+                        reject(err)
                     }
-
-
-                    HtmlLocationCitiesFromDataBase += `
-                <p class="Location"><img id="Location-Image" src="Images/Flags/${LocationCitiesFromDataBase[i].FlagPath}" alt="">  ${LocationCitiesFromDataBase[i].Country_Full_Name} </p>`
-
+                    else if (results.length > 0) {
+                        resolve(results)
+                    }
+                    else {
+                        reject({ error: 'no results' })
+                    }
+                })
+            })
+        }
+        let LocationCitiesFromDataBase = await queryLocations();
+        if (LocationCitiesFromDataBase.length > 0) {
+            for (let i = 0; i < LocationCitiesFromDataBase.length; i++) {
+                for (let j = 0; j < files.length; j++) {
+                    if (files[j].split(' ')[0].includes(LocationCitiesFromDataBase[i].Country.toLowerCase())) {
+                        LocationCitiesFromDataBase[i].FlagPath = files[j];
+                        break;
+                    }
+                    else {
+                        LocationCitiesFromDataBase[i].FlagPath = 'xx Unknown.svg';
+                    }
                 }
-                res.json({ userInfo: userInfo, HtmlLocationCitiesFromDataBase: HtmlLocationCitiesFromDataBase })
-            }
 
+
+                HtmlLocationCitiesFromDataBase += `
+            <p class="Location"><img id="Location-Image" src="Images/Flags/${LocationCitiesFromDataBase[i].FlagPath}" alt="">  ${LocationCitiesFromDataBase[i].Country_Full_Name} </p>`
+
+            }
+            res.json({ userInfo: userInfo, HtmlLocationCitiesFromDataBase: HtmlLocationCitiesFromDataBase })
         }
     })
 })

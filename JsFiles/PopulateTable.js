@@ -16,8 +16,8 @@ async function GetDataFromApi() {
             editOrAdd[0].textContent = 'Edit User';
             editOrAdd[1].textContent = 'Save Changes';
 
+
             edit = true;
-           
             populateLocation(IdOfUser[i].textContent)
             editOrAdd[1].removeEventListener("click", async (e) => {
                 e.preventDefault()
@@ -25,6 +25,7 @@ async function GetDataFromApi() {
             });
             editOrAdd[1].addEventListener('click', async (e) => {
                 e.preventDefault()
+
                 await SaveChanges();
             });
         })

@@ -676,7 +676,7 @@
     <div id="Add-Edit-User" class="hidden">
         <img id="Add-Edit-User-Closer" src="Images/admin-profile-icon-outline-close.svg" alt=""></img>
         <h1><span class="Edit-Or-Add"></span>_</h1>
-        <form action="">
+        <form id="myForm" action="">
             <div>
                 <label for="">
                     First Name
@@ -770,6 +770,7 @@
         const LocationError = document.getElementById('Location-error')
         const RoleError = document.getElementById('Role-error')
         const EmailError = document.getElementById('Email-error');
+        const form = document.getElementById("myForm");
 
 
         for (let i = 0; i < inputs.length; i++) {
@@ -784,11 +785,14 @@
                 Role.innerHTML = optionRole[i].innerHTML;
             })
         }
-        AddUser.addEventListener('click', () => {
+        AddUser.addEventListener('click', (e) => {
+            e.preventDefault()
+            e.stopPropagation()
             AddEditUserPage.classList.remove('hidden');
             editOrAdd[0].textContent = 'Add User';
             editOrAdd[1].textContent = 'Add User';
             edit = false;
+            console.log(edit);
             populateLocation()
             editOrAdd[1].removeEventListener('click', async (e) => {
                 e.preventDefault()
@@ -829,7 +833,6 @@
             populateLocation()
         })
         async function populateLocation(id) {
-            console.log(id);
             let UserId = await checkForCookies();
             if (UserId == null) {
                 console.error('No Id available');
@@ -871,7 +874,6 @@
                 Skype.value = ''
                 Role.textContent = ''
             }
-
             const Locations = document.getElementsByClassName('Location');
             for (let i = 0; i < Locations.length; i++) {
                 Locations[i].addEventListener('click', () => {
