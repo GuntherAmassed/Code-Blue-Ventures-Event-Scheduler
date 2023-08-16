@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 const fs = require('fs');
-let Html = fs.createReadStream(`EmailToSendToUser.html`);
+let Html = fs.createReadStream(`Emailhopeitworks.html`);
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -13,12 +13,18 @@ const mailOptions = {
     to: 'moshe9012@gmail.com',
     subject: '7',
     text: 'That was easy!',
-    html:``,
-attachments: [{
-    filename: 'div.main-section-MainLandscape.png',
-    path: 'Images/div.main-section-MainLandscape.png', // Update this to the correct image file path
-    cid: 'unique@nodemailer.com', // Same cid value as in the html img src
-  }]};
+    html: Html,
+    attachments: [{
+        filename: 'CODEBLUE TIME.png',
+        path: 'CODEBLUE TIME.png',
+        cid: 'CodeBlue@nodemailer.com',
+    },
+    {
+        filename: 'Screenshot 2023-08-16 140532.png',
+        path: 'Screenshot 2023-08-16 140532.png',
+        cid: 'Screen@nodemailer.com',
+    }],
+}
 
 transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
