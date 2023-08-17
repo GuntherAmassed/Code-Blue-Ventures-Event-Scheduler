@@ -145,6 +145,7 @@ function setClockOfUser(timeForUser, clockOfUser) {
     let SecondOfUser = timeForUser.getSeconds();
     let MinuteOfUser = timeForUser.getMinutes();
     let HourOfUser = timeForUser.getHours();
+    console.log(HourOfUser);
     let RunClockOfUser = () => {
         SecondOfUser++;
         if (SecondOfUser === 60) {
@@ -159,13 +160,17 @@ function setClockOfUser(timeForUser, clockOfUser) {
         let finalSecond = SecondOfUser <= 9 ? '0' + SecondOfUser : SecondOfUser;
         if (HourOfUser >= 12) {
             let finalHour = HourOfUser;
-            if (HourOfUser > 13) {
+            if (HourOfUser >= 13) {
                 finalHour -= 12;
             }
             FullTime = `${finalHour}:${finalMinute}:${finalSecond} PM`;
         }
         else {
-            FullTime = `${HourOfUser}:${finalMinute}:${finalSecond} AM`;
+            let realHour = HourOfUser;
+            if (HourOfUser === 0) {
+                realHour = 12;
+            }
+            FullTime = `${realHour}:${finalMinute}:${finalSecond} AM`;
         }
         clockOfUser.innerHTML = FullTime;
     }

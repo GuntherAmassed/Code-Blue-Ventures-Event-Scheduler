@@ -188,6 +188,7 @@ async function SaveChanges() {
     else {
         console.log('Saved');
         document.cookie = `token = ${responseData.token}; expires=Wed, 05 Aug 2024 23:00:00 UTC;`;
+        location.reload();
     }
     console.log(responseData.token);
 }
