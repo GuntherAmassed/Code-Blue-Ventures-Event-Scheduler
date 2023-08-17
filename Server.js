@@ -638,8 +638,7 @@ function getFlagNames() {
 }
 
 ////
-const host = 'codebluetimes.com';
-app.listen(port,host,() => {
+app.listen(port,() => {
     console.log("listening on port " + port);
 })
 
