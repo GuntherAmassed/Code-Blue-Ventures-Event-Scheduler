@@ -1,4 +1,4 @@
-const port = 3000;
+const port = 80;
 require('dotenv').config()
 const express = require('express');
 const cors = require('cors');
@@ -638,8 +638,8 @@ function getFlagNames() {
 }
 
 ////
-
-app.listen(port,() => {
+const host = 'codebluetimes.com';
+app.listen(port,host,() => {
     console.log("listening on port " + port);
 })
 
