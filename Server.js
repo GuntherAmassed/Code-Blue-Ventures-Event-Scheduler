@@ -19,7 +19,8 @@ const pool = createPool({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'loginforzunta'
+    database: 'loginforzunta',
+    port: '3306'
 });
 
 let FinalCountryIntialArray = [];
