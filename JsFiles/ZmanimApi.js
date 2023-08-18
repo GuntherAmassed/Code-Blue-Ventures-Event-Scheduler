@@ -51,7 +51,7 @@ async function ZmanFetch(data) {
         MyDate += '01-01'
     }
 
-    let response = await fetch(`http://localhost:3000/ZmanimApi`, {
+    let response = await fetch(`https://codebluetimes.com/app/ZmanimApi`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

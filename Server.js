@@ -44,7 +44,7 @@ const checkIfUserHasRefreshToken = `SELECT * FROM refresh_token WHERE refresh_to
 getCountries();
 getFlagNames();
 /////listeners
-app.post('/ChangePassword', authenticate, (req, res) => {
+app.post('/app/ChangePassword', authenticate, (req, res) => {
     if (req.body.NewPassword === req.body.ConfirmNewPassword) {
         pool.query('UPDATE userinfo SET Password=? WHERE Email=? AND Password=?', [req.body.NewPassword, req.body.Email, req.body.OldPassword], async (err) => {
             if (err) {
@@ -62,7 +62,7 @@ app.post('/ChangePassword', authenticate, (req, res) => {
     }
 
 })
-app.post('/GetStates', (req, res) => {
+app.post('/app/GetStates', (req, res) => {
     pool.query(`SELECT DISTINCT lt.State FROM locationstable lt WHERE  lt.Country_Full_Name=? ORDER BY lt.State ASC;`, [req.body.Country], (err, results) => {
         if (err) {
             console.error(err)
@@ -80,7 +80,7 @@ app.post('/GetStates', (req, res) => {
 
     })
 })
-app.post('/GetCities', (req, res) => {
+app.post('/app/GetCities', (req, res) => {
 
     pool.query(`SELECT lt.City_Name FROM locationstable lt WHERE lt.State=? AND lt.Country_Full_Name=? ORDER BY lt.City_Name ASC;`, [req.body.State, req.body.Country], (err, results) => {
         if (err) {
@@ -99,7 +99,7 @@ app.post('/GetCities', (req, res) => {
 
     })
 })
-app.post('/GetLocationId', (req, res) => {
+app.post('/app/GetLocationId', (req, res) => {
     pool.query(`SELECT lt.GeoName_Id FROM locationstable lt WHERE lt.City_Name=? AND lt.State=? AND lt.Country_Full_Name=?`, [req.body.City, req.body.State, req.body.Country], (err, results) => {
         if (err) {
             console.error(err)
@@ -123,7 +123,7 @@ app.post('/GetLocationId', (req, res) => {
 })
 
 
-app.post('/Locations', (req, res) => {
+app.post('/app/Locations', (req, res) => {
     let HtmlLocationCitiesFromDataBase = '';
     let userInfo = '';
     pool.query('SELECT us.Role,lt.Country,lt.City_Name,lt.State,lt.Country_Full_Name,lt.GeoName_Id,us.timeZone, us.Email,us.First_Name,us.Last_Name,us.Skype FROM locationstable lt JOIN userinfo us on us.location_Id = lt.GeoName_Id WHERE us.Id=?;', [req.body.Id], async (error, results) => {
@@ -278,7 +278,7 @@ app.post('/app/token', async (req, res) => {
     }
 })
 
-app.delete('/logout', authenticate, (req, res) => {
+app.delete('/app/logout', authenticate, (req, res) => {
     pool.query('DELETE FROM refresh_token WHERE Id=?;', [req.user.id], (error) => {
         if (error) {
             console.error(error)
@@ -291,7 +291,7 @@ app.delete('/logout', authenticate, (req, res) => {
 
 })
 
-app.get('/UserInfo', (req, res) => {
+app.get('/app/UserInfo', (req, res) => {
     let row = '';
     pool.query('SELECT * FROM locationstable lt JOIN userinfo ON userinfo.location_Id=lt.GeoName_Id ORDER BY userinfo.First_Name; ', async (error, results) => {
         if (error) {
@@ -333,7 +333,7 @@ app.get('/UserInfo', (req, res) => {
 
 })
 
-app.post('/ClockAmount', (req, res) => {
+app.post('/app/ClockAmount', (req, res) => {
     let clockAmount;
     let times = [];
     let clockFrame = '';
@@ -380,7 +380,7 @@ app.post('/ClockAmount', (req, res) => {
     });
 })
 
-app.post('/ZmanimApi', async (req, res) => {
+app.post('/app/ZmanimApi', async (req, res) => {
     try {
         let start = [];
         let end = [];
@@ -446,7 +446,7 @@ app.post('/ZmanimApi', async (req, res) => {
 
 })
 
-app.post('/SaveChanges', authenticate, (req, res) => {
+app.post('/app/SaveChanges', authenticate, (req, res) => {
     pool.query('SELECT timeZone FROM `locationstable` WHERE GeoName_Id=?;', [req.body.LocationId], (err, results) => {
         if (err) {
             console.log(err);
@@ -475,7 +475,7 @@ app.post('/SaveChanges', authenticate, (req, res) => {
 
     })
 })
-app.post('/AddUser', authenticate, (req, res) => {
+app.post('/app/AddUser', authenticate, (req, res) => {
     pool.query('SELECT timeZone FROM `locationstable` WHERE GeoName_Id=?;', [req.body.LocationId], (err, results) => {
         if (err) {
             console.log(err);
@@ -494,7 +494,7 @@ app.post('/AddUser', authenticate, (req, res) => {
         }
     })
 })
-app.post('/DeleteUser', (req, res) => {
+app.post('/app/DeleteUser', (req, res) => {
     pool.query('DELETE FROM userinfo WHERE Id=?', [req.body.Id], (err) => {
         if (err) {
             console.log(err);

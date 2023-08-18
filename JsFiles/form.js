@@ -57,7 +57,7 @@ async function populateLocation() {
         console.error('No Id available');
         return
     }
-    let response = await fetch('http://localhost:3000/Locations', {
+    let response = await fetch('https://codebluetimes.com/app/Locations', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -98,7 +98,7 @@ async function getIdForCountry(City, State, Country) {
     let CountryTrim = Country.trim();
     let StateTrim = State.trim()
     let CityTrim = City.trim()
-    let response = await fetch('http://localhost:3000/GetLocationId', {
+    let response = await fetch('https://codebluetimes.com/app/GetLocationId', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -116,7 +116,7 @@ async function getIdForCountry(City, State, Country) {
 async function getCitiesForCountry(StateCountry, Country) {
     let CountryTrim = Country.trim();
     let StateTrim = StateCountry.trim()
-    let response = await fetch('http://localhost:3000/GetCities', {
+    let response = await fetch('https://codebluetimes.com/app/GetCities', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -138,7 +138,7 @@ async function getCitiesForCountry(StateCountry, Country) {
 }
 async function getStatesForCountry(Country) {
     let CountryTrim = Country.trim();
-    let response = await fetch('http://localhost:3000/GetStates', {
+    let response = await fetch('https://codebluetimes.com/app/GetStates', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -166,7 +166,7 @@ async function SaveChanges() {
         console.log('no cookie');
         return;
     }
-    let response = await fetch('http://localhost:3000/SaveChanges', {
+    let response = await fetch('https://codebluetimes.com/app/SaveChanges', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

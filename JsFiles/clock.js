@@ -8,7 +8,7 @@ const NameOfCountry = document.getElementsByClassName("Name-Of-Country");
 const DayOfWeek = document.getElementsByClassName("Day-Of-Week");
 
 async function ClockStart() {
-  let response = await fetch('http://localhost:3000/ClockAmount', {
+  let response = await fetch('https://codebluetimes.com/app/ClockAmount', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

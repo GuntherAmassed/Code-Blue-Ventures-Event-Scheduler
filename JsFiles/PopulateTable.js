@@ -2,7 +2,7 @@ let data;
 let Table = document.getElementById('table-body');
 GetDataFromApi();
 async function GetDataFromApi() {
-    let response = await fetch(`http://localhost:3000/UserInfo`);
+    let response = await fetch(`https://codebluetimes.com/app/UserInfo`);
     data = await response.text();
     Table.innerHTML = data;
     const EditUser = document.getElementsByClassName('Edit-User');
