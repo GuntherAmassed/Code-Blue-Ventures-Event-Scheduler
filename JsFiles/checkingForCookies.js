@@ -9,7 +9,7 @@ async function checkForCookies() {
         token: Token
     }
     try {
-        let response = await fetch('http://localhost:3000/token', {
+        let response = await fetch('https://codebluetimes.com/token', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ async function LogOutToken() {
     let jsonToken = {
         token: Token
     }
-    let response = await fetch('http://localhost:3000/logout', {
+    let response = await fetch('https://codebluetimes.com/logout', {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
