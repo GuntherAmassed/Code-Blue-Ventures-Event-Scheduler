@@ -22,6 +22,17 @@ const pool = createPool({
     database: 'loginforzunta',
     port: '3306'
 });
+pool.getConnection((err, connection) => {
+  if (err) {
+    console.error('Error connecting to database:', err);
+    return;
+  }
+
+  console.log('Connected to database');
+
+  // Release the connection back to the pool when done
+  connection.release();
+});
 
 let FinalCountryIntialArray = [];
 let fileNames = [];
