@@ -16,7 +16,7 @@ app.use(express.static(dirName));
 const fs = require('fs');
 let files = fs.readdirSync(`Images/Flags`);
 const pool = createPool({
-    host: 'codebluetimes.com',
+    host: 'localhost',
     user: 'root',
     password: '',
     database: 'loginforzunta'
