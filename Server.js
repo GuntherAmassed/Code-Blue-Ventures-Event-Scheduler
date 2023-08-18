@@ -14,7 +14,7 @@ const jwt = require('jsonwebtoken');
 const fs = require('fs');
 let files = fs.readdirSync(`Images/Flags`);
 const pool = createPool({
-    host: 'localhost',
+    host: '127.0.0.1',
     user: 'root',
     password: '',
     database: 'loginforzunta',
