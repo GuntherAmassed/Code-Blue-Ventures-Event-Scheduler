@@ -38,7 +38,7 @@ const LogInQuery = `SELECT * FROM userinfo us WHERE us.Email=? AND us.Password=?
 const refreshTokenAdd = `INSERT INTO refresh_token(Refresh_Tokens,Id) VALUES(?,?);`;
 const updateRefreshToken = `UPDATE refresh_token SET Refresh_Tokens=? WHERE id=?`
 const checkIfRefreshTokenIsInDatabase = `SELECT * FROM refresh_token WHERE Refresh_Tokens=?;`;
-const checkIfUserHasRefreshToken = `SELECT * FROM Refresh_Token WHERE refresh_token.id=?;`
+const checkIfUserHasRefreshToken = `SELECT * FROM refresh_token WHERE refresh_token.id=?;`
 
 /////calling
 getCountries();
@@ -237,7 +237,7 @@ app.post('/app/LogIn', (req, res) => {
 
 
 
-app.post('/token', async (req, res) => {
+app.post('/app/token', async (req, res) => {
     const Token = req.body.token;
     if (Token == null) return res.sendStatus(401)
     let checkDataBase = async () => {

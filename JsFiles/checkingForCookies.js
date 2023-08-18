@@ -9,7 +9,7 @@ async function checkForCookies() {
         token: Token
     }
     try {
-        let response = await fetch('https://codebluetimes.com/token', {
+        let response = await fetch('/app/token', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
