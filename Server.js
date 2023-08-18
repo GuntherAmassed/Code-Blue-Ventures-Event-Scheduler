@@ -10,9 +10,7 @@ app.use(cors());
 app.use(express.json());
 const { formatInTimeZone } = require('date-fns-tz');
 const today = new Date();
-let dirName = 'C:/Users/Moshe Stern/Desktop/Figma Api/ZuntaTimes';
 const jwt = require('jsonwebtoken');
-app.use(express.static(dirName));
 const fs = require('fs');
 let files = fs.readdirSync(`Images/Flags`);
 const pool = createPool({
