@@ -193,7 +193,7 @@ app.post('/Locations', (req, res) => {
     })
 })
 
-app.post('app/LogIn', (req, res) => {
+app.post('/app/LogIn', (req, res) => {
     pool.query(LogInQuery, [req.body.Email, req.body.Password], async (error, results) => {
         let response = {
             error: true,
