@@ -21,15 +21,15 @@ const pool = createPool({
     port: '3306'
 });
 pool.getConnection((err, connection) => {
-  if (err) {
-    console.error('Error connecting to database:', err);
-    return;
-  }
+    if (err) {
+        console.error('Error connecting to database:', err);
+        return;
+    }
 
-  console.log('Connected to database');
+    console.log('Connected to database');
 
-  // Release the connection back to the pool when done
-  connection.release();
+    // Release the connection back to the pool when done
+    connection.release();
 });
 
 let FinalCountryIntialArray = [];
@@ -381,7 +381,7 @@ app.post('/app/ClockAmount', (req, res) => {
 })
 
 app.post('/app/ZmanimApi', async (req, res) => {
-   
+
     try {
         let start = [];
         let end = [];
@@ -432,7 +432,11 @@ app.post('/app/ZmanimApi', async (req, res) => {
                     start: start,
                     end: end,
                 }
-                res.json({ event, timeForUser: new Date(formatInTimeZone(new Date(), timezoneofuser, 'yyyy-MM-dd hh:mm:ss aa')), CityOfUser: CityOfUser , timeZoneOfUser:timezoneofuser})
+                let hours = new Date(formatInTimeZone(new Date(), 'Asia/Kabul', 'yyyy-MM-dd hh:mm:ss aa')).getHours();
+                let minutes = new Date(formatInTimeZone(new Date(), 'Asia/Kabul', 'yyyy-MM-dd hh:mm:ss aa')).getMinutes();
+                let seconds = new Date(formatInTimeZone(new Date(), 'Asia/Kabul', 'yyyy-MM-dd hh:mm:ss aa')).getSeconds();
+                let days = new Date(formatInTimeZone(new Date(), 'Asia/Kabul', 'yyyy-MM-dd hh:mm:ss aa')).getDay()
+                res.json({ event, CityOfUser: CityOfUser, hours: hours, minutes: minutes, seconds: seconds, days: days })
             }
             else {
                 console.log('no data');
@@ -649,7 +653,7 @@ function getFlagNames() {
 }
 
 ////
-app.listen(port,() => {
+app.listen(port, () => {
     console.log("listening on port " + port);
 })
 

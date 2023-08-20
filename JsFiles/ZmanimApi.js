@@ -6,6 +6,7 @@ const NameOfEvent = document.getElementById('Event-Name');
 const LocationOptions = document.getElementsByClassName('location-borders');
 const LocationIdFromOptions = document.getElementsByClassName('Hidden-Location-Id');
 const nameTitle = document.getElementById('User-Name-Time');
+const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 let dataOfUser;
 let EventTimes;
 let startCounter = 0;
@@ -59,17 +60,15 @@ async function ZmanFetch(data) {
         body: JSON.stringify({ Date: MyDate, location: MyLocation.Location })
     });
     let responseData = await response.json();
-    console.log(responseData.timeZoneOfUser);
-    console.log(new Date(responseData.timeForUser));
-    let timeForUserRedone = new Date(responseData.timeForUser).toLocaleDateString('en-us', { weekday: "short" });
+
     nameTitle.innerHTML = '';
     nameTitle.innerHTML += `  <span> Hello,</span>${dataOfUser.First_Name} ${dataOfUser.Last_Name}_
      <p>
-    ${responseData.CityOfUser} <span> ${timeForUserRedone} </span><span id="clock-of-user"></span>
+    ${responseData.CityOfUser} <span> ${weekday[responseData.days]} </span><span id="clock-of-user"></span>
     </p>`;
     let clockOfUser = document.getElementById('clock-of-user');
     clockOfUser.innerHTML = '';
-    setClockOfUser(responseData.timeForUser, clockOfUser);
+    setClockOfUser(responseData.hours, responseData.minutes, responseData.seconds, clockOfUser);
     EventTimes = {
         start: [],
         end: []
@@ -142,11 +141,11 @@ async function addClickEventForLocation() {
         })
     }
 }
-function setClockOfUser(timeForUser, clockOfUser) {
+function setClockOfUser(hours,minutes,seconds, clockOfUser) {
     let FullTime;
-    let SecondOfUser = timeForUser.getSeconds();
-    let MinuteOfUser = timeForUser.getMinutes();
-    let HourOfUser = timeForUser.getHours();
+    let SecondOfUser = seconds;
+    let MinuteOfUser =minutes;
+    let HourOfUser = hours;
     console.log(HourOfUser);
     let RunClockOfUser = () => {
         SecondOfUser++;
