@@ -16,7 +16,7 @@ let files = fs.readdirSync(`Images/Flags`);
 const pool = createPool({
     host: '127.0.0.1',
     user: 'root',
-    password: '',
+    password: 'new_password',
     database: 'loginforzunta',
     port: '3306'
 });
