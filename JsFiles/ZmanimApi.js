@@ -59,6 +59,8 @@ async function ZmanFetch(data) {
         body: JSON.stringify({ Date: MyDate, location: MyLocation.Location })
     });
     let responseData = await response.json();
+    console.log(responseData.timeZoneOfUser);
+    console.log(new Date(responseData.timeForUser));
     let timeForUserRedone = new Date(responseData.timeForUser).toLocaleDateString('en-us', { weekday: "short" });
     nameTitle.innerHTML = '';
     nameTitle.innerHTML += `  <span> Hello,</span>${dataOfUser.First_Name} ${dataOfUser.Last_Name}_
@@ -67,7 +69,7 @@ async function ZmanFetch(data) {
     </p>`;
     let clockOfUser = document.getElementById('clock-of-user');
     clockOfUser.innerHTML = '';
-    setClockOfUser(new Date(responseData.timeForUser), clockOfUser);
+    setClockOfUser(responseData.timeForUser, clockOfUser);
     EventTimes = {
         start: [],
         end: []

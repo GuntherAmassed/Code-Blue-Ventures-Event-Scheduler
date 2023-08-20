@@ -16,7 +16,7 @@ let files = fs.readdirSync(`Images/Flags`);
 const pool = createPool({
     host: '127.0.0.1',
     user: 'root',
-    password: 'new_password',
+    password: '',
     database: 'loginforzunta',
     port: '3306'
 });
@@ -381,6 +381,7 @@ app.post('/app/ClockAmount', (req, res) => {
 })
 
 app.post('/app/ZmanimApi', async (req, res) => {
+   
     try {
         let start = [];
         let end = [];
@@ -431,7 +432,7 @@ app.post('/app/ZmanimApi', async (req, res) => {
                     start: start,
                     end: end,
                 }
-                res.json({ event, timeForUser: new Date(formatInTimeZone(new Date(), timezoneofuser, 'yyyy-MM-dd hh:mm:ss aa')), CityOfUser: CityOfUser })
+                res.json({ event, timeForUser: new Date(formatInTimeZone(new Date(), timezoneofuser, 'yyyy-MM-dd hh:mm:ss aa')), CityOfUser: CityOfUser , timeZoneOfUser:timezoneofuser})
             }
             else {
                 console.log('no data');
