@@ -432,10 +432,10 @@ app.post('/app/ZmanimApi', async (req, res) => {
                     start: start,
                     end: end,
                 }
-                let hours = new Date(formatInTimeZone(new Date(), 'Asia/Kabul', 'yyyy-MM-dd hh:mm:ss aa')).getHours();
-                let minutes = new Date(formatInTimeZone(new Date(), 'Asia/Kabul', 'yyyy-MM-dd hh:mm:ss aa')).getMinutes();
-                let seconds = new Date(formatInTimeZone(new Date(), 'Asia/Kabul', 'yyyy-MM-dd hh:mm:ss aa')).getSeconds();
-                let days = new Date(formatInTimeZone(new Date(), 'Asia/Kabul', 'yyyy-MM-dd hh:mm:ss aa')).getDay()
+                let hours = new Date(formatInTimeZone(new Date(), results[0].timeZone, 'yyyy-MM-dd hh:mm:ss aa')).getHours();
+                let minutes = new Date(formatInTimeZone(new Date(), results[0].timeZone, 'yyyy-MM-dd hh:mm:ss aa')).getMinutes();
+                let seconds = new Date(formatInTimeZone(new Date(), results[0].timeZone, 'yyyy-MM-dd hh:mm:ss aa')).getSeconds();
+                let days = new Date(formatInTimeZone(new Date(), results[0].timeZone, 'yyyy-MM-dd hh:mm:ss aa')).getDay()
                 res.json({ event, CityOfUser: CityOfUser, hours: hours, minutes: minutes, seconds: seconds, days: days })
             }
             else {
