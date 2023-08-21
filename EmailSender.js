@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
         pass: 'ikmkqzbrovvznoyo'
     }
 });
-app.post('Email/NewUser', (res, req) => {
+app.post('/Email/NewUser', (res, req) => {
     console.log('hi about to send email');
     const mailOptions = {
         from: 'moshe@zunta.com',
