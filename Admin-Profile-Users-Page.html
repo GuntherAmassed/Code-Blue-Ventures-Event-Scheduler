@@ -918,6 +918,7 @@
             if (responseData == null) {
                 console.log('no cities');
             }
+            console.log(responseData);
             DropDownLocations[0].innerHTML = responseData.CitiesForCountry;
             const LocationCities = document.getElementsByClassName('City-Location');
             for (let i = 0; i < LocationCities.length; i++) {
