@@ -14,10 +14,13 @@ Content-Type: application/json
 POST https://codebluetimes.com/Email/NewUser
 Content-Type: application/json
 
-{ 
-   "Email":"hi",
-   "Name":"hello",
-   "PasswordLink":"hlele"
+{
+      
+        "Email":"hi",
+        "Name":"hello",
+        "PasswordLink":"hlele"
+        
+  
 }
 ####
 GET  https://codebluetimes.com

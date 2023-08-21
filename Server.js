@@ -484,28 +484,29 @@ app.post('/app/SaveChanges', authenticate, (req, res) => {
 })
 app.post('/app/AddUser', authenticate, (req, res) => {
     console.log('hi');
-    console.log(req.body.Email, req.body.FirstName, req.body.LastName, req.body.Skype, req.body.Role, req.body.LocationId);
-
+    let tempPasswordUser = require('crypto').randomBytes(64).toString('hex');
+    let name = req.body.FirstName + ' ' + req.body.LastName;
+    let email = req.body.Email
+    console.log(email, name, tempPasswordUser);
     pool.query('SELECT timeZone FROM `locationstable` WHERE GeoName_Id=?;', [req.body.LocationId], (err, results) => {
         if (err) {
             console.log(err);
         }
         else if (results.length > 0) {
-           
-            let tempPasswordUser = require('crypto').randomBytes(64).toString('hex');
             pool.query('INSERT INTO userinfo (Email, First_Name, Last_Name, Skype, timeZone, Password, Role,location_Id) VALUES (?, ?, ?, ?, ?, ? ,? ,?);', [req.body.Email, req.body.FirstName, req.body.LastName, req.body.Skype, results[0].timeZone, tempPasswordUser, req.body.Role, req.body.LocationId], async (err) => {
                 if (err) {
                     console.error(err)
                     res.json(null)
                 }
-                else { 
+                else {
                     console.log('gain');
+
                     let SendEmail = await fetch('https://codebluetimes.com/Email/NewUser', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ Email: req.body.Email, Name: req.body.FirstName + ' ' + req.body.LastName, PasswordLink: `https://codebluetimes.com/SetUpPassword.html?${tempPasswordUser}` })
+                        body: JSON.stringify({ Email: email, Name: name, PasswordLink: `https://codebluetimes.com/SetUpPassword.html?${tempPasswordUser}` })
                     })
                     let responseSendEmail = await SendEmail.json()
                     res.json('added and sent email', responseSendEmail)
