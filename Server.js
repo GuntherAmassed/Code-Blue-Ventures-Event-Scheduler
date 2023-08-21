@@ -540,6 +540,7 @@ app.post('/app/DeleteUser', (req, res) => {
     })
 })
 app.post('/app/NewPasswordChange', (req, res) => {
+    console.log(req.body.Password, req.body.queryString, req.body.Email);
     pool.query('UPDATE userinfo SET userinfo.Password=? WHERE userinfo.Password=? AND userinfo.Email=?', [req.body.Password, req.body.queryString, req.body.Email], (err) => {
         if (err) {
             console.log(err);
