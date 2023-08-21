@@ -546,9 +546,12 @@ app.post('/app/NewPasswordChange', (req, res) => {
             console.log(err);
             res.json(null)
         }
-        else {
+        else if(results.length>0) {
             console.log('Set up');
             res.json('Changed')
+        }
+        else{
+            res.json(null)
         }
     })
 })
