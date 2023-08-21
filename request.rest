@@ -11,13 +11,13 @@ Content-Type: application/json
    
 }
 ####
-POST https://codebluetimes.com/app/AddUser
+POST https://codebluetimes.com/Email/NewUser
 Content-Type: application/json
 
 { 
-    "Password":"",
-    "Email":"moshe@zunta.com",
-    "rememberMe":true
+   "Email":"hi",
+   "Name":"hello",
+   "PasswordLink":"hlele"
 }
 ####
 GET  https://codebluetimes.com

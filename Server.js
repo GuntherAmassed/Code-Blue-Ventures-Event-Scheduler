@@ -499,7 +499,7 @@ app.post('/app/AddUser', authenticate, (req, res) => {
                     res.json(null)
                 }
                 else { 
-                    console.log('hiagain');
+                    console.log('gain');
                     let SendEmail = await fetch('https://codebluetimes.com/Email/NewUser', {
                         method: 'POST',
                         headers: {
