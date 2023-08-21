@@ -484,7 +484,7 @@ app.post('/app/SaveChanges', authenticate, (req, res) => {
 })
 app.post('/app/AddUser', authenticate, (req, res) => {
     console.log('hi');
-    console.log(req.body.Email, req.body.FirstName, req.body.LastName, req.body.Skype, results[0].timeZone, tempPasswordUser, req.body.Role, req.body.LocationId);
+    console.log(req.body.Email, req.body.FirstName, req.body.LastName, req.body.Skype, req.body.Role, req.body.LocationId);
 
     pool.query('SELECT timeZone FROM `locationstable` WHERE GeoName_Id=?;', [req.body.LocationId], (err, results) => {
         if (err) {
