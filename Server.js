@@ -514,8 +514,14 @@ app.post('/app/AddUser', authenticate, (req, res) => {
                         body: JSON.stringify(EmailInfo)
                     })
                     let responseSendEmail = await SendEmail.json()
-                    res.json('added and sent email', responseSendEmail)
-                    console.log("added");
+                    if (responseSendEmail == null) {
+                        res.json(null)
+                    }
+                    else {
+                        res.json('added and sent email')
+                        console.log("added");
+                    }
+
                 }
             })
         }
@@ -533,6 +539,20 @@ app.post('/app/DeleteUser', (req, res) => {
         }
     })
 })
+app.post('/app/NewPasswordChange', (req, res) => {
+    pool.query('UPDATE userinfo SET userinfo.Password=? WHERE userinfo.Password=? AND userinfo.Email=?', [req.body.Password, req.body.queryString, req.body.Email], (err) => {
+        if (err) {
+            console.log(err);
+            res.json(null)
+        }
+        else {
+            console.log('Set up');
+            res.json('Changed')
+        }
+    })
+})
+
+
 /////functions
 function authenticate(req, res, next) {
     jwt.verify(req.body.token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
