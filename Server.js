@@ -100,6 +100,7 @@ app.post('/app/GetCities', (req, res) => {
     })
 })
 app.post('/app/GetLocationId', (req, res) => {
+    console.log(req.body.City, req.body.State, req.body.Country);
     pool.query(`SELECT lt.GeoName_Id FROM locationstable lt WHERE lt.City_Name=? AND lt.State=? AND lt.Country_Full_Name=?`, [req.body.City, req.body.State, req.body.Country], (err, results) => {
         if (err) {
             console.error(err)
@@ -113,6 +114,7 @@ app.post('/app/GetLocationId', (req, res) => {
         }
         else if (results.length > 1) {
             console.log('too much ids');
+            res.json(null)
         }
         else {
             res.json(null)
