@@ -11,18 +11,12 @@ Content-Type: application/json
    
 }
 ####
-POST https://codebluetimes.com/Email/NewUser
+POST http://localhost:3100/Email/NewUser
 Content-Type: application/json
 
 {
-     
-        "Email":"hi",
-        "Name":"hello",
-        "PasswordLink":"hlele"
-      
-        
-        
-  
+    "Email":"hi"
 }
+
 ####
 GET  https://codebluetimes.com
