@@ -19,7 +19,7 @@ app.post('/Email/NewUser', (res, req) => {
     console.log('hi about to send email');
     console.log(req.body);
     console.log(req.EmailInfo);
-    const mailOptions = {
+    let mailOptions = {
         from: 'moshe@zunta.com',
         to: req.body.Email,
         subject: 'Codeblue Times Sign up',

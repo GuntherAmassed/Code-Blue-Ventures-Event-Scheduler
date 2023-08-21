@@ -15,10 +15,12 @@ POST https://codebluetimes.com/Email/NewUser
 Content-Type: application/json
 
 {
-      
+      "EmailInfo"{
         "Email":"hi",
         "Name":"hello",
         "PasswordLink":"hlele"
+      }
+        
         
   
 }
