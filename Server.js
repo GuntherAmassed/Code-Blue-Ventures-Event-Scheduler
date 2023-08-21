@@ -488,6 +488,11 @@ app.post('/app/AddUser', authenticate, (req, res) => {
     let name = req.body.FirstName + ' ' + req.body.LastName;
     let email = req.body.Email
     console.log(email, name, tempPasswordUser);
+    let EmailInfo = {
+        Email: email,
+        Name: name,
+        PasswordLink: `https://codebluetimes.com/SetUpPassword.html?${tempPasswordUser}`
+    }
     pool.query('SELECT timeZone FROM `locationstable` WHERE GeoName_Id=?;', [req.body.LocationId], (err, results) => {
         if (err) {
             console.log(err);
@@ -506,7 +511,7 @@ app.post('/app/AddUser', authenticate, (req, res) => {
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ Email: email, Name: name, PasswordLink: `https://codebluetimes.com/SetUpPassword.html?${tempPasswordUser}` })
+                        body: EmailInfo
                     })
                     let responseSendEmail = await SendEmail.json()
                     res.json('added and sent email', responseSendEmail)
