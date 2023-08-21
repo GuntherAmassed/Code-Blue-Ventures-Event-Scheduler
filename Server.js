@@ -511,7 +511,7 @@ app.post('/app/AddUser', authenticate, (req, res) => {
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: EmailInfo
+                        body: JSON.stringify(EmailInfo)
                     })
                     let responseSendEmail = await SendEmail.json()
                     res.json('added and sent email', responseSendEmail)
