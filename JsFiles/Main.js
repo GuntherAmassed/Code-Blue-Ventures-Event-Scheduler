@@ -4,5 +4,6 @@ async function Excute() {
     console.log(data);
     await ZmanFetch(data);
     await addClickEventForLocation();
+    //visibility not hidden for document
 }
 Excute();
