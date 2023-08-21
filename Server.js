@@ -491,14 +491,15 @@ app.post('/app/AddUser', authenticate, (req, res) => {
             console.log(err);
         }
         else if (results.length > 0) {
-            console.log('hiagain');
+           
             let tempPasswordUser = require('crypto').randomBytes(64).toString('hex');
             pool.query('INSERT INTO userinfo (Email, First_Name, Last_Name, Skype, timeZone, Password, Role,location_Id) VALUES (?, ?, ?, ?, ?, ? ,? ,?);', [req.body.Email, req.body.FirstName, req.body.LastName, req.body.Skype, results[0].timeZone, tempPasswordUser, req.body.Role, req.body.LocationId], async (err) => {
                 if (err) {
                     console.error(err)
                     res.json(null)
                 }
-                else {
+                else { 
+                    console.log('hiagain');
                     let SendEmail = await fetch('https://codebluetimes.com/Email/NewUser', {
                         method: 'POST',
                         headers: {
