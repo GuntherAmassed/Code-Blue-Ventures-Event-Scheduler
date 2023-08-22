@@ -580,6 +580,7 @@ app.post('/app/ResetPasswordRequest', (req, res) => {
                 else {
                     console.log('inserted');
                     console.log(results);
+                    console.log(ResetInfo);
                     let SendEmail = await fetch('https://codebluetimes.com/Email/ResetPassword', {
                         method: 'POST',
                         headers: {
