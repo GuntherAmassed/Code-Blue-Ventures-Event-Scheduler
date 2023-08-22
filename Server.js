@@ -608,7 +608,7 @@ app.post('/app/ResetPasswordRequest', (req, res) => {
 })
 app.post('/app/ResetPassword', (req, res) => {
     console.log(req.body.Password, req.body.ResetToken, req.body.Email);
-    pool.query('SELECT Id FROM `userinfo` WHERE Email=?;'[req.body.Email], (err, results) => {
+    pool.query('SELECT Id FROM `userinfo` WHERE Email=?;',[req.body.Email], (err, results) => {
         if (err) {
             res.json(null)
             console.error(err)
