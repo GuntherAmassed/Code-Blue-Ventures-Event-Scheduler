@@ -614,7 +614,6 @@ app.post('/app/ResetPassword', (req, res) => {
             console.error(err)
         }
         else if (results.length > 0) {
-            console.log(results);
             pool.query('SELECT * FROM reset_tokens WHERE Reset_Token=? AND Id = ?;', [req.body.ResetToken, results[0].Id], (err, results) => {
                 if (err) {
                     res.json(null)
@@ -626,7 +625,8 @@ app.post('/app/ResetPassword', (req, res) => {
                             console.log(err);
                             res.json(null)
                         }
-                        else if (results.length > 0) {
+                        else{
+                            console.log(results);
                             pool.query('DELETE FROM reset_tokens WHERE Id=? AND Reset_Token=?;', [results[0].Id, req.body.ResetToken], (err, results) => {
                                 if (err) {
                                     res.json(null)
@@ -639,10 +639,7 @@ app.post('/app/ResetPassword', (req, res) => {
                                 }
                             })
                         }
-                        else {
-                            console.log('couldnt find');
-                            res.json(null)
-                        }
+                        
                     })
                 }
             })
