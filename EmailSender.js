@@ -8,6 +8,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 const templatePath = 'Emailhopeitworks.ejs';
+const templatePathResetPassword='ResetPasswordEmail.ejs';
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -39,6 +40,31 @@ app.post('/Email/NewUser', (req,res) => {
         });
     });
 })
+app.post('/Email/ResetPassword', (req,res) => {
+    let mailOptions = {
+        from: 'moshe@zunta.com',
+        to: req.body.Email,
+        subject: 'Codeblue Times Sign up',
+    }
+    ejs.renderFile(templatePathResetPassword, { username: req.body.Name, setupLink: req.body.ResetTokenLink }, (err, html) => {
+        if (err) {
+            console.error('Error rendering EJS template:', err);
+            res.json(null)
+            return;
+        }
+        mailOptions.html = html;
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+                res.json(null)
+            } else {
+                console.log('Email sent: ' + info.response);
+                res.json('Email sent: ' + info.response)
+            }
+        });
+    });
+})
+
 app.listen(port, () => {
     console.log("listening on port " + port);
 })

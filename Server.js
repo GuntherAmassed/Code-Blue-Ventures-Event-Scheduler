@@ -491,7 +491,7 @@ app.post('/app/AddUser', authenticate, (req, res) => {
     let EmailInfo = {
         Email: email,
         Name: name,
-        PasswordLink: `https://codebluetimes.com/SetUpPassword.html?${tempPasswordUser}`
+        PasswordLink: `https://codebluetimes.com/SetUpPassword.html?token=${tempPasswordUser}&type=NewUser`
     }
     pool.query('SELECT timeZone FROM `locationstable` WHERE GeoName_Id=?;', [req.body.LocationId], (err, results) => {
         if (err) {
@@ -541,19 +541,113 @@ app.post('/app/DeleteUser', (req, res) => {
 })
 app.post('/app/NewPasswordChange', (req, res) => {
     console.log(req.body.Password, req.body.queryString, req.body.Email);
-    pool.query('UPDATE userinfo SET userinfo.Password=? WHERE userinfo.Password=? AND userinfo.Email=?', [req.body.Password, req.body.queryString, req.body.Email], (err) => {
+    pool.query('UPDATE userinfo SET userinfo.Password=? WHERE userinfo.Password=? AND userinfo.Email=?', [req.body.Password, req.body.queryString, req.body.Email], (err, results) => {
         if (err) {
             console.log(err);
             res.json(null)
         }
-        else if(results.length>0) {
+        else if (results.length > 0) {
+            console.log(results);
             console.log('Set up');
             res.json('Changed')
         }
-        else{
+        else {
             res.json(null)
         }
     })
+})
+app.post('/ResetPasswordRequest', (req, res) => {
+    let ResetToken = require('crypto').randomBytes(64).toString('hex');
+    let Name = '';
+
+    pool.query('SELECT Id,First_Name,Last_Name FROM `userinfo` WHERE Email=?;'[req.body.Email], (err, results) => {
+        if (err) {
+            res.json(null)
+            console.error(err)
+        }
+        else if (results.length > 0) {
+            Name = results[0].First_Name + ' ' + results[0].Last_Name;
+            let ResetInfo = {
+                Name: Name,
+                ReResetTokenLink: `https://codebluetimes.com/SetUpPassword.html?token=${ResetToken}&type=ResetPassword`
+            }
+            console.log(results);
+            pool.query('INSERT INTO reset_tokens (Id,Reset_Token) VALUES (?,?);', [results[0].Id, ResetToken], async (err, results) => {
+                if (err) {
+                    res.json(null)
+                    console.error(err)
+                }
+                else {
+                    console.log('inserted');
+                    console.log(results);
+                    let SendEmail = await fetch('https://codebluetimes.com/Email/ResetPassword', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(ResetInfo)
+                    })
+                    let responseSendEmail = await SendEmail.json()
+                    if (responseSendEmail == null) {
+                        res.json(null)
+                    }
+                    else {
+                        res.json('added and sent email')
+                        console.log("added");
+                    }
+                }
+            })
+        }
+        else {
+            res.json(null)
+        }
+    })
+
+})
+app.post('/app/ResetPassword', (req, res) => {
+    console.log(req.body.Password, req.body.ResetToken, req.body.Email);
+    pool.query('SELECT Id FROM `userinfo` WHERE Email=?;'[req.body.Email], (err, results) => {
+        if (err) {
+            res.json(null)
+            console.error(err)
+        }
+        else if (results.length > 0) {
+            console.log(results);
+            pool.query('SELECT * FROM reset_tokens WHERE Reset_Token=? AND Id = ?;', [req.body.ResetToken, results[0].Id], (err, results) => {
+                if (err) {
+                    res.json(null)
+                    console.error(err)
+                }
+                else {
+                    pool.query('UPDATE userinfo SET userinfo.Password=? WHERE userinfo.Id=? AND userinfo.Email=?', [req.body.Password, results[0].Id, req.body.Email], (err, results) => {
+                        if (err) {
+                            console.log(err);
+                            res.json(null)
+                        }
+                        else if (results.length > 0) {
+                            pool.query('DELETE FROM reset_tokens WHERE Id=? AND Reset_Token=?;', [results[0].Id, req.body.ResetToken], (err, results) => {
+                                if (err) {
+                                    res.json(null)
+                                    console.error(err)
+                                }
+                                else {
+                                    console.log(results);
+                                    res.json('Reseted!')
+                                }
+                            })
+                        }
+                        else {
+                            res.json(null)
+                        }
+                    })
+                }
+            })
+        }
+        else {
+            res.json(null)
+        }
+    })
+
 })
 
 
