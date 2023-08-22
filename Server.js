@@ -633,12 +633,14 @@ app.post('/app/ResetPassword', (req, res) => {
                                     console.error(err)
                                 }
                                 else {
+                                    console.log('Reseted!');
                                     console.log(results);
                                     res.json('Reseted!')
                                 }
                             })
                         }
                         else {
+                            console.log('couldnt find');
                             res.json(null)
                         }
                     })
