@@ -569,7 +569,7 @@ app.post('/app/ResetPasswordRequest', (req, res) => {
             Name = `${results[0].First_Name} ${results[0].Last_Name}`;
             let ResetInfo = {
                 Email:req.body.Email,
-                Name: Name,
+                Name: 'hi',
                 ResetTokenLink: `https://codebluetimes.com/SetUpPassword.html?token=${ResetToken}&type=ResetPassword`
             }
             console.log(results);// affectedRows
