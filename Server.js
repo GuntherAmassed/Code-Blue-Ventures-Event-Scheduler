@@ -572,7 +572,7 @@ app.post('/app/ResetPasswordRequest', (req, res) => {
                 ReResetTokenLink: `https://codebluetimes.com/SetUpPassword.html?token=${ResetToken}&type=ResetPassword`
             }
             console.log(results);
-            pool.query('INSERT INTO reset_tokens (Id,Reset_Token) VALUES (?,?);', [results[0].Id, ResetToken], async (err, results) => {
+            pool.query('INSERT INTO reset_tokens (Id,Reset_Token) VALUES (?,?);', [results[0].Id, String(ResetToken)], async (err, results) => {
                 if (err) {
                     res.json(null)
                     console.error(err)
