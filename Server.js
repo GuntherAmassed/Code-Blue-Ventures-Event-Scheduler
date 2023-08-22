@@ -556,7 +556,7 @@ app.post('/app/NewPasswordChange', (req, res) => {
         }
     })
 })
-app.post('/ResetPasswordRequest', (req, res) => {
+app.post('/app/ResetPasswordRequest', (req, res) => {
     let ResetToken = require('crypto').randomBytes(64).toString('hex');
     let Name = '';
 

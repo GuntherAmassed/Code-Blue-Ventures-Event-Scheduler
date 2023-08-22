@@ -228,15 +228,23 @@
                 </div>
 
                 <div>
-                    <p>check out mail </p>
-                   
+                    <p id="Check-Out-Mail"></p>
+
                 </div>
             </header>
-          
+
             <div id="button-container">
                 <button id="Change-Password-Button"><a href="index.html">Go to log in Page</a></button>
             </div>
         </div>
     </form>
+    <script>
+        const CheckOutMail = document.getElementById('Check-Out-Mail')
+        const retrievedValue = localStorage.getItem('Email');
+        if (retrievedValue != null) {
+            CheckOutMail.innerHTML=`check out mail <span>${retrievedValue}</span>`
+        }
+    </script>
 </body>
+
 </html>
