@@ -21,6 +21,7 @@ let day = '';
 ArrowRight.addEventListener('click', async () => {
     if ((EventTimes.end.length - 10) === startCounter) {
         nextYear++;
+        console.log('hi');
         await ZmanFetch(MyLocation);
     }
     getStartAndEndOfEvent(EventTimes);
@@ -55,7 +56,7 @@ async function ZmanFetch(data) {
         MyDate = (date.getFullYear() + nextYear) + '-';
         MyDate += `${month}-${day}`
     }
-
+console.log(data);
     let response = await fetch(`https://codebluetimes.com/app/ZmanimApi`, {
         method: 'POST',
         headers: {

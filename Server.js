@@ -391,6 +391,8 @@ app.post('/app/ZmanimApi', async (req, res) => {
         let StartDate = req.body.Date;
         let splitDate = StartDate.split('-');
         let EndDate = `${(Number(splitDate[0]) + 1)}-${splitDate[1]}-${splitDate[2]}`;
+        console.log(splitDate);
+        console.log(EndDate)
         let response = await fetch(`https://www.hebcal.com/hebcal?v=1&cfg=json&mf=off&maj=on&start=${StartDate}&end=${EndDate}&geo=geoname&geonameid=${req.body.location}`);
         let responsedata = await response.json();
         let data = responsedata.items;
