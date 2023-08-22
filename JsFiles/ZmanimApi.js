@@ -19,7 +19,7 @@ let month = '';
 let day = '';
 
 ArrowRight.addEventListener('click', async () => {
-    if ((EventTimes.end.length - 10) === startCounter) {
+    if (EventTimes.end.length - 10 === startCounter) {
         nextYear++;
         console.log('hi');
         await ZmanFetch(MyLocation);
@@ -43,20 +43,11 @@ async function ZmanFetch(data) {
         MyLocation.Location = data.user.Location_Id;
     }
     let MyDate;
-    if (nextYear === 0) {
-        let date = new Date();
-        MyDate = (date.getFullYear()) + '-';
-        month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) + '-' : (date.getMonth() + 1);
-        MyDate += month;
-        day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
-        MyDate += day;
-    }
-    else {
-        let date = new Date();
-        MyDate = (date.getFullYear() + nextYear) + '-';
-        MyDate += `${month}-${day}`
-    }
-console.log(data);
+    let date = new Date();
+    MyDate = Number(date.getFullYear()+nextYear) + '-';
+    MyDate += '01-01'
+console.log(MyDate);
+
     let response = await fetch(`https://codebluetimes.com/app/ZmanimApi`, {
         method: 'POST',
         headers: {
@@ -84,6 +75,31 @@ console.log(data);
     for (let i = 0; i < responseData.event.end.length; i++) {
         EventTimes.end.push(responseData.event.end[i]);
     }
+    if (nextYear === 0) {
+        let getpoint = () => {
+            month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
+            day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+            for (let i = 0; i < responseData.event.start.length; i++) {
+
+                if (Number(responseData.event.start[i].date.split('-')[1]) === Number(month)) {
+
+                    for (let j = i; j < responseData.event.start.length; j++) {
+
+                        if (Number(responseData.event.start[j].date.split('-')[2].split(' ')[0]) > Number(day)) {
+                            console.log(j);
+                            startCounter += j;
+                            endCounter += j+1;
+                            return
+                        }
+                    }
+
+                }
+            }
+        }
+        getpoint();
+    }
+
+
     getStartAndEndOfEvent(EventTimes);
 }
 
