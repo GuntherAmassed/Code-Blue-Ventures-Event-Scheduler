@@ -4,46 +4,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="light dark">
-    <meta name="supported-color-schemes" content="light dark">
-    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Roboto:wght@100;400&display=swap"
+        rel="stylesheet">
 </head>
-<style>
-    body,
-    td,
-    tr,
-    table {
-        padding: 0;
-        margin: 0;
-    }
-</style>
 
-<body >
+<body>
     <table
         style="border-collapse: collapse; font-family: sans-serif; max-width: 600px; box-sizing: border-box;  background: var(--background-dark, #02121F); ">
         <tr>
-            <td>
-                <img style=" box-sizing: border-box; margin-left: 70%; width: 120px; "
+            <td style="padding: 2em; padding-bottom: 0; text-align: right;">
+                <img style=" box-sizing: border-box;  width: 120px; "
                     src="https://codebluetimes.com/images/CODEBLUE%20TIME.png" alt="CODEBLUE TIME">
             </td>
         </tr>
         <tr>
-            <td style="padding-left: 4em; ">
+            <td style="padding-left: 4em; padding-right: 1.5em; padding-bottom: 1em;">
                 <h1 border-color="#1F2D3A"
-                    style="width: 80%;padding-bottom: 1em;font-family: Lucida Sans Typewriter;border:0; border-bottom:1px; border-style: solid; line-height: 3.5rem;letter-spacing: 0.1875rem; font-weight: 400; text-transform: uppercase; font-size: 3em;  color: #009AFE;border-color:#1F2D3A;  ">
+                    style=" width: 80%; padding-bottom: 1em;font-family: sans-serif;border:0; border-bottom:1px; border-style: solid; line-height: 3.5rem;letter-spacing: 0.1875rem; font-weight: 400; text-transform: uppercase;  font-size: 3em; color: #009AFE;border-color:#1F2D3A;  ">
                     <img src="" alt="">Reset your
-                    <span style="font-family: Lucida Sans Typewriter; color: rgb(249, 243, 243);">Password_</span>
+                    <span style="font-family: sans-serif; color: rgb(249, 243, 243);">Password_</span>
                 </h1>
-                <h2 style="text-transform: uppercase;font-family: Lucida Sans Typewriter; color: rgb(255, 255, 255);">
-                    Hi, <%= username %>
+                <h2 style="text-transform: uppercase;font-family: sans-serif; color: rgb(255, 255, 255);">
+                    Hi, Moshe
                 </h2>
-                <p style=" font-family: Roboto; line-height: 1.125rem; color: rgb(255, 255, 255); width: 80%">You
+                <p style="width: 80%; text-align: justify; font-family: Roboto, sans-serif;
+                    line-height: 1.125rem; color: rgb(255, 255, 255); ">
                     Someone has requested a link to change your password, and you can do this through the link below. If
                     you didn't request this, please ignore this email.
                 </p>
-                <a style="cursor: pointer;" href="<%= setupLink %>">
+                <a style="cursor: pointer;" href="">
                     <button
-                        style="cursor: pointer;font-family: Trade Gothic LT Std; margin-top: 2em ;padding: .8em; background-color:  #009AFE; letter-spacing: 0.0625rem;color: white; border: 0; font-family: sans-serif; text-transform: uppercase; font-weight: 400; font-size: 1rem;">
+                        style="cursor: pointer; font-family: Gothic A1, sans-serif; margin-top: 1.5em ;padding: 1em; background-color:  #009AFE; letter-spacing: 0.0625rem;color: white; border: 0; font-family: sans-serif; text-transform: uppercase; font-weight: 400; ">
                         change my password
                     </button>
                 </a>
@@ -52,7 +45,7 @@
         <tr>
             <td>
                 <img style="display: block; "
-                    src="https://codebluetimes.com/images/Screenshot%202023-08-16%20140532.png"
+                    src="https://www.codebluetimes.com/images/Screenshot%202023-08-16%20140532.png"
                     alt="Screenshot 2023-08-16 140532">
             </td>
         </tr>

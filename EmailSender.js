@@ -7,6 +7,8 @@ cors.all;
 const app = express();
 app.use(cors());
 app.use(express.json());
+// const fs= require('fs');
+// let Html=fs.ReadStream('try.html')
 const templatePath = 'Emailhopeitworks.ejs';
 const templatePathResetPassword='ResetPasswordEmail.ejs';
 const transporter = nodemailer.createTransport({
