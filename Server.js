@@ -559,8 +559,8 @@ app.post('/app/NewPasswordChange', (req, res) => {
 app.post('/app/ResetPasswordRequest', (req, res) => {
     let ResetToken = require('crypto').randomBytes(64).toString('hex');
     let Name = '';
-
-    pool.query('SELECT Id,First_Name,Last_Name FROM `userinfo` WHERE Email=?;'[req.body.Email], (err, results) => {
+    console.log(req.body.Email);
+    pool.query('SELECT Id,First_Name,Last_Name FROM userinfo WHERE Email=?;'[req.body.Email], (err, results) => {
         if (err) {
             res.json(null)
             console.error(err)
