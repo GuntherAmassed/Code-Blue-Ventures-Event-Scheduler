@@ -566,7 +566,7 @@ app.post('/app/ResetPasswordRequest', (req, res) => {
             console.error(err)
         }
         else if (results.length > 0) {
-            Name = results[0].First_Name + ' ' + results[0].Last_Name;
+            Name = `${results[0].First_Name} ${results[0].Last_Name}`;
             let ResetInfo = {
                 Name: Name,
                 ResetTokenLink: `https://codebluetimes.com/SetUpPassword.html?token=${ResetToken}&type=ResetPassword`
