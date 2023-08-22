@@ -608,26 +608,28 @@ app.post('/app/ResetPasswordRequest', (req, res) => {
 })
 app.post('/app/ResetPassword', (req, res) => {
     console.log(req.body.Password, req.body.ResetToken, req.body.Email);
+    let id=''
     pool.query('SELECT Id FROM `userinfo` WHERE Email=?;',[req.body.Email], (err, results) => {
         if (err) {
             res.json(null)
             console.error(err)
         }
         else if (results.length > 0) {
-            pool.query('SELECT * FROM reset_tokens WHERE Reset_Token=? AND Id = ?;', [req.body.ResetToken, results[0].Id], (err, results) => {
+            id=results[0].Id;
+            pool.query('SELECT * FROM reset_tokens WHERE Reset_Token=? AND Id = ?;', [req.body.ResetToken, id], (err, results) => {
                 if (err) {
                     res.json(null)
                     console.error(err)
                 }
                 else {
-                    pool.query('UPDATE userinfo SET userinfo.Password=? WHERE userinfo.Id=? AND userinfo.Email=?', [req.body.Password, results[0].Id, req.body.Email], (err, results) => {
+                    pool.query('UPDATE userinfo SET userinfo.Password=? WHERE userinfo.Id=? AND userinfo.Email=?', [req.body.Password, id, req.body.Email], (err, results) => {
                         if (err) {
                             console.log(err);
                             res.json(null)
                         }
                         else{
                             console.log(results);
-                            pool.query('DELETE FROM reset_tokens WHERE Id=? AND Reset_Token=?;', [results[0].Id, req.body.ResetToken], (err, results) => {
+                            pool.query('DELETE FROM reset_tokens WHERE Id=? AND Reset_Token=?;', [id, req.body.ResetToken], (err, results) => {
                                 if (err) {
                                     res.json(null)
                                     console.error(err)
