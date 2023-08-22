@@ -546,13 +546,10 @@ app.post('/app/NewPasswordChange', (req, res) => {
             console.log(err);
             res.json(null)
         }
-        else if (results.length > 0) {
+        else if(results.affectedRows>0){
             console.log(results);
             console.log('Set up');
             res.json('Changed')
-        }
-        else {
-            res.json(null)
         }
     })
 })
@@ -578,7 +575,7 @@ app.post('/app/ResetPasswordRequest', (req, res) => {
                     res.json(null)
                     console.error(err)
                 }
-                else {
+                else if(results.affectedRows>0) {
                     console.log('inserted');
                     console.log(results);
                     console.log(ResetInfo);
@@ -616,7 +613,7 @@ app.post('/app/ResetPassword', (req, res) => {
         }
         else if (results.length > 0) {
             id=results[0].Id;
-            pool.query('SELECT * FROM reset_tokens WHERE Reset_Token=? AND Id = ?;', [req.body.ResetToken, id], (err, results) => {
+            pool.query('SELECT * FROM reset_tokens WHERE Reset_Token=? AND Id = ?;', [req.body.ResetToken, id], (err) => {
                 if (err) {
                     res.json(null)
                     console.error(err)
