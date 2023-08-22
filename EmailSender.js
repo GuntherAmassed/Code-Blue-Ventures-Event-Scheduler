@@ -41,6 +41,7 @@ app.post('/Email/NewUser', (req,res) => {
     });
 })
 app.post('/Email/ResetPassword', (req,res) => {
+    console.log('hi there Reseterr');
     let mailOptions = {
         from: 'moshe@zunta.com',
         to: req.body.Email,
