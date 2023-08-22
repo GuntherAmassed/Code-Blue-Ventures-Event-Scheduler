@@ -551,6 +551,9 @@ app.post('/app/NewPasswordChange', (req, res) => {
             console.log('Set up');
             res.json('Changed')
         }
+        else {
+            res.json(null)
+        }
     })
 })
 app.post('/app/ResetPasswordRequest', (req, res) => {
@@ -624,19 +627,25 @@ app.post('/app/ResetPassword', (req, res) => {
                             console.log(err);
                             res.json(null)
                         }
-                        else{
+                        else if(results.affectedRows>0){
                             console.log(results);
                             pool.query('DELETE FROM reset_tokens WHERE Id=? AND Reset_Token=?;', [id, req.body.ResetToken], (err, results) => {
                                 if (err) {
                                     res.json(null)
                                     console.error(err)
                                 }
-                                else {
+                                else if(results.affectedRows>0){
                                     console.log('Reseted!');
                                     console.log(results);
                                     res.json('Reseted!')
                                 }
+                                else {
+                                    res.json(null)
+                                }
                             })
+                        }
+                        else {
+                            res.json(null)
                         }
                         
                     })
