@@ -15,6 +15,8 @@ let timeExtracted = '';
 let holiday = false;
 let nextYear = 0;
 let MyLocation = {};
+let month = '';
+let day = '';
 
 ArrowRight.addEventListener('click', async () => {
     if ((EventTimes.end.length - 10) === startCounter) {
@@ -43,13 +45,15 @@ async function ZmanFetch(data) {
     if (nextYear === 0) {
         let date = new Date();
         MyDate = (date.getFullYear()) + '-';
-        MyDate += (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) + '-' : (date.getMonth() + 1);
-        MyDate += date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+        month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) + '-' : (date.getMonth() + 1);
+        MyDate += month;
+        day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+        MyDate += day;
     }
     else {
         let date = new Date();
         MyDate = (date.getFullYear() + nextYear) + '-';
-        MyDate += '01-01'
+        MyDate += `${month}-${day}`
     }
 
     let response = await fetch(`https://codebluetimes.com/app/ZmanimApi`, {
@@ -141,10 +145,10 @@ async function addClickEventForLocation() {
         })
     }
 }
-function setClockOfUser(hours,minutes,seconds, clockOfUser) {
+function setClockOfUser(hours, minutes, seconds, clockOfUser) {
     let FullTime;
     let SecondOfUser = seconds;
-    let MinuteOfUser =minutes;
+    let MinuteOfUser = minutes;
     let HourOfUser = hours;
     console.log(HourOfUser);
     let RunClockOfUser = () => {
