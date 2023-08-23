@@ -396,7 +396,6 @@ app.post('/app/ZmanimApi', async (req, res) => {
         let responsedata = await response.json();
         let data = responsedata.items;
         console.log(responsedata);
-        let newStart=[]
         for (let i = 0; i < data.length; i++) {
             if ('memo' in data[i]) {
                 if (data[i].category === "candles" && StartOfHoliday === false) {
@@ -417,14 +416,13 @@ app.post('/app/ZmanimApi', async (req, res) => {
                 }
             }
         }
-        for (let i = 0; end.length; i++) {
-            if (i < start.length) {
-                if (Number(start[i].date.split('-')[2].split(' ')[0]) < Number(end[i].date.split('-')[2].split(' ')[0])) {
-                    newStart.push(start[i])
-                }
-            }
-        }
-        console.log(newStart.length,end.length);
+        // for (let i = 0; end.length; i++) {
+        //     if (i < start.length) {
+        //         if (Number(start[i].date.split('-')[2].split(' ')[0]) < Number(end[i].date.split('-')[2].split(' ')[0])) {
+        //             newStart.push(start[i])
+        //         }
+        //     }
+        // }
         pool.query(`SELECT lt.timeZone, lt.City_Name,lt.State, lt.Country_Full_Name FROM locationstable lt WHERE lt.GeoName_Id=?;`, [req.body.location], (error, results) => {
             if (error) {
                 console.error(error)
@@ -433,14 +431,14 @@ app.post('/app/ZmanimApi', async (req, res) => {
                 let timezoneofuser = results[0].timeZone;
                 let CityOfUser = results[0].City_Name + ' - ' + results[0].State + ' - ' + results[0].Country_Full_Name;
                 for (let i = 0; i < newStart.length; i++) {
-                    newStart[i].date = formatInTimeZone(newStart[i].date, timezoneofuser, 'yyyy-MM-dd HH:mm')
+                    start[i].date = formatInTimeZone(start[i].date, timezoneofuser, 'yyyy-MM-dd HH:mm')
                 }
                 for (let i = 0; i < end.length; i++) {
                     end[i].date = formatInTimeZone(end[i].date, timezoneofuser, 'yyyy-MM-dd HH:mm')
                 }
 
                 let event = {
-                    start: newStart,
+                    start: start,
                     end: end,
                 }
                 let hours = new Date(formatInTimeZone(new Date(), results[0].timeZone, 'yyyy-MM-dd hh:mm:ss aa')).getHours();
