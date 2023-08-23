@@ -397,14 +397,25 @@ app.post('/app/ZmanimApi', async (req, res) => {
         let response = await fetch(`https://www.hebcal.com/hebcal?v=1&cfg=json&mf=off&maj=on&start=${StartDate}&end=${EndDate}&geo=geoname&geonameid=${req.body.location}`);
         let responsedata = await response.json();
         let data = responsedata.items;
-        let newStart = [];
+        let newStart=[]
         for (let i = 0; i < data.length; i++) {
-
-            if (data[i].category === "candles") {
-                start.push(data[i]);
+            if ('memo' in data[i]) {
+                if (data[i].category === "candles" && StartOfHoliday === false) {
+                    start.push(data[i]);
+                    StartOfHoliday = true;
+                }
+                if (data[i].category === "havdalah") {
+                    end.push(data[i]);
+                    StartOfHoliday = false;
+                }
             }
-            else if (data[i].category === "havdalah") {
-                end.push(data[i]);
+            else {
+                if (data[i].category === "candles") {
+                    start.push(data[i]);
+                }
+                else if (data[i].category === "havdalah") {
+                    end.push(data[i]);
+                }
             }
         }
         for (let i = 0; end.length; i++) {
@@ -544,7 +555,7 @@ app.post('/app/NewPasswordChange', (req, res) => {
             console.log(err);
             res.json(null)
         }
-        else if (results.affectedRows > 0) {
+        else if(results.affectedRows>0){
             console.log(results);
             console.log('Set up');
             res.json('Changed')
@@ -576,7 +587,7 @@ app.post('/app/ResetPasswordRequest', (req, res) => {
                     res.json(null)
                     console.error(err)
                 }
-                else if (results.affectedRows > 0) {
+                else if(results.affectedRows>0) {
                     console.log('inserted');
                     console.log(results);
                     console.log(ResetInfo);
@@ -606,14 +617,14 @@ app.post('/app/ResetPasswordRequest', (req, res) => {
 })
 app.post('/app/ResetPassword', (req, res) => {
     console.log(req.body.Password, req.body.ResetToken, req.body.Email);
-    let id = ''
-    pool.query('SELECT Id FROM `userinfo` WHERE Email=?;', [req.body.Email], (err, results) => {
+    let id=''
+    pool.query('SELECT Id FROM `userinfo` WHERE Email=?;',[req.body.Email], (err, results) => {
         if (err) {
             res.json(null)
             console.error(err)
         }
         else if (results.length > 0) {
-            id = results[0].Id;
+            id=results[0].Id;
             pool.query('SELECT * FROM reset_tokens WHERE Reset_Token=? AND Id = ?;', [req.body.ResetToken, id], (err) => {
                 if (err) {
                     res.json(null)
@@ -625,14 +636,14 @@ app.post('/app/ResetPassword', (req, res) => {
                             console.log(err);
                             res.json(null)
                         }
-                        else if (results.affectedRows > 0) {
+                        else if(results.affectedRows>0){
                             console.log(results);
                             pool.query('DELETE FROM reset_tokens WHERE Id=? AND Reset_Token=?;', [id, req.body.ResetToken], (err, results) => {
                                 if (err) {
                                     res.json(null)
                                     console.error(err)
                                 }
-                                else if (results.affectedRows > 0) {
+                                else if(results.affectedRows>0){
                                     console.log('Reseted!');
                                     console.log(results);
                                     res.json('Reseted!')
@@ -645,7 +656,7 @@ app.post('/app/ResetPassword', (req, res) => {
                         else {
                             res.json(null)
                         }
-
+                        
                     })
                 }
             })
