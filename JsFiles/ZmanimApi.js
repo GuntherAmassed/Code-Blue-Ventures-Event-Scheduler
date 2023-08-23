@@ -15,11 +15,12 @@ let timeExtracted = '';
 let holiday = false;
 let nextYear = 0;
 let MyLocation = {};
-let month = '';
-let day = '';
+const date = new Date();
 
 ArrowRight.addEventListener('click', async () => {
-    if (EventTimes.end.length - 10 === startCounter) {
+    console.log(Number(EventTimes.end.length)=== startCounter);
+    console.log(Number(EventTimes.end.length),startCounter);
+    if (EventTimes.end.length-1 === startCounter) {
         nextYear++;
         console.log('hi');
         await ZmanFetch(MyLocation);
@@ -43,10 +44,9 @@ async function ZmanFetch(data) {
         MyLocation.Location = data.user.Location_Id;
     }
     let MyDate;
-    let date = new Date();
-    MyDate = Number(date.getFullYear()+nextYear) + '-';
+    MyDate = Number(date.getFullYear() + nextYear) + '-';
     MyDate += '01-01'
-console.log(MyDate);
+    console.log(MyDate);
 
     let response = await fetch(`https://codebluetimes.com/app/ZmanimApi`, {
         method: 'POST',
@@ -75,31 +75,33 @@ console.log(MyDate);
     for (let i = 0; i < responseData.event.end.length; i++) {
         EventTimes.end.push(responseData.event.end[i]);
     }
-    if (nextYear === 0) {
-        let getpoint = () => {
-            month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
-            day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
-            for (let i = 0; i < responseData.event.start.length; i++) {
+    let getpoint = () => {
+        month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
+        day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+        for (let q = 0; q < responseData.event.start.length; i++) {
+            if (Number(responseData.event.start[q].date.split('-')[0]) === Number(date.getFullYear() + nextYear)) {
+                for (let i = q; i < responseData.event.start.length; i++) {
 
-                if (Number(responseData.event.start[i].date.split('-')[1]) === Number(month)) {
+                    if (Number(responseData.event.start[i].date.split('-')[1]) === Number(month)) {
 
-                    for (let j = i; j < responseData.event.start.length; j++) {
+                        for (let j = i; j < responseData.event.start.length; j++) {
 
-                        if (Number(responseData.event.start[j].date.split('-')[2].split(' ')[0]) > Number(day)) {
-                            console.log(j);
-                            startCounter += j;
-                            endCounter += j+1;
-                            return
+                            if (Number(responseData.event.start[j].date.split('-')[2].split(' ')[0]) > Number(day)) {
+                                console.log(j);
+                                startCounter += j;
+                                endCounter += j + 1;
+                                return
+                            }
                         }
-                    }
 
+                    }
                 }
             }
+
         }
-        getpoint();
+
     }
-
-
+    getpoint();
     getStartAndEndOfEvent(EventTimes);
 }
 
