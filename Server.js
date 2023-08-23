@@ -387,7 +387,7 @@ app.post('/app/ZmanimApi', async (req, res) => {
     try {
         let start = [];
         let end = [];
-        let StartOfHoliday = false;
+        let isyomtov = false;
         let StartDate = req.body.Date;
         let splitDate = StartDate.split('-');
         let EndDate = `${(Number(splitDate[0]) + 1)}-01-01`;
@@ -395,33 +395,32 @@ app.post('/app/ZmanimApi', async (req, res) => {
         let response = await fetch(`https://www.hebcal.com/hebcal?v=1&cfg=json&mf=off&maj=on&start=${StartDate}&end=${EndDate}&geo=geoname&geonameid=${req.body.location}`);
         let responsedata = await response.json();
         let data = responsedata.items;
-        for (let i = 0; i < data.length; i++) {
-            if ('memo' in data[i]) {
-                if (data[i].category === "candles" && StartOfHoliday === false) {
-                    start.push(data[i]);
-                    StartOfHoliday = true;
-                }
-                if (data[i].category === "havdalah") {
-                    end.push(data[i]);
-                    StartOfHoliday = false;
+        for (elem of data) {
+            if (elem.category === 'candles' && 'memo' in elem) {
+                if (elem.memo.includes('Erev')) {
+                    start.push(elem)
+                    isyomtov = true;
                 }
             }
-            else {
-                if (data[i].category === "candles") {
-                    start.push(data[i]);
+            if (elem.category === 'havdalah' && 'memo' in elem) {
+                if (!(elem.memo.includes('Sukkot'))) {
+                    end.push(elem)
+                    isyomtov = false;
+                    continue
                 }
-                else if (data[i].category === "havdalah") {
-                    end.push(data[i]);
+    
+            }
+            if (isyomtov === false) {
+                if (elem.category === 'havdalah') {
+                    end.push(elem)
+                }
+                if (elem.category === 'candles') {
+                    start.push(elem)
                 }
             }
         }
-        // for (let i = 0; end.length; i++) {
-        //     if (i < start.length) {
-        //         if (Number(start[i].date.split('-')[2].split(' ')[0]) < Number(end[i].date.split('-')[2].split(' ')[0])) {
-        //             newStart.push(start[i])
-        //         }
-        //     }
-        // }
+        console.log(start.length,end.length);
+       
         pool.query(`SELECT lt.timeZone, lt.City_Name,lt.State, lt.Country_Full_Name FROM locationstable lt WHERE lt.GeoName_Id=?;`, [req.body.location], (error, results) => {
             if (error) {
                 console.error(error)
@@ -448,7 +447,6 @@ app.post('/app/ZmanimApi', async (req, res) => {
             }
             else {
                 console.log('no data');
-
             }
         })
 

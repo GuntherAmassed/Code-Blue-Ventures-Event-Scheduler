@@ -77,7 +77,6 @@ async function ZmanFetch(data) {
     for (let i = 0; i < responseData.event.end.length; i++) {
         EventTimes.end.push(responseData.event.end[i]);
     }
-
     startCounter = 0;
     endCounter = 0;
     let getpoint = () => {
@@ -92,7 +91,7 @@ async function ZmanFetch(data) {
                     if (Number(responseData.event.start[j].date.split('-')[2].split(' ')[0]) > Number(day)) {
                         console.log(j);
                         startCounter += j;
-                        endCounter += j + 1;
+                        endCounter += j;
                         return
                     }
                 }
@@ -100,14 +99,9 @@ async function ZmanFetch(data) {
             }
         }
     }
-
-
-
-
-    if (nextYear === 0) {
-        getpoint();
-
-    }
+    // if (nextYear === 0) {
+    //     getpoint();
+    // }
     console.log(EventTimes.end.length, EventTimes.start.length);
     getStartAndEndOfEvent(EventTimes);
 }
