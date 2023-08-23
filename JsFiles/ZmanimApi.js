@@ -67,7 +67,7 @@ async function ZmanFetch(data) {
     let clockOfUser = document.getElementById('clock-of-user');
     clockOfUser.innerHTML = '';
     setClockOfUser(responseData.hours, responseData.minutes, responseData.seconds, clockOfUser);
- EventTimes = {
+    EventTimes = {
         start: [],
         end: []
     };
@@ -77,7 +77,7 @@ async function ZmanFetch(data) {
     for (let i = 0; i < responseData.event.end.length; i++) {
         EventTimes.end.push(responseData.event.end[i]);
     }
-   
+
     startCounter = 0;
     endCounter = 0;
     let getpoint = () => {

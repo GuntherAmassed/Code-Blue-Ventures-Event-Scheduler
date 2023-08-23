@@ -391,9 +391,7 @@ app.post('/app/ZmanimApi', async (req, res) => {
         let StartDate = req.body.Date;
         let splitDate = StartDate.split('-');
         let EndDate = `${(Number(splitDate[0]) + 1)}-01-01`;
-        console.log(StartDate);
-        console.log(EndDate)
-        console.log(req.body.location);
+       
         let response = await fetch(`https://www.hebcal.com/hebcal?v=1&cfg=json&mf=off&maj=on&start=${StartDate}&end=${EndDate}&geo=geoname&geonameid=${req.body.location}`);
         let responsedata = await response.json();
         let data = responsedata.items;
@@ -425,6 +423,7 @@ app.post('/app/ZmanimApi', async (req, res) => {
                 }
             }
         }
+        console.log(newStart.length,end.length);
         pool.query(`SELECT lt.timeZone, lt.City_Name,lt.State, lt.Country_Full_Name FROM locationstable lt WHERE lt.GeoName_Id=?;`, [req.body.location], (error, results) => {
             if (error) {
                 console.error(error)
