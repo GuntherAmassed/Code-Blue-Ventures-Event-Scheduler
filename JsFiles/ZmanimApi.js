@@ -18,14 +18,16 @@ let MyLocation = {};
 const date = new Date();
 
 ArrowRight.addEventListener('click', async () => {
-    console.log(Number(EventTimes.end.length)=== startCounter);
-    console.log(Number(EventTimes.end.length),startCounter);
-    if (EventTimes.end.length-1 === startCounter) {
+
+    if (EventTimes.start.length == startCounter) {
         nextYear++;
         console.log('hi');
         await ZmanFetch(MyLocation);
+        return
     }
-    getStartAndEndOfEvent(EventTimes);
+    else {
+        getStartAndEndOfEvent(EventTimes);
+    }
 })
 
 ArrowLeft.addEventListener('click', async () => {
@@ -56,7 +58,7 @@ async function ZmanFetch(data) {
         body: JSON.stringify({ Date: MyDate, location: MyLocation.Location })
     });
     let responseData = await response.json();
-
+    console.log(responseData);
     nameTitle.innerHTML = '';
     nameTitle.innerHTML += `  <span> Hello,</span>${dataOfUser.First_Name} ${dataOfUser.Last_Name}_
      <p>
@@ -65,7 +67,7 @@ async function ZmanFetch(data) {
     let clockOfUser = document.getElementById('clock-of-user');
     clockOfUser.innerHTML = '';
     setClockOfUser(responseData.hours, responseData.minutes, responseData.seconds, clockOfUser);
-    EventTimes = {
+ EventTimes = {
         start: [],
         end: []
     };
@@ -75,38 +77,44 @@ async function ZmanFetch(data) {
     for (let i = 0; i < responseData.event.end.length; i++) {
         EventTimes.end.push(responseData.event.end[i]);
     }
+   
+    startCounter = 0;
+    endCounter = 0;
     let getpoint = () => {
         month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
         day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
-        for (let q = 0; q < responseData.event.start.length; i++) {
-            if (Number(responseData.event.start[q].date.split('-')[0]) === Number(date.getFullYear() + nextYear)) {
-                for (let i = q; i < responseData.event.start.length; i++) {
+        for (let i = 0; i < responseData.event.start.length; i++) {
 
-                    if (Number(responseData.event.start[i].date.split('-')[1]) === Number(month)) {
+            if (Number(responseData.event.start[i].date.split('-')[1]) === Number(month)) {
 
-                        for (let j = i; j < responseData.event.start.length; j++) {
+                for (let j = i; j < responseData.event.start.length; j++) {
 
-                            if (Number(responseData.event.start[j].date.split('-')[2].split(' ')[0]) > Number(day)) {
-                                console.log(j);
-                                startCounter += j;
-                                endCounter += j + 1;
-                                return
-                            }
-                        }
-
+                    if (Number(responseData.event.start[j].date.split('-')[2].split(' ')[0]) > Number(day)) {
+                        console.log(j);
+                        startCounter += j;
+                        endCounter += j + 1;
+                        return
                     }
                 }
-            }
 
+            }
         }
+    }
+
+
+
+
+    if (nextYear === 0) {
+        getpoint();
 
     }
-    getpoint();
+    console.log(EventTimes.end.length, EventTimes.start.length);
     getStartAndEndOfEvent(EventTimes);
 }
 
 function getStartAndEndOfEvent(event) {
     try {
+        console.log(event);
         if ('memo' in event.start[startCounter]) {
             holiday = true;
             let yomtov;

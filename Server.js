@@ -400,24 +400,24 @@ app.post('/app/ZmanimApi', async (req, res) => {
         for (let i = 0; i < data.length; i++) {
 
 
-            if ('memo' in data[i]) {
-                if (data[i].category === "candles" && StartOfHoliday === false) {
-                    start.push(data[i]);
-                    StartOfHoliday = true;
-                }
-                if (data[i].category === "havdalah") {
-                    end.push(data[i]);
-                    StartOfHoliday = false;
-                }
-            }
-            else {
+            // if ('memo' in data[i]) {
+            //     if (data[i].category === "candles" && StartOfHoliday === false) {
+            //         start.push(data[i]);
+            //         StartOfHoliday = true;
+            //     }
+            //     if (data[i].category === "havdalah") {
+            //         end.push(data[i]);
+            //         StartOfHoliday = false;
+            //     }
+            // }
+            // else {
                 if (data[i].category === "candles") {
                     start.push(data[i]);
                 }
                 else if (data[i].category === "havdalah") {
                     end.push(data[i]);
                 }
-            }
+            //}
         }
         pool.query(`SELECT lt.timeZone, lt.City_Name,lt.State, lt.Country_Full_Name FROM locationstable lt WHERE lt.GeoName_Id=?;`, [req.body.location], (error, results) => {
             if (error) {
