@@ -1,37 +1,112 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="utf-8">
-<title>Jewish Calendar</title>
-<link href="hebcal-styles.css" rel="stylesheet">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Roboto:wght@100;400&display=swap"
+        rel="stylesheet">
 </head>
+<style>
+
+</style>
+
 <body>
-<div id="calendar"></div>
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.0.3/index.global.min.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  var calendarEl = document.getElementById('calendar');
-  var calendar = new FullCalendar.Calendar(calendarEl, {
-      headerToolbar: {
-        left: 'title',
-        right: 'prev,next today',
-      },
-      events: {
-          // add &c=on&geonameid=[locationID] for candle-lighting times
-          url: "https://www.hebcal.com/hebcal?cfg=fc&v=1&i=off&maj=on&min=on&nx=on&mf=on&ss=on&mod=on&lg=s&s=on",
-          cache: true
-      }
-  });
-  calendar.render();
-  // optional: bind keyboard left/right arrow keys
-  // to move calendar forward/backward by a month
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'ArrowLeft' && !e.metaKey) {
-      calendar.prev();
-    } else if (e.key === 'ArrowRight' && !e.metaKey) {
-      calendar.next();
-    }
-  });
-});
-</script>
+    <table
+        style="  border-collapse: collapse; font-family: sans-serif;  box-sizing: border-box; background: var(--background-dark, #02121F); color: white; width: 368px; ">
+        <tr>
+            <td style="padding: 2em; padding-bottom: 0; text-align: right; ">
+                <img style=" box-sizing: border-box;  width: 120px; "
+                    src="https://codebluetimes.com/images/CODEBLUE%20TIME.png" alt="CODEBLUE TIME">
+            </td>
+        </tr>
+
+
+
+        <tr>
+            <td>
+                <h1
+                    style="display: block; font-family: sans-serif;border:0; border-bottom:1px; border-style: solid; line-height: 3.5rem;letter-spacing: 0.1875rem; font-weight: 400; text-transform: uppercase;  font-size: 3em; color: #009AFE;border-color:#1F2D3A;  ">
+                    HEllo
+                    <span style="font-family: sans-serif; color: rgb(249, 243, 243);">
+                        <%= username %>_
+                    </span>
+                </h1>
+            </td>
+        </tr>
+        <tr>
+            <td style=" padding: 1em;">
+                <%= Event=%>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="2" style="  border: 1px solid var(--border, #1F2D3A);">
+                h
+            </td>
+            <td style="  border: 1px solid var(--border, #1F2D3A); ">hi</td>
+            <td style="  border: 1px solid var(--border, #1F2D3A); ">hi</td>
+        </tr>
+        <tr>
+
+            <td style="  border: 1px solid var(--border, #1F2D3A); ">hi</td>
+            <td style="  border: 1px solid var(--border, #1F2D3A); ">hi</td>
+        </tr>
+        <tr>
+            <td>Other Timezones</td>
+        </tr>
+        <tr>
+            <td rowspan="2" style=" border: 1px solid var(--border, #1F2D3A); ">
+                h
+            </td>
+            <td style="  border: 1px solid var(--border, #1F2D3A); ">hi</td>
+            <td style="  border: 1px solid var(--border, #1F2D3A); ">hi</td>
+        </tr>
+        <tr>
+
+            <td style="  border: 1px solid var(--border, #1F2D3A); ">hi</td>
+            <td style="  border: 1px solid var(--border, #1F2D3A); ">hi</td>
+        </tr>
+        <tr>
+            <td rowspan="2" style="  border: 1px solid var(--border, #1F2D3A); ">
+                h
+            </td>
+            <td style="  border: 1px solid var(--border, #1F2D3A); ">hi</td>
+            <td style="  border: 1px solid var(--border, #1F2D3A); ">hi</td>
+        </tr>
+        <tr>
+
+            <td style=" border: 1px solid var(--border, #1F2D3A); ">hi</td>
+            <td style="  border: 1px solid var(--border, #1F2D3A); ">hi</td>
+        </tr>
+        <tr>
+            <td rowspan="2" style="  border: 1px solid var(--border, #1F2D3A); ">
+                h
+            </td>
+            <td style=" border: 1px solid var(--border, #1F2D3A); ">hi</td>
+            <td style=" border: 1px solid var(--border, #1F2D3A); ">hi</td>
+        </tr>
+        <tr>
+
+            <td style="  border: 1px solid var(--border, #1F2D3A); ">hi</td>
+            <td style="  border: 1px solid var(--border, #1F2D3A); ">hi</td>
+        </tr>
+
+
+
+        <tr>
+            <td>
+                <img src="GuyDoingWork.png" alt="">
+
+            </td>
+        </tr>
+
+
+
+    </table>
 </body>
+
+
+
 </html>

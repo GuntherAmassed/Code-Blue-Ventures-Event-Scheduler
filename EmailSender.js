@@ -8,10 +8,30 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 const cron = require('node-cron');
+const Pool = require('mysql2/typings/mysql/lib/Pool');
 // const fs= require('fs');
 // let Html=fs.ReadStream('try.html')
 const templatePath = 'Emailhopeitworks.ejs';
 const templatePathResetPassword = 'ResetPasswordEmail.ejs';
+const pool = createPool({
+    host: '127.0.0.1',
+    user: 'root',
+    password: 'new_password',
+    database: 'loginforzunta',
+    port: '3306'
+});
+pool.getConnection((err, connection) => {
+    if (err) {
+        console.error('Error connecting to database:', err);
+        return;
+    }
+
+    console.log('Connected to database');
+
+    // Release the connection back to the pool when done
+    connection.release();
+});
+
 const templateTimes;
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -93,13 +113,44 @@ cron.schedule('0 0 1 * *', async () => {
             }
         }
     }
-    for (let i = 0; i < englishyomtovstart.length; i++) {
-        cron.schedule(`0 0 ${new Date(englishyomtovstart[i].date).getDate()} ${new Date(englishyomtovstart[i].date).getMonth()} *`, async () => {
-            //send
-        })
-    }
 
+    pool.query('SELECT Email FROM userinfo', (err, results) => {
+        if (err) {
+            console.error(err);
+        }
+        else if (results.length > 0) {
+            for (let j = 0; j < results.length; j++) {
+                for (let i = 0; i < englishyomtovstart.length; i++) {
+                    cron.schedule(`0 0 ${new Date(englishyomtovstart[i].date).getDate()} ${new Date(englishyomtovstart[i].date).getMonth()} *`, async () => {
+                        let mailOptions = {
+                            from: 'moshe@zunta.com',
+                            to: results[j].Email,
+                            subject: 'Code Blue Times',
+                        }
+                        ejs.renderFile(templateTimes, { username: req.body.Name, setupLink: req.body.ResetTokenLink }, (err, html) => {
+                            if (err) {
+                                console.error('Error rendering EJS template:', err);
+                                res.json(null)
+                                return;
+                            }
+                            mailOptions.html = html;
+                            transporter.sendMail(mailOptions, function (error, info) {
+                                if (error) {
+                                    console.log(error);
+                                    res.json(null)
+                                } else {
+                                    console.log('Email sent: ' + info.response);
+                                    res.json('Email sent: ' + info.response)
+                                }
+                            });
+                        });
+                    })
 
+                }
+            }
+
+        }
+    })
 })
 
 app.listen(port, () => {
