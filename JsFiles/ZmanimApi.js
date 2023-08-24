@@ -7,6 +7,12 @@ const NameOfEvent = document.getElementById('Event-Name');
 const LocationOptions = document.getElementsByClassName('location-borders');
 const LocationIdFromOptions = document.getElementsByClassName('Hidden-Location-Id');
 const nameTitle = document.getElementById('User-Name-Time');
+const EventNameRow = document.getElementById('Event-Name-Row');
+const StartOfEventRow = document.getElementById('Start-of-Event-Row');
+const EndOfEventRow = document.getElementById('End-Of-Event-Row');
+const table = document.getElementById('table-event');
+
+
 const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 let dataOfUser;
 let EventTimes;
@@ -58,7 +64,7 @@ async function ZmanFetch(data) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ Date: MyDate, location: MyLocation.Location })
+        body: JSON.stringify({ Date: MyDate, location: MyLocation.Location ,nextYear})
     });
     let responseData = await response.json();
     console.log(responseData);
@@ -70,7 +76,8 @@ async function ZmanFetch(data) {
     let clockOfUser = document.getElementById('clock-of-user');
     clockOfUser.innerHTML = '';
     setClockOfUser(responseData.hours, responseData.minutes, responseData.seconds, clockOfUser);
-
+    EventTimes.yomtovend = []
+    EventTimes.yomtovstart = []
     for (let i = 0; i < responseData.event.start.length; i++) {
         EventTimes.start.push(responseData.event.start[i]);
     }
@@ -107,37 +114,69 @@ async function ZmanFetch(data) {
     console.log(EventTimes.end.length, EventTimes.start.length);
     getStartAndEndOfEvent(EventTimes);
 }
-
 function getStartAndEndOfEvent(event) {
     try {
-        let nextyomtov = {}
+        let nextyomtov = []
+
         for (let i = 0; i < event.yomtovend.length; i++) {
-
-            if (event.start[startCounter].date.split(' ')[0] < event.yomtovstart[i].date) {
-                nextyomtov.start = event.yomtovstart[i].date;
-                nextyomtov.yomtov = event.yomtovstart[i].yomtov;
-                nextyomtov.end = event.yomtovend[i].date;
+            if (new Date(event.end[endCounter].date).getMonth() === new Date(event.yomtovstart[i].date).getMonth()) {
+                let items = {
+                    start: event.yomtovstart[i].date,
+                    yomtov: event.yomtovstart[i].yomtov,
+                    end: event.yomtovend[i].date
+                }
+                nextyomtov.push(items);
             }
-
         }
-
-        console.log(nextyomtov);
-
         if (new Date(event.end[endCounter].date).getDay() === 6 || new Date(event.start[startCounter].date).getDay() === 5) {
-
             NameOfEvent.innerHTML = ' Sabbath';
-
         }
         EndOfEvent.innerHTML = getTime(event.end[endCounter].date);
         endCounter++;
         StartOfEvent.innerHTML = getTime(event.start[startCounter].date);
         startCounter++;
+        let tditem1 = document.getElementsByClassName('td-item-1');
+        let tditem2 = document.getElementsByClassName('td-item-2');
+        let tditem3 = document.getElementsByClassName('td-item-3');
+        console.log(StartOfEventRow);
+
+        if (tditem1.length > 0) {
+            console.log('h');
+            for (let i = tditem1.length - 1; i >= 0; i--) {
+                StartOfEventRow.removeChild(tditem1[i]);
+                EndOfEventRow.removeChild(tditem2[i]);
+                EventNameRow.removeChild(tditem3[i]);
+            }
+
+        }
+        console.log(StartOfEventRow);
+        if (nextyomtov.length > 0) {
+            let td1;
+            let td2;
+            let td3;
+            for (let i = 0; i < nextyomtov.length; i++) {
+                td1 = document.createElement('td');
+                td2 = document.createElement('td');
+                td3 = document.createElement('td');
+                td1.textContent = getTime(nextyomtov[i].start);
+                td2.textContent = getTime(nextyomtov[i].end);
+                td3.textContent = nextyomtov[i].yomtov
+                td1.classList.add('td-item-1');
+                td2.classList.add('td-item-2');
+                td3.classList.add('td-item-3');
+                StartOfEventRow.appendChild(td1);
+                EndOfEventRow.appendChild(td2);
+                EventNameRow.appendChild(td3);
+            }
+        }
+
     }
     catch (error) {
         console.error(error);
     }
-
 }
+
+
 
 function getTime(date) {
     let time = new Date(date);

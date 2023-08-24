@@ -31,6 +31,5 @@ async function hi() {
             }
         }
     }
-    console.log(englishyomtovend[4], englishyomtovstart[4]);
 }
 hi()
