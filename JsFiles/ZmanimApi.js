@@ -191,6 +191,8 @@ async function addClickEventForLocation() {
             startCounter = 0;
             endCounter = 0;
             nextYear = 0;
+            EventTimes.end=[];
+            EventTimes.start=[];
             MyLocation.Location = LocationIdFromOptions[i].innerHTML
             await ZmanFetch(MyLocation);
             for (let j = 0; j < LocationOptions.length; j++) {

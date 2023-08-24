@@ -7,10 +7,12 @@ cors.all;
 const app = express();
 app.use(cors());
 app.use(express.json());
+const cron = require('node-cron');
 // const fs= require('fs');
 // let Html=fs.ReadStream('try.html')
 const templatePath = 'Emailhopeitworks.ejs';
-const templatePathResetPassword='ResetPasswordEmail.ejs';
+const templatePathResetPassword = 'ResetPasswordEmail.ejs';
+const templateTimes;
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -18,7 +20,7 @@ const transporter = nodemailer.createTransport({
         pass: 'ikmkqzbrovvznoyo'
     }
 });
-app.post('/Email/NewUser', (req,res) => {
+app.post('/Email/NewUser', (req, res) => {
     let mailOptions = {
         from: 'moshe@zunta.com',
         to: req.body.Email,
@@ -42,7 +44,7 @@ app.post('/Email/NewUser', (req,res) => {
         });
     });
 })
-app.post('/Email/ResetPassword', (req,res) => {
+app.post('/Email/ResetPassword', (req, res) => {
     console.log('hi there Reseterr');
     let mailOptions = {
         from: 'moshe@zunta.com',
@@ -66,6 +68,38 @@ app.post('/Email/ResetPassword', (req,res) => {
             }
         });
     });
+})
+
+cron.schedule('0 0 1 * *', async () => {
+    console.log('shceudle');
+    let response = await fetch(`https://www.hebcal.com/hebcal?v=1&cfg=json&year=now&month=${new Date().getMonth()}geo=geoname&geonameid=3448439&d=on&D=on`);
+    let responsedata = await response.json();
+    let hebdate = []
+    let englishyomtovstart = []
+    let englishyomtovend = []
+    for (elem of responsedata.items) {
+        if (elem.category === 'hebdate') {
+            hebdate.push(elem)
+        }
+    }
+    for (let i = 0; i < hebdate.length; i++) {
+        for (let j = 0; j < yomtovstart.length; j++) {
+
+            if (hebdate[i].hdate.split(' ')[0] + ' ' + hebdate[i].hdate.split(' ')[1] === yomtovstart[j]) {
+                englishyomtovstart.push(hebdate[i])
+            }
+            if (hebdate[i].hdate.split(' ')[0] + ' ' + hebdate[i].hdate.split(' ')[1] === yomtovend[j]) {
+                englishyomtovend.push(hebdate[i])
+            }
+        }
+    }
+    for (let i = 0; i < englishyomtovstart.length; i++) {
+        cron.schedule(`0 0 ${new Date(englishyomtovstart[i].date).getDate()} ${new Date(englishyomtovstart[i].date).getMonth()} *`, async () => {
+            //send
+        })
+    }
+
+
 })
 
 app.listen(port, () => {
