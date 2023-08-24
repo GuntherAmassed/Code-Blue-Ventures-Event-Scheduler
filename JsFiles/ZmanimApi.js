@@ -16,7 +16,10 @@ let holiday = false;
 let nextYear = 0;
 let MyLocation = {};
 const date = new Date();
-
+ EventTimes = {
+        start: [],
+        end: []
+    };
 ArrowRight.addEventListener('click', async () => {
 
     if (EventTimes.start.length == startCounter) {
@@ -48,8 +51,6 @@ async function ZmanFetch(data) {
     let MyDate;
     MyDate = Number(date.getFullYear() + nextYear) + '-';
     MyDate += '01-01'
-    console.log(MyDate);
-
     let response = await fetch(`https://codebluetimes.com/app/ZmanimApi`, {
         method: 'POST',
         headers: {
@@ -67,18 +68,13 @@ async function ZmanFetch(data) {
     let clockOfUser = document.getElementById('clock-of-user');
     clockOfUser.innerHTML = '';
     setClockOfUser(responseData.hours, responseData.minutes, responseData.seconds, clockOfUser);
-    EventTimes = {
-        start: [],
-        end: []
-    };
+   
     for (let i = 0; i < responseData.event.start.length; i++) {
         EventTimes.start.push(responseData.event.start[i]);
     }
     for (let i = 0; i < responseData.event.end.length; i++) {
         EventTimes.end.push(responseData.event.end[i]);
     }
-    startCounter = 0;
-    endCounter = 0;
     let getpoint = () => {
         month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
         day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
@@ -99,9 +95,9 @@ async function ZmanFetch(data) {
             }
         }
     }
-    // if (nextYear === 0) {
-    //     getpoint();
-    // }
+    if (nextYear === 0) {
+        getpoint();
+    }
     console.log(EventTimes.end.length, EventTimes.start.length);
     getStartAndEndOfEvent(EventTimes);
 }
