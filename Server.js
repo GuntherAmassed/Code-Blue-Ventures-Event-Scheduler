@@ -385,42 +385,46 @@ app.post('/app/ClockAmount', (req, res) => {
 app.post('/app/ZmanimApi', async (req, res) => {
 
     try {
-        let start = [];
-        let end = [];
-        let isyomtov = false;
+      
         let StartDate = req.body.Date;
         let splitDate = StartDate.split('-');
         let EndDate = `${(Number(splitDate[0]) + 1)}-01-01`;
-       console.log('hi');
-        let response = await fetch(`https://www.hebcal.com/hebcal?v=1&cfg=json&mf=off&maj=on&start=${StartDate}&end=${EndDate}&geo=geoname&geonameid=${req.body.location}`);
+        console.log('hi');
+        let response = await fetch(`https://www.hebcal.com/hebcal?v=1&cfg=json&start=${StartDate}&end=${EndDate}&geo=geoname&geonameid=${req.body.location}d=on`);
         let responsedata = await response.json();
         let data = responsedata.items;
+        let start = []
+        let end = []
+        let hebdate = []
+        let yomtovstart = ['29 Elul', '9 Tishrei', '14 Tishrei', '14 Nisan', '5 Sivan']
+        let yomtovend = ['2 Tishrei', '10 Tishrei', '23 Tishrei', '22 Nisan', '7 Sivan']
+        let englishyomtovstart = [];
+        let englishyomtovend = [];
         for (elem of data) {
-            if (elem.category === 'candles' && 'memo' in elem) {
-                if (elem.memo.includes('Erev')) {
-                    start.push(elem)
-                    isyomtov = true;
-                }
+            if (elem.category === 'havdalah') {
+                end.push(elem)
             }
-            if (elem.category === 'havdalah' && 'memo' in elem) {
-                if (!(elem.memo.includes('Sukkot'))) {
-                    end.push(elem)
-                    isyomtov = false;
-                    continue
-                }
-    
+            if (elem.category === 'candles') {
+                start.push(elem)
             }
-            if (isyomtov === false) {
-                if (elem.category === 'havdalah') {
-                    end.push(elem)
+            if (elem.category === 'hebdate') {
+                hebdate.push(elem)
+            }
+        }
+        for (let i = 0; i < hebdate.length; i++) {
+            for (let j = 0; j < yomtovstart.length; j++) {
+
+                if (hebdate[i].hdate.split(' ')[0] + ' ' + hebdate[i].hdate.split(' ')[1] === yomtovstart[j]) {
+                    englishyomtovstart.push(hebdate[i])
                 }
-                if (elem.category === 'candles') {
-                    start.push(elem)
+                if (hebdate[i].hdate.split(' ')[0] + ' ' + hebdate[i].hdate.split(' ')[1] === yomtovend[j]) {
+                    englishyomtovend.push(hebdate[i])
                 }
             }
         }
-        console.log(start.length,end.length);
-       
+
+        console.log(start.length, end.length);
+
         pool.query(`SELECT lt.timeZone, lt.City_Name,lt.State, lt.Country_Full_Name FROM locationstable lt WHERE lt.GeoName_Id=?;`, [req.body.location], (error, results) => {
             if (error) {
                 console.error(error)
@@ -438,6 +442,8 @@ app.post('/app/ZmanimApi', async (req, res) => {
                 let event = {
                     start: start,
                     end: end,
+                    englishyomtovend:englishyomtovend,
+                    englishyomtovstart:englishyomtovstart
                 }
                 let hours = new Date(formatInTimeZone(new Date(), results[0].timeZone, 'yyyy-MM-dd hh:mm:ss aa')).getHours();
                 let minutes = new Date(formatInTimeZone(new Date(), results[0].timeZone, 'yyyy-MM-dd hh:mm:ss aa')).getMinutes();
@@ -550,7 +556,7 @@ app.post('/app/NewPasswordChange', (req, res) => {
             console.log(err);
             res.json(null)
         }
-        else if(results.affectedRows>0){
+        else if (results.affectedRows > 0) {
             console.log(results);
             console.log('Set up');
             res.json('Changed')
@@ -582,7 +588,7 @@ app.post('/app/ResetPasswordRequest', (req, res) => {
                     res.json(null)
                     console.error(err)
                 }
-                else if(results.affectedRows>0) {
+                else if (results.affectedRows > 0) {
                     console.log('inserted');
                     console.log(results);
                     console.log(ResetInfo);
@@ -612,14 +618,14 @@ app.post('/app/ResetPasswordRequest', (req, res) => {
 })
 app.post('/app/ResetPassword', (req, res) => {
     console.log(req.body.Password, req.body.ResetToken, req.body.Email);
-    let id=''
-    pool.query('SELECT Id FROM `userinfo` WHERE Email=?;',[req.body.Email], (err, results) => {
+    let id = ''
+    pool.query('SELECT Id FROM `userinfo` WHERE Email=?;', [req.body.Email], (err, results) => {
         if (err) {
             res.json(null)
             console.error(err)
         }
         else if (results.length > 0) {
-            id=results[0].Id;
+            id = results[0].Id;
             pool.query('SELECT * FROM reset_tokens WHERE Reset_Token=? AND Id = ?;', [req.body.ResetToken, id], (err) => {
                 if (err) {
                     res.json(null)
@@ -631,14 +637,14 @@ app.post('/app/ResetPassword', (req, res) => {
                             console.log(err);
                             res.json(null)
                         }
-                        else if(results.affectedRows>0){
+                        else if (results.affectedRows > 0) {
                             console.log(results);
                             pool.query('DELETE FROM reset_tokens WHERE Id=? AND Reset_Token=?;', [id, req.body.ResetToken], (err, results) => {
                                 if (err) {
                                     res.json(null)
                                     console.error(err)
                                 }
-                                else if(results.affectedRows>0){
+                                else if (results.affectedRows > 0) {
                                     console.log('Reseted!');
                                     console.log(results);
                                     res.json('Reseted!')
@@ -651,7 +657,7 @@ app.post('/app/ResetPassword', (req, res) => {
                         else {
                             res.json(null)
                         }
-                        
+
                     })
                 }
             })
