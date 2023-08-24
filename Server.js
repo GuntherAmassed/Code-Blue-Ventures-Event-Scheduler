@@ -385,7 +385,7 @@ app.post('/app/ClockAmount', (req, res) => {
 app.post('/app/ZmanimApi', async (req, res) => {
 
     try {
-      
+
         let StartDate = req.body.Date;
         let splitDate = StartDate.split('-');
         let EndDate = `${(Number(splitDate[0]) + 1)}-01-01`;
@@ -396,7 +396,7 @@ app.post('/app/ZmanimApi', async (req, res) => {
         let start = []
         let end = []
         let hebdate = []
-        let yomtovstart = ['29 Elul', '9 Tishrei', '14 Tishrei', '14 Nisan', '5 Sivan']
+        let yomtovstart = [{ date: '29 Elul', yomtov: 'Rosh Hashana' }, { date: '9 Tishrei', yomtov: 'Yom Kippur' }, { date: '14 Tishrei', yomtov: 'Succos' }, { date: '14 Nisan', yomtov: 'Pesach' }, { date: '5 Sivan', yomtov: 'Shavous' }]
         let yomtovend = ['2 Tishrei', '10 Tishrei', '23 Tishrei', '22 Nisan', '7 Sivan']
         let englishyomtovstart = [];
         let englishyomtovend = [];
@@ -414,7 +414,8 @@ app.post('/app/ZmanimApi', async (req, res) => {
         for (let i = 0; i < hebdate.length; i++) {
             for (let j = 0; j < yomtovstart.length; j++) {
 
-                if (hebdate[i].hdate.split(' ')[0] + ' ' + hebdate[i].hdate.split(' ')[1] === yomtovstart[j]) {
+                if (hebdate[i].hdate.split(' ')[0] + ' ' + hebdate[i].hdate.split(' ')[1] === yomtovstart[j].date) {
+                    hebdate[i].yomtov = yomtovstart[j].yomtov;
                     englishyomtovstart.push(hebdate[i])
                 }
                 if (hebdate[i].hdate.split(' ')[0] + ' ' + hebdate[i].hdate.split(' ')[1] === yomtovend[j]) {
@@ -442,8 +443,8 @@ app.post('/app/ZmanimApi', async (req, res) => {
                 let event = {
                     start: start,
                     end: end,
-                    englishyomtovend:englishyomtovend,
-                    englishyomtovstart:englishyomtovstart
+                    englishyomtovend: englishyomtovend,
+                    englishyomtovstart: englishyomtovstart
                 }
                 let hours = new Date(formatInTimeZone(new Date(), results[0].timeZone, 'yyyy-MM-dd hh:mm:ss aa')).getHours();
                 let minutes = new Date(formatInTimeZone(new Date(), results[0].timeZone, 'yyyy-MM-dd hh:mm:ss aa')).getMinutes();

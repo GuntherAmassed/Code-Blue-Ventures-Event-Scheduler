@@ -6,7 +6,7 @@ let yomtovend = ['2 Tishrei', '10 Tishrei', '23 Tishrei', '22 Nisan', '7 Sivan']
 let englishyomtovstart = [];
 let englishyomtovend = [];
 async function hi() {
-    let response = await fetch(`https://www.hebcal.com/hebcal?v=1&cfg=json&start=2023-01-01&end=2024-01-01&geo=geoname&geonameid=3448439&d=on`);
+    let response = await fetch(`https://www.hebcal.com/hebcal?v=1&cfg=json&start=2023-01-01&end=2024-01-01&geo=geoname&geonameid=3448439&d=on&D=on`);
     let responsedata = await response.json();
 
     for (elem of responsedata.items) {

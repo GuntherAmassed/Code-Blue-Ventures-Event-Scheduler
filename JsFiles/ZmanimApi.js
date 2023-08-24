@@ -1,3 +1,4 @@
+
 const ArrowRight = document.getElementById('Arrow-Right');
 const ArrowLeft = document.getElementById('Arrow-Left');
 const StartOfEvent = document.getElementById('Start-of-Event');
@@ -12,14 +13,15 @@ let EventTimes;
 let startCounter = 0;
 let endCounter = 0;
 let timeExtracted = '';
-let holiday = false;
 let nextYear = 0;
 let MyLocation = {};
 const date = new Date();
- EventTimes = {
-        start: [],
-        end: []
-    };
+EventTimes = {
+    start: [],
+    end: [],
+    yomtovend: [],
+    yomtovstart: []
+};
 ArrowRight.addEventListener('click', async () => {
 
     if (EventTimes.start.length == startCounter) {
@@ -68,12 +70,16 @@ async function ZmanFetch(data) {
     let clockOfUser = document.getElementById('clock-of-user');
     clockOfUser.innerHTML = '';
     setClockOfUser(responseData.hours, responseData.minutes, responseData.seconds, clockOfUser);
-   
+
     for (let i = 0; i < responseData.event.start.length; i++) {
         EventTimes.start.push(responseData.event.start[i]);
     }
     for (let i = 0; i < responseData.event.end.length; i++) {
         EventTimes.end.push(responseData.event.end[i]);
+    }
+    for (let i = 0; i < responseData.event.englishyomtovend.length; i++) {
+        EventTimes.yomtovend.push(responseData.event.englishyomtovend[i]);
+        EventTimes.yomtovstart.push(responseData.event.englishyomtovstart[i]);
     }
     let getpoint = () => {
         month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
@@ -104,29 +110,23 @@ async function ZmanFetch(data) {
 
 function getStartAndEndOfEvent(event) {
     try {
-        console.log(event);
-        if ('memo' in event.start[startCounter]) {
-            holiday = true;
-            let yomtov;
-            yomtov = event.end[endCounter].memo;
-            NameOfEvent.innerHTML = yomtov;
+        let nextyomtov = {}
+        for (let i = 0; i < event.yomtovend.length; i++) {
+
+            if (event.start[startCounter].date.split(' ')[0] < event.yomtovstart[i].date) {
+                nextyomtov.start = event.yomtovstart[i].date;
+                nextyomtov.yomtov = event.yomtovstart[i].yomtov;
+                nextyomtov.end = event.yomtovend[i].date;
+            }
+
         }
-        if ('memo' in event.end[endCounter]) {
-            holiday = true;
-            let yomtov;
-            yomtov = event.end[endCounter].memo;
-            NameOfEvent.innerHTML = yomtov;
-        }
-        else {
-            holiday = false;
-        }
+
+        console.log(nextyomtov);
+
         if (new Date(event.end[endCounter].date).getDay() === 6 || new Date(event.start[startCounter].date).getDay() === 5) {
-            if (holiday) {
-                NameOfEvent.innerHTML += ' & Sabbath';
-            }
-            else {
-                NameOfEvent.innerHTML = ' Sabbath';
-            }
+
+            NameOfEvent.innerHTML = ' Sabbath';
+
         }
         EndOfEvent.innerHTML = getTime(event.end[endCounter].date);
         endCounter++;
