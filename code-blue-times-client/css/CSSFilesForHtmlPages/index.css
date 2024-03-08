@@ -1,0 +1,305 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+a {
+
+    color: inherit;
+    text-decoration: none;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    background: var(--background-dark, #02121F);
+    min-height: 848px;
+    height: 100vh;
+    width: 100vw;
+}
+
+.Main-Container {
+    position: relative;
+    margin-top: 5%;
+    display: flex;
+    min-height: 50%;
+    height: 50%;
+    justify-content: space-between;
+    flex-direction: column;
+    padding-top: 10%;
+    padding-left: 6.5%;
+    padding-right: 6.5%;
+}
+
+#CodeBlue {
+    width: 102.857px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+
+.Planet-Container {
+    position: relative;
+    z-index: -2;
+    -webkit-transform: translate3d(0, 0, 0);
+    background-image: url("/Images/unsplash-y-zyg-o-nr-u-be-8.png");
+    text-decoration: none;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 50%;
+    width: 100%;
+
+}
+
+h1 {
+    color: #FFF;
+    margin-top: 5%;
+    font-size: 2.375rem;
+    font-family: Lucida Sans Typewriter;
+    line-height: 2.875rem;
+    letter-spacing: 0.1875rem;
+    text-transform: uppercase;
+    font-weight: 100;
+}
+
+p {
+    font-size: 0.875rem;
+    font-family: Trade Gothic LT Std;
+    line-height: 0.875rem;
+    letter-spacing: 0.035rem;
+}
+
+#Log-in-button {
+    cursor: pointer;
+    background: var(--primary, #009AFE);
+    border: 0;
+    padding:0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFF;
+    font-size: 1rem;
+    font-family: Trade Gothic LT Std;
+    letter-spacing: 0.0625rem;
+    line-height: 0;
+    height: 2.6em;
+}
+
+.TextContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+span {
+    color: #009AFE;
+}
+
+.Input-Container {
+
+    display: flex;
+    gap: 2rem;
+    flex-direction: column;
+}
+
+.ellipse {
+    position: absolute;
+    top: -5%;
+    width: 100%;
+    height: 15%;
+    -webkit-transform: translate3d(0, 0, 0);
+    z-index: -1;
+    background: #02121F;
+    filter: blur(20px);
+}
+
+input {
+    padding: .5rem;
+    font-size: 16px;
+    border-radius: 0;
+    background-color: transparent;
+    box-sizing: border-box;
+    display: flex;
+    outline: none;
+    border: 0;
+    border-bottom: 1px solid var(--primary, #009AFE);
+    font-size: 0.875rem;
+    font-family: Trade Gothic LT Std;
+    line-height: 0.875rem;
+    letter-spacing: 0.035rem;
+    color: gray;
+}
+
+
+.ellipse-2 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 7.3125rem;
+    height: 7.3125rem;
+    border-radius: 117px;
+    background: var(--primary, #009AFE);
+    border-radius: 7.3125rem;
+    -webkit-transform: translate3d(0, 0, 0);
+    filter: blur(92px);
+
+}
+
+#password-Hidden {
+    width: 16px;
+    position: absolute;
+    right: 0;
+    bottom: 5px;
+}
+
+#Password-Div,
+.Email-div {
+    border-bottom: 1px solid var(--primary, #009AFE);
+    position: relative;
+}
+
+input {
+    width: 100%;
+    border-bottom: none;
+}
+
+.TextContainer p:first-of-type {
+    color: #FFF;
+    font-size: 0.75rem;
+    line-height: 0.625rem;
+    letter-spacing: 0.03rem;
+}
+
+#Forgot-Password span:hover {
+    cursor: pointer;
+    color: white;
+}
+
+#NextPageButton:hover {
+    cursor: pointer;
+}
+
+.TextContainer :first-child {
+    display: inline-flex;
+    gap: 0.5rem;
+    align-items: end;
+}
+
+
+
+.Error-Message {
+    position: absolute;
+    display: none;
+    gap: .5em;
+    margin: .5em;
+    color: #FF2D6C;
+    text-transform: capitalize;
+    align-items: end;
+}
+
+.Error-Message img {
+    width: 1em;
+}
+
+#Log-in-button:hover {
+    background-color: white;
+    color: #009AFE;
+
+}
+
+
+/*media queires*/
+
+@media (min-width:800px) {
+
+    .ellipse-2 {
+        width: 10rem;
+        height: 10rem;
+    }
+}
+
+@media (min-width:1000px) {
+    h1 {
+        font-size: 3rem;
+        line-height: 3.5rem;
+    }
+
+    body {
+        min-height: 600px;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    #Log-in-button {
+        width: 18%;
+    }
+
+    .Planet-Container {
+        background-image: url("/Images/NEwPlanetDesktop.png");
+        height: auto;
+        background-size: cover;
+        background-position: left;
+        max-height: 100%;
+    }
+
+    .ellipse {
+        border-radius: 68rem;
+        height: 100%;
+        width: 10%;
+        top: 0;
+
+    }
+
+    #CodeBlue {
+        width: 9.375rem;
+        height: 2.1875rem;
+        margin-top: -10rem;
+        margin-bottom: 5rem;
+    }
+
+    .Main-Container {
+        margin-top: 0;
+        justify-content: center;
+        padding-right: 0;
+        padding-top: 0;
+        gap: 3rem;
+        height: 100%;
+        width: 60%;
+    }
+
+    .ellipse-2 {
+        top: 20%;
+        right: 50%;
+        left: 30%;
+        z-index: -1;
+        width: 11.8125rem;
+        height: 11.8125rem;
+        border-radius: 11.8125rem;
+        background: var(--primary, #009AFE);
+        -webkit-filter: blur(122px);
+        filter: blur(122px);
+    }
+}
+
+@media (min-width:1400px) {
+    .Planet-Container {
+        background-size: contain;
+        background-position: right;
+    }
+
+    .Main-Container {
+        padding-right: 6.5%;
+        width: 50%;
+    }
+
+    .ellipse {
+        width: 35%;
+        left: -10%;
+    }
+}
+
+@media (min-width:1800px) {
+    .ellipse {
+        width: 40%;
+        left: -10%;
+    }
+}

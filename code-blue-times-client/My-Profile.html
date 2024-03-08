@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <script src="JsFiles/checkingForCookies.js?versioncontrol=1696973044759"></script>
+    <script src="JsFiles/CheckLogin.js?versioncontrol=1696973044759"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1A1kb78jJ26lxV1CQEPBTur2NLZAJ9aA&libraries=places"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,  maximum-scale=1, user-scalable=no">
+    <title>Profile</title>
+    <link rel="stylesheet" href="css/desktop-Menu.css?versioncontrol=1696973044759">
+    <link rel="stylesheet" href="css/Mobile-Menu.css?versioncontrol=1696973044759">
+    <link rel="stylesheet" href="css/font.css?versioncontrol=1696973044759">
+    <link rel="stylesheet" href="css/scroll-Bar.css?versioncontrol=1696973044759">
+    <link rel="stylesheet" href="css/CSSFilesForHtmlPages/My-Profile.css?versioncontrol=1696973044759">
+    <link rel="icon" href="https://codeblue.ventures/wp-content/uploads/2020/11/favicon.ico" sizes="32x32">
+    <link rel="icon" href="https://codeblue.ventures/wp-content/uploads/2020/11/favicon.ico" sizes="192x192">
+    <link rel="apple-touch-icon" href="https://codeblue.ventures/wp-content/uploads/2020/11/favicon.ico">
+    <meta name="msapplication-TileImage" content="https://codeblue.ventures/wp-content/uploads/2020/11/favicon.ico">
+
+</head>
+
+<body>
+    <div class="Frame-Menu" id="Menu-Nav-Desktop">
+        <div class="container">
+            <img src="Images/CODEBLUE TIME.svg" alt="">
+            <p id="home"><img src="Images/admin-profile-icon-home.svg" alt=""> home</p>
+            <p id="user-Desktop-Admin"><img src="Images/admin-profile-icon-user.svg" alt=""> user</p>
+            <p id="My-Profile"><img src="Images/admin-profile-icon-users.svg" alt="">My Profile</p>
+
+        </div>
+        <p id="log-out"><img src="Images/admin-profile-icon-exit.svg" alt=""> log out</p>
+    </div>
+    <div class="Main-Container GridItem">
+        <div id="Menu-Mobile-Frame">
+            <img id="Code-Blue" src="Images/CODEBLUE TIME.svg" alt="">
+            <img id="Option-Frame" src="Images/frame.svg" alt="">
+            <img id="Mobile-Frame" src="Images/mobilegoodFrameMenu.png" alt="">
+        </div>
+        <div id="Menu-Mobile-Frame-Extended">
+            <div>
+                <img id="Code-Blue" src="Images/CODEBLUE TIME.svg" alt="">
+                <img id="ExIcon" src="Images/admin-profile-icon-outline-close.svg" alt="">
+            </div>
+            <div>
+                <div id="user-Mobile-Frame">
+                    <p id="user-Mobile"><img src="Images/admin-profile-icon-users.svg" alt="">Users</p>
+                </div>
+
+                <div>
+                    <p id="home-Mobile"><img src="Images/admin-profile-icon-home.svg" alt="">Home</p>
+                </div>
+                <div>
+                    <p id="My-Profile-Mobile"><img src="Images/admin-profile-icon-user.svg" alt="">My Profile</p>
+                </div>
+
+                <div>
+                    <p id="log-out-Mobile"> <img src="Images/admin-profile-icon-exit.svg" alt="">Log out</p>
+                </div>
+            </div>
+            <img id="Mobile-Frame-Extended" src="Images/Frame 232-Extended.png" alt="">
+        </div>
+        <h1 class="Mains"><span id="Stupid-Id">My</span> <span>Profile</span>_</h1>
+        <form action="" class="Mains">
+            <div class="input-container">
+                <div id="Password-Div">
+                    <label for="">
+                        <span class="Label-P">First Name</span>
+                        <input id="First-Name" type="text" placeholder="">
+                    </label>
+
+                    <img class="password-Hidden ExIconForInputs" src="Images/admin-profile-icon-outline-close.svg"
+                        alt=""></img>
+                </div>
+                <div id="Password-Div">
+                    <label for="">
+                        <span class="Label-P">Last Name</span>
+                        <input id="Last-Name" type="text" placeholder="">
+                    </label>
+                    <img class="password-Hidden ExIconForInputs" src="Images/admin-profile-icon-outline-close.svg"
+                        alt=""></img>
+                </div>
+            </div>
+            <div id="Password-Div">
+                <label for=""><span class="Label-P">Email</span><input id="Email" type="text" placeholder=""></label>
+                <img class="password-Hidden ExIconForInputs" src="Images/admin-profile-icon-outline-close.svg"
+                    alt=""></img>
+                <div id="email-error-container">
+                    <div id="Email-error" class="Error-Message">
+                    </div>
+                </div>
+            </div>
+            <div id="Password-Div">
+                <label for=""> <span class="Label-P">Skype</span><input id="Skype" type="text" placeholder=""></label>
+                <img class="password-Hidden ExIconForInputs" src="Images/admin-profile-icon-outline-close.svg"
+                    alt=""></img>
+            </div>
+            <label id="LabelForLocation" for=""><span class="Label-P">Location*</span>
+                <input type="text" name="" id="pac-input"> <img class="password-Hidden ExIconForInputs"
+                    src="Images/admin-profile-icon-outline-close.svg" alt=""></img>
+                <div id="Location-error" class="Error-Message">
+
+                </div>
+            </label>
+            <div class="container">
+                <button id="SaveChangesButton">
+                    SAVE CHANGES
+                </button>
+                <p><a href="changePassword.html">Change Password</a></p>
+            </div>
+        </form>
+    </div>
+    <script src="JsFiles/inputStyling.js?versioncontrol=1696973044759"></script>
+    <script src="JsFiles/appending.js?versioncontrol=1696973044759"></script>
+    <script src="JsFiles/Mobile-Menu.js?versioncontrol=1696973044759"></script>
+    <script src="JsFiles/Menu.js?versioncontrol=1696973044759"></script>
+    <script src="JsFiles/form.js?versioncontrol=1696973044759"> </script>
+</body>
+
+</html>

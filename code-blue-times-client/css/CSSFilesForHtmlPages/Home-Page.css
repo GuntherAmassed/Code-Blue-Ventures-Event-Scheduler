@@ -1,0 +1,640 @@
+.content {
+    display: block;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+#Arrow-Right,
+#Arrow-Left {
+    cursor: pointer;
+}
+
+#Menu-Mobile-Frame {
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+}
+
+#Menu-Mobile-Frame-Extended {
+    height: 100%;
+}
+
+#Menu-Mobile-Frame-Extended div:first-child {
+    flex-direction: row;
+}
+
+#Menu-Mobile-Frame-Extended div:nth-child(2) div:last-child {
+    padding-bottom: 2.5rem;
+}
+
+
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    background-color: #02121F;
+}
+
+body {
+    background: var(--background-dark, #02121F);
+    grid-template-rows: .5fr 9fr;
+    grid-template-columns: 1fr;
+    box-sizing: border-box;
+
+}
+
+main {
+    color: white;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 32px;
+    font-size: 0.875rem;
+    font-family: Roboto;
+    width: 100%;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.125rem;
+    letter-spacing: 0.03125rem;
+    padding: 1em;
+    padding-top: 32px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+p {
+    color: #FFF;
+    font-family: Trade Gothic LT Std;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5rem;
+    letter-spacing: 0.0625rem;
+    text-transform: uppercase;
+}
+
+
+div {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    gap: .5rem;
+}
+
+.Frame {
+    background: var(--background-blue, #091C2E);
+}
+
+
+
+#Menu-Desktop {
+    display: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-color: #1F2D3A;
+}
+
+table td,
+th {
+    white-space: nowrap;
+    text-align: left;
+    padding: 1em;
+    border: 1px solid #1F2D3A;
+}
+
+table span {
+    color: var(--placeholders, #929BA3);
+    font-family: Trade Gothic LT Std;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 0.875rem;
+    letter-spacing: 0.035rem;
+}
+
+h1 {
+    font-family: Lucida Sans Typewriter;
+    font-size: 1.75rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 130%;
+    letter-spacing: 0.1875rem;
+    text-transform: uppercase;
+    font-size: 1.75rem;
+}
+
+span {
+    color: #009AFE;
+}
+
+
+
+
+.location-borders {
+    color: #929BA3;
+    padding: 1em;
+    font-size: 12px;
+    height: 28px;
+    box-sizing: border-box;
+    border-radius: 3.125rem;
+    border: 1px solid var(--placeholders, #929BA3);
+
+}
+
+.clock-Frame {
+    background: var(--background-blue, #091C2E);
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    width: 12rem;
+    height: 100%;
+    min-height: 14rem;
+    box-sizing: border-box;
+
+}
+
+.clock-Frame p {
+    text-align: center;
+    text-transform: capitalize;
+    color: var(--placeholders, #929BA3);
+    font-family: Trade Gothic LT Std;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 0.875rem;
+    letter-spacing: 0.035rem;
+}
+
+.clock-Frame p:first-of-type {
+    color: white;
+}
+
+.Frame {
+    justify-content: space-around;
+    gap: 32px;
+    padding: 32px 24px;
+}
+
+.row.Frame {
+    gap: 32px;
+    background: var(--background-dark, #02121F);
+    justify-content: flex-start;
+    display: grid;
+    height: max-content;
+    /* grid-auto-columns: max-content;
+    grid-auto-rows: max-content; */
+    grid-auto-flow: column;
+    padding: 0;
+    /* padding-bottom: 1em; */
+    overflow-y: hidden;
+    overflow-x: auto;
+}
+
+.ContentFrame {
+    gap: 16px;
+}
+
+.Locations {
+    overflow-x: auto;
+    display: grid;
+    height: fit-content;
+    grid-auto-columns: max-content;
+    grid-auto-rows: max-content;
+    grid-auto-flow: column;
+}
+
+.change-Date {
+    position: relative;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    overflow: auto;
+}
+
+.change-Date p {
+    color: var(--placeholders, #929BA3);
+    font-family: Trade Gothic LT Std;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 0.875rem;
+    letter-spacing: 0.035rem;
+    text-transform: capitalize;
+
+}
+
+.change-Date div {
+    flex-direction: row;
+    align-items: center;
+    gap: .5rem;
+}
+
+
+.change-Date img {
+    width: 1.5rem;
+    height: 1.125rem;
+
+
+}
+
+.drop-Down-Paragraph p {
+    color: var(--placeholders, #929BA3);
+    font-family: Roboto;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.125rem;
+    letter-spacing: 0.03125rem;
+    text-transform: none;
+}
+
+.Paragraph-Head h3 {
+    color: var(--white, #FFF);
+    font-family: Trade Gothic LT Std;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5rem;
+    letter-spacing: 0.0625rem;
+    text-transform: uppercase;
+
+}
+
+.Paragraph-Head {
+    display: flex;
+    gap: 1em;
+    margin-right: 2em;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+
+}
+
+
+
+.Paragraph-Head img {
+    width: 1.5rem;
+    height: fit-content;
+}
+
+.drop-Down-Paragraph {
+    position: relative;
+    display: flex;
+    gap: 1rem;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid var(--Border, #1F2D3A);
+}
+
+#Plus-Icon-4:active .drop-Down-Paragraph:first-of-type {
+    display: none;
+}
+
+#Today-Date-span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--Primary, #009AFE);
+    padding: .45em;
+    font-family: Trade Gothic LT Std;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 100%;
+    letter-spacing: 0.48px;
+    border-radius: 0.125rem;
+    background: rgba(0, 154, 254, 0.20);
+    margin-bottom: auto;
+}
+
+.color-gray {
+    color: var(--placeholders, #929BA3)
+}
+
+.Day-Of-Week,
+.digital-clock,
+.Time-dif,
+.Day-Of-Local {
+    color: inherit;
+}
+
+.drop-Down-Paragraph {
+    cursor: pointer;
+}
+
+#row-location-frame {
+    margin-left: auto;
+    overflow: hidden;
+}
+
+#calendarIcon,
+#scroll-container {
+    cursor: pointer;
+}
+
+
+.Plus-Icon {
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 1em;
+}
+
+.Content.hidden {
+    display: none;
+}
+
+.location-borders {
+    cursor: pointer;
+}
+
+.location-borders:hover {
+    border-color: #009AFE;
+    color: white;
+}
+
+.Hidden-Location-Id {
+    display: none;
+}
+
+.Content {
+    margin-right: 5em;
+}
+
+
+
+
+
+
+#Today-Date-span {
+    cursor: pointer;
+}
+
+#Handthing {
+    padding-right: .3em;
+}
+
+#User-Name-Time p {
+    line-height: 2.2em;
+}
+
+.small {
+    font-size: 20px;
+}
+
+th {
+    color: var(--White, #FFF);
+    font-family: Trade Gothic LT Std;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+td {
+    color: var(--White, #FFF);
+    font-family: Trade Gothic LT Std;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 14px;
+    letter-spacing: 0.8px;
+}
+
+.blue-span {
+    color: #009AFE;
+}
+
+.blueborder {
+    border-color: #009AFE;
+}
+
+.pac-item:hover {
+    background-color: transparent;
+}
+
+#Menu-Mobile-Frame-Extended {
+    display: none;
+}
+
+#table-Container {
+    width: 100%;
+    padding-bottom: .5em;
+    overflow-y: hidden;
+    overflow-x: auto;
+}
+
+input {
+    border-radius: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+#Today-Date {
+    width: max-content;
+}
+
+#calendar-Frame {
+    padding: 0;
+}
+
+th {
+    width: 10%;
+}
+
+td {
+    width: 22.5%;
+}
+
+#upcomingTimeFrame {
+    gap: 32px;
+}
+
+
+/*media queires*/
+@media (max-width:299px) {
+    body {
+        grid-template-rows: minmax(100px, max-content) 9fr;
+    }
+}
+
+@media (max-width:499px) {
+    h1 {
+        font-size: 1.25rem;
+    }
+
+    body {
+        grid-template-rows: minmax(100px, max-content) 9fr;
+    }
+}
+
+
+@media (max-width:820px) {
+    #row-location-frame {
+        width: 180px;
+    }
+
+    .change-Date {
+        gap: 24px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .change-Date div {
+
+        order: 3;
+    }
+
+    #Location-scroll-Container {
+        width: 100%;
+        order: 2;
+    }
+
+    #Date-Calendar-Container {
+        align-items: flex-end;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    #Today-Date-span {
+        margin-right: auto;
+        order: 2;
+    }
+
+    #calendar-Frame {
+        order: 1;
+    }
+
+    .Frame {
+        gap: 24px;
+        box-sizing: border-box;
+    }
+
+    .change-Date div:not(.location-borders) {
+        padding-bottom: 0;
+    }
+}
+
+@media (max-width:999px) {
+    .ContentFrame {
+        gap: 24px;
+    }
+
+    #Menu-Mobile-Frame {
+        display: flex;
+    }
+
+    #Menu-Mobile-Frame-Extended {
+        display: none;
+    }
+
+    #Menu-Desktop {
+        display: none !important;
+    }
+
+    .drop-Down-Paragraph {
+        flex-direction: column;
+    }
+
+    .Content {
+        margin: 0;
+    }
+
+
+}
+
+
+
+@media (min-width :1000px) {
+
+
+    #upcomingTimeFrame {
+        gap: 0;
+    }
+
+    #upcomingTimeFrame h1 {
+        margin-bottom: 25px;
+    }
+
+    #upcomingTimeFrame .change-Date {
+        margin-bottom: 22px;
+    }
+
+    h1 {
+        font-size: 1.75rem;
+    }
+
+    body {
+        overflow-y: hidden;
+
+        padding: 0;
+    }
+
+
+    #Menu-Mobile-Frame-Extended {
+        display: none !important;
+
+    }
+
+    #Menu-Mobile-Frame {
+        display: none !important;
+    }
+
+    #Menu-Desktop {
+        display: flex;
+        height: 100vh;
+        width: auto;
+
+    }
+
+    main {
+        padding-top: 48px;
+        justify-content: space-between;
+        padding-right: 3rem;
+        width: 100%;
+        overflow: auto;
+
+    }
+
+    .Frame {
+        max-width: 100%;
+    }
+
+    body {
+        grid-template-columns: 1.5fr 9fr;
+        grid-template-rows: 100vh;
+        gap: 2rem;
+        justify-content: left;
+        width: 100vw;
+        max-height: 100vh;
+        min-height: 800px;
+
+    }
+
+    .row.Frame {
+        min-height: 14.625rem;
+    }
+
+    .drop-Down-Paragraph {
+        display: grid;
+        grid-template-columns: 1fr 3.5fr;
+        grid-template-rows: 1fr;
+    }
+
+}

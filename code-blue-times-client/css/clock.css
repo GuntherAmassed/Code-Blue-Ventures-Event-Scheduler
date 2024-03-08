@@ -1,0 +1,107 @@
+.clock {
+  position: relative;
+  display: inline-flex;
+  background-image: url("/Images/ellipse-8.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 120px;
+  height: 120px;
+  border: 2px solid black;
+  border-radius: 50%;
+}
+
+.clock-Dark {
+  position: relative;
+  display: inline-flex;
+  background-image: url("/Images/ellipse-8\ copy.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 120px;
+  height: 120px;
+  border: 2px solid black;
+  border-radius: 50%;
+}
+
+
+
+.hour {
+  position: absolute;
+  bottom: 0;
+  background-color: black;
+  border-radius: 50%;
+  width: 3px;
+  height: 35px;
+  transform-origin: bottom;
+
+
+}
+
+.minute {
+  position: absolute;
+  bottom: 0;
+  background-color: black;
+  border-radius: 50%;
+  width: 2px;
+  height: 40px;
+  transform-origin: bottom;
+
+
+
+}
+
+.second {
+  position: absolute;
+  bottom: 0;
+  background-color: black;
+  border-radius: 50%;
+  width: 1px;
+  height: 45px;
+  transform-origin: bottom;
+
+
+
+}
+
+.middle {
+  position: relative;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+
+
+
+
+}
+
+.clock-Dark .second {
+  background-color: white;
+}
+
+.clock-Dark .minute {
+  background-color: white;
+}
+
+.clock-Dark .hour {
+  background-color: white;
+}
+
+.middle img {
+  top: -8px;
+  left: -6px;
+  width: max-content;
+  height: max-content;
+  border: 0;
+  border-radius: 50%;
+  z-index: 1;
+  position: absolute;
+
+}
+
+.point {
+  position: absolute;
+  left: -2px;
+  width: 6px;
+  height: 6px;
+  background-color: white;
+  border-radius: 50%;
+}

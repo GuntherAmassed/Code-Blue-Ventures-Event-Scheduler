@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,  maximum-scale=1, user-scalable=no">
+    <title>Admin User Page</title>
+    <link rel="icon" href="https://codeblue.ventures/wp-content/uploads/2020/11/favicon.ico" sizes="32x32">
+    <link rel="icon" href="https://codeblue.ventures/wp-content/uploads/2020/11/favicon.ico" sizes="192x192">
+    <link rel="apple-touch-icon" href="https://codeblue.ventures/wp-content/uploads/2020/11/favicon.ico">
+    <meta name="msapplication-TileImage" content="https://codeblue.ventures/wp-content/uploads/2020/11/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Roboto:wght@100;400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/desktop-Menu.css?versioncontrol=1696973044755">
+    <link rel="stylesheet" href="css/Mobile-Menu.css?versioncontrol=1696973044755">
+    <link rel="stylesheet" href="css/font.css?versioncontrol=1696973044755">
+    <link rel="stylesheet" href="css/scroll-Bar.css?versioncontrol=1696973044755">
+    <link rel="stylesheet" href="css/toggleSwitch.css?versioncontrol=1696973044755">
+    <link rel="stylesheet" href="css/CSSFilesForHtmlPages/Admin-Profile-Users-Page.css?versioncontrol=1696973044755">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"
+        integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww=="
+        crossorigin="anonymous">
+        </script>
+    <link rel="stylesheet" href="css/autofill.css?versioncontrol=1696973044755">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <script src="JsFiles/checkingForCookies.js?versioncontrol=1696973044755"></script>
+    <script src="JsFiles/CheckLogin.js?versioncontrol=1696973044755"></script>
+    <script src="JsFiles/checkIfAdmin.js?versioncontrol=1696973044755"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1A1kb78jJ26lxV1CQEPBTur2NLZAJ9aA&libraries=places"></script>
+
+    <div class="Frame-Menu" id="Menu-Desktop">
+        <div class="container">
+            <img src="Images/CODEBLUE TIME.svg" alt="">
+            <p id="home"><img src="Images/admin-profile-icon-home.svg" alt="">home</p>
+            <p id="user-Desktop-Admin"><img src="Images/admin-profile-icon-user.svg" alt="">user</p>
+            <p id="My-Profile"><img src="Images/admin-profile-icon-users.svg" alt="">My Profile</p>
+        </div>
+        <p id="log-out"><img src="Images/admin-profile-icon-exit.svg" alt="">log out</p>
+    </div>
+    <Main class="GridItem">
+        <div id="Menu-Mobile-Frame">
+            <img id="Code-Blue" src="Images/CODEBLUE TIME.svg" alt="">
+            <img id="Option-Frame" src="Images/frame.svg" alt="">
+            <img id="Mobile-Frame" src="Images/mobilegoodFrameMenu.png" alt="">
+        </div>
+        <div id="Menu-Mobile-Frame-Extended">
+            <div>
+                <img id="Code-Blue" src="Images/CODEBLUE TIME.svg" alt="">
+                <img id="ExIcon" src="Images/admin-profile-icon-outline-close.svg" alt="">
+            </div>
+            <div>
+
+                <div>
+                    <p id="home-Mobile"><img src="Images/admin-profile-icon-home.svg" alt="">Home</p>
+                </div>
+                <div id="user-Mobile-Frame">
+                    <p id="user-Mobile"><img src="Images/admin-profile-icon-users.svg" alt="">Users</p>
+                </div>
+                <div>
+                    <p id="My-Profile-Mobile"><img src="Images/admin-profile-icon-user.svg" alt="">My Profile</p>
+                </div>
+
+                <div>
+                    <p id="log-out-Mobile"> <img src="Images/admin-profile-icon-exit.svg" alt="">Log out</p>
+                </div>
+            </div>
+            <img id="Mobile-Frame-Extended" src="Images/Frame 232-Extended.png" alt="">
+        </div>
+        <header class="Mains">
+            <div id="header-Container">
+                <h1><span>users</span>_</h1>
+                <div id="Search-Input">
+                    <input id="Search-Input-Input" class="Form-input" type="text">
+                    <img id="Search-Input-Icon" src="Images/admin-profile-icon-search.svg" alt="">
+                    <img id="Search-Input-Ex" class="hidden ExIconForInputs"
+                        src="Images/admin-profile-icon-outline-close.svg" alt=""></img>
+                    <label style="display: none;" class="Label-P" for=""></label>
+                </div>
+                <button id="Add-User">ADD USER</button>
+
+            </div>
+            <div id="Sort-Option-P">Sort by: <span id="Current-Sort"></span><img id="sort-Icon-Drop-D"
+                    src="Images/icon-outline-arrow-down copy.svg" alt="">
+            </div>
+        </header>
+        <table id="Sorting-Table" class="hidden">
+            <tr>
+                <td class="Sort-Option-td First-Sort">Name Ascending<img src="Images/Sorting-top-not-Active.svg" alt="">
+                </td>
+                <td class="Sort-Option-td">Name Descending<img src="Images/Sorting-bottom-Not-Active.svg" alt=""></td>
+                <td class="Sort-Option-td">Location Ascending<img src="Images/Sorting-top-not-Active.svg" alt=""></td>
+                <td class="Sort-Option-td">Location Descending<img src="Images/Sorting-bottom-Not-Active.svg" alt="">
+                </td>
+                <td class="Sort-Option-td">Role Ascending<img src="Images/Sorting-top-not-Active.svg" alt=""></td>
+                <td class="Sort-Option-td">Role Descending<img src="Images/Sorting-bottom-Not-Active.svg" alt=""></td>
+            </tr>
+        </table>
+
+        <div id="table-Container" class="Mains">
+            <table>
+                <thead>
+                    <tr class="header-row">
+                        <th id="FirstSortDesktop">Name<img id="Sorting-Image" src="Images/Sorting-top.svg" alt=""></th>
+                        <th>Email</th>
+                        <th>Skype</th>
+                        <th>Location</th>
+                        <th>Time Zone</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                </tbody>
+            </table>
+        </div>
+
+    </Main>
+    <div id="Add-Edit-User" class="hidden display-Class">
+        <form id="myForm" autocomplete="off" action="">
+            <img id="Add-Edit-User-Closer" src="Images/admin-profile-icon-outline-close.svg" alt=""></img>
+            <h1><span class="Edit-Or-Add"></span>_</h1>
+
+            <div>
+                <label for="">
+
+                    <span class="Label-P"> First Name</span>
+                    <input required type="text" class="Form-input" name="" autocomplete="off" id="First-Name">
+                    <img id="exIconLocationClose-Hidden-DropDown" class="hidden ExIconForInputs"
+                        src="Images/admin-profile-icon-outline-close.svg" alt="">
+
+                </label>
+                <label for="">
+                    <span class="Label-P">Last Name</span>
+                    <input required type="text" name="" class="Form-input" autocomplete="off" id="Last-Name">
+                    <img id="exIconLocationClose-Hidden-DropDown" class="hidden ExIconForInputs"
+                        src="Images/admin-profile-icon-outline-close.svg" alt="">
+
+                </label>
+            </div>
+
+            <label for="">
+
+                <span class="Label-P"> Email*</span>
+                <input required type="" name="" class="Form-input" autocomplete="off" id="Email">
+                <img id="exIconLocationClose-Hidden-DropDown" class="hidden ExIconForInputs"
+                    src="Images/admin-profile-icon-outline-close.svg" alt="">
+
+                <div id="email-error-container">
+                    <div id="Email-error" class="Error-Message">
+                    </div>
+                </div>
+            </label>
+
+
+
+            <label for="">
+                <span class="Label-P">Skype</span>
+                <input type="text" name="" class="Form-input" id="Skype">
+                <img id="exIconLocationClose-Hidden-DropDown" class="hidden ExIconForInputs"
+                    src="Images/admin-profile-icon-outline-close.svg" alt="">
+
+
+            </label>
+            <label for="">
+                <span class="Label-P">Location*</span>
+                <img id="exIconLocationClose-Hidden-DropDown" class="hidden ExIconForInputs"
+                    src="Images/admin-profile-icon-outline-close.svg" alt="">
+                <input required type="text" name="" class="Form-input" id="pac-input" placeholder="">
+                <div id="Location-error" class="Error-Message">
+
+                </div>
+            </label>
+            <label id="TheRoleLabel" for="">
+                <span class="Label-P">Role*</span>
+                <input id="Current-Role" class="Form-input" readonly>
+                <img class="Drop-Down-Icon" src="Images/icon-outline-arrow-down.svg" alt="">
+                <img id="exIconRole" class="hidden ExIconForInputs" src="Images/admin-profile-icon-outline-close.svg"
+                    alt="">
+                <div class="dropDown-Div">
+                    <div id="Role" class="Drop-Down-Locations hidden">
+                        <p class="Option">Admin</p>
+                        <p class="Option">User</p>
+                    </div>
+                    <div id="Role-error" class="Error-Message">
+
+                    </div>
+                </div>
+            </label>
+            <div id="checkboxDivHolder"><input type="checkbox" id="switch" /><label for="switch"
+                    id="LabelForswitch"></label>Notification of the event start and end by email</div>
+
+            <button class="Edit-Or-Add">
+
+            </button>
+        </form>
+    </div>
+    <script src="JsFiles/SearchOption.js?versioncontrol=1696973044755"></script>
+    <script src="JsFiles/PopulateTable.js?versioncontrol=1696973044755"></script>
+    <script src="JsFiles/JsfilesForhtmlPages/Admin-Profile-Users-Page.js?versioncontrol=1696973044755"> </script>
+    <script src="JsFiles/appending.js?versioncontrol=1696973044755"></script>
+    <script src="JsFiles/Mobile-Menu.js?versioncontrol=1696973044755"></script>
+    <script src="JsFiles/Menu.js?versioncontrol=1696973044755"></script>
+</body>
+
+</html>

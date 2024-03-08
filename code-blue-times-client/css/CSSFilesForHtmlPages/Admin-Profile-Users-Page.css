@@ -1,0 +1,924 @@
+td:nth-child(4) {
+    display: flex;
+    min-width: 300px;
+    width: 100%;
+    justify-content: left;
+}
+
+td span {
+    gap: 16px;
+    line-height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    color: inherit;
+}
+
+.display-Class {
+    display: flex;
+}
+
+mark {
+    background-color: rgba(0, 154, 254, 0.5);
+    mix-blend-mode: lighten;
+    color: inherit;
+}
+
+.Normal-span {
+    display: inline-block;
+}
+
+#Menu-Mobile-Frame {
+    height: 100%;
+}
+
+#Menu-Mobile-Frame-Extended {
+    height: 100%;
+}
+
+#Menu-Mobile-Frame-Extended div:nth-child(2) div:last-child {
+    padding-bottom: 2.5rem;
+}
+
+*::-webkit-scrollbar {
+    width: 10px;
+
+}
+
+::-webkit-scrollbar-thumb {
+    height: 50px;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+
+body {
+    position: relative;
+    color: var(--placeholders, #929BA3);
+    background: var(--background-dark, #02121F);
+    font-size: 0.875rem;
+    font-family: Trade Gothic LT Std;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 0.875rem;
+    letter-spacing: 0.035rem;
+    border: 0;
+    min-height: 700px;
+    height: 100vh;
+    /* overflow: hidden; */
+}
+
+table {
+    scroll-behavior: smooth;
+}
+
+main {
+    max-height: 100vh;
+    display: grid;
+    /* gap: 2rem; */
+    grid-template-columns: 1fr;
+    grid-template-rows: 100px max-content 4fr;
+
+}
+
+header {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+div {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+#Menu-Desktop {
+    height: 100%;
+    display: none;
+}
+
+h1 {
+    color: white;
+    font-size: 1.75rem;
+    font-family: Lucida Sans Typewriter;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 130%;
+    letter-spacing: 0.1875rem;
+    text-transform: uppercase;
+}
+
+span {
+    color: #009AFE;
+
+}
+
+button {
+    display: inline-block;
+    padding: 0  !important;
+    border: 0;
+    width: 20%;
+    min-width: 100px;
+    background: var(--primary, #009AFE);
+    color: var(--white, #FFF);
+    text-align: center;
+    height: 2.6em;
+    font-size: 1rem;
+    font-family:  Trade Gothic LT Std;
+    letter-spacing: 0.0625rem;
+    line-height: 0;
+}
+
+.Button-Container {
+    position: relative;
+    display: flex;
+    gap: 1.5rem;
+}
+
+
+
+.Sort-Option-td {
+    cursor: pointer;
+}
+
+
+#Add-Edit-User {
+
+    position: absolute;
+    align-self: center;
+    justify-self: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    opacity: 2 !important;
+    flex-grow: 1;
+    margin: .5em;
+    max-width: 521px;
+    min-height: 567px;
+    flex-shrink: 0;
+    background: var(--background-dark, #02121F);
+    box-shadow: 0px 4px 100px 0px rgba(0, 154, 254, 0.07);
+    gap: 2em;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+form {
+    overflow-y: auto;
+    overflow-x: hidden;
+    gap: 3em;
+    box-sizing: border-box;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    flex-grow: 1;
+}
+
+form div {
+    width: 100%;
+    gap: 1em;
+}
+
+label {
+    margin: .1em;
+    width: 100%;
+}
+
+
+input,
+#Current-Role,
+.Error-Message {
+    padding-bottom: 0.5em;
+    padding-top: 0.5em;
+    outline: none;
+    background-color: transparent;
+    border: 0;
+    font-size: 1rem;
+    font-family: Trade Gothic LT Std;
+    line-height: 0.875rem;
+    letter-spacing: 0.035rem;
+    color: gray;
+    width: 100%;
+    border-bottom: 1px solid #009AFE;
+}
+
+.Drop-Down-Locations {
+    position: absolute;
+    flex-direction: column;
+    z-index: 1;
+    top: 0;
+    box-sizing: border-box;
+    padding: 1.5em;
+    padding-top: 0;
+    padding-bottom: 0;
+    gap: 0;
+    overflow: auto;
+    width: 100%;
+    display: inline-flex;
+    background: var(--background-blue, #091C2E);
+    box-shadow: 5px 4px 100px 0px rgba(3, 16, 24, 0.40);
+}
+
+.hidden {
+    display: none;
+}
+
+.dropDown-Div {
+    width: 100%;
+    position: absolute;
+    position: relative;
+}
+
+label {
+    position: relative;
+}
+
+#Current-Location,
+#Current-Role {
+    cursor: pointer;
+    color: white;
+    border-bottom: 1px solid var(--primary, #009AFE);
+}
+
+.Drop-Down-Icon {
+    position: absolute;
+    right: 0;
+    z-index: 4;
+    bottom: 5px;
+}
+
+#Add-Edit-User-Closer {
+    position: absolute;
+    right: 24px;
+    top: 24px;
+}
+
+#exIconLocationClose-Hidden-DropDown {
+    position: absolute;
+    right: 0;
+    bottom: 5px;
+}
+
+.Drop-Down-Locations p {
+    cursor: pointer;
+    padding: 1em;
+    gap: 2em;
+    display: flex;
+    color: white;
+    align-items: end;
+    border-bottom: 1px solid gray;
+
+}
+
+.Drop-Down-Locations p:last-of-type {
+    border: 0;
+}
+
+
+
+.Drop-Down-Locations p img {
+    width: 1rem;
+}
+
+#Location-Image {
+    width: 1rem;
+}
+
+#Current-Location {
+    display: flex;
+    justify-content: normal;
+    gap: .5em;
+}
+
+#Current-Location span {
+    color: gray;
+    display: flex;
+    gap: .5em;
+}
+
+.Error-Message {
+    display: none;
+    position: absolute;
+    justify-content: normal;
+    padding: 1em;
+    font-size: 12px;
+    color: #FF2D6C;
+    text-transform: capitalize;
+    border: 0;
+    align-items: flex-start;
+}
+
+.Error-Message img {
+    width: 12px;
+    height: 12px;
+}
+
+#email-error-container {
+    position: absolute;
+    position: relative;
+}
+
+button {
+    cursor: pointer;
+}
+
+.Delete-User,
+.Edit-User,
+.Drop-Down-Icon,
+#exIconLocationClose-Hidden-DropDown,
+#Add-Edit-User-Closer {
+    cursor: pointer;
+}
+
+.pac-container {
+    background: var(--background-blue, #091C2E);
+    flex-direction: column;
+    border: 0;
+}
+
+.pac-container span {
+    color: white;
+}
+
+.pac-item {
+    justify-content: normal;
+    gap: .5em;
+    padding: 0;
+    border: 0;
+    border-bottom: 1px solid gray;
+}
+
+.pac-item:last-of-type {
+    border: 0;
+}
+
+.pac-logo:after {
+    display: none;
+}
+
+
+
+table {
+    padding: 1em;
+}
+
+.EditDeleteDiv {
+    display: inline-flex;
+    gap: .5em;
+}
+
+button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button:hover {
+    color: #009AFE;
+
+    background-color: white;
+}
+
+label,
+input,
+#Current-Role {
+    /* text-indent: 1em; */
+    font-size: 1em;
+}
+
+#checkboxDivHolder {
+    justify-content: normal;
+    align-items: center;
+    color: white;
+}
+
+#exIconRole {
+    position: absolute;
+    right: 20px;
+    bottom: 5px;
+}
+
+#Current-Role {
+    position: relative;
+}
+
+.pac-item:hover {
+    background-color: transparent;
+}
+
+input {
+    border-radius: 0;
+}
+
+header {
+    padding-top: 48px;
+}
+
+th {
+    cursor: pointer;
+    font-family: Trade Gothic LT Std !important;
+    white-space: nowrap;
+}
+
+
+
+tr:last-of-type {
+    border: 0;
+}
+
+#table-Container {
+    overscroll-behavior: none;
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    overflow: auto;
+}
+
+
+#Search-Input {
+    width: 100%;
+    position: relative;
+}
+
+#Search-Input-Icon {
+    position: absolute;
+    right: 0;
+    bottom: .5em;
+}
+
+#Search-Input-Ex {
+    position: absolute;
+    right: 40px;
+    bottom: .8em;
+}
+
+#header-Container button {
+    order: 2;
+}
+
+#header-Container h1 {
+    order: 1;
+}
+
+#header-Container div {
+    order: 3;
+}
+
+#header-Container {
+    flex-wrap: wrap;
+}
+
+#header-Container {
+    gap: 1em;
+}
+
+.Label-P {
+    position: absolute;
+    bottom: 10px;
+    left: 1em;
+    color: inherit;
+    z-index: -1;
+}
+
+.go-up-P {
+    top: -10px;
+}
+
+input {
+    z-index: 1;
+    text-indent: 1em;
+}
+
+.ExIconForInputs {
+    z-index: 5;
+}
+
+#Sorting-Image {
+    width: 16px;
+    height: 16px;
+}
+
+#Sort-Option-P {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1em;
+    color: var(--Placeholders, #929BA3);
+    font-family: Trade Gothic LT Std;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5rem;
+    letter-spacing: 0.0625rem;
+    text-transform: uppercase;
+    margin-top: 1em;
+}
+
+#Current-Sort {
+    color: var(--White, #FFF);
+    font-family: Roboto;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.125rem;
+    letter-spacing: 0.03125rem;
+    display: flex;
+    align-items: flex-start;
+    margin-right: auto;
+    text-transform: capitalize;
+}
+
+
+#Sorting-Table td::before {
+    content: none;
+}
+
+#Sorting-Table {
+    padding-bottom: 0;
+    height: max-content;
+}
+
+#Sorting-Table td {
+    gap: .5em;
+    border: 0;
+    padding-left: 3em;
+    padding-right: 8em;
+    padding-bottom: 1.5em;
+    display: flex;
+}
+
+#Sorting-Table td:nth-child(1) {
+    padding-top: 2.5em;
+}
+
+#Sorting-Table td:nth-child(6) {
+    padding-bottom: 2.62em;
+}
+
+#Sorting-Table td:last-child {
+    padding: 0;
+    padding-left: 3em;
+    padding-right: 8em;
+    padding-bottom: 2.62em;
+}
+
+#Sorting-Table td img {
+    width: 1em;
+}
+
+#Sorting-Table tr {
+    background: var(--background-dark, #02121F);
+    box-shadow: 0px 4px 100px 0px rgba(0, 154, 254, 0.07);
+}
+
+
+
+
+/*Media Queries*/
+
+
+
+
+
+
+
+
+@media (max-width:800px) {
+    #Sort-Option-P {
+        display: flex;
+    }
+
+    table {
+        width: 100%;
+        height: 100%;
+        padding: 1em;
+        display: block;
+        /* overflow: auto; */
+    }
+
+    tbody {
+        display: block;
+        color: var(--white, #FFF);
+        font-size: 0.875rem;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.125rem;
+        letter-spacing: 0.03125rem;
+    }
+
+    tr {
+        margin-bottom: 16px;
+        display: block;
+        width: 100%;
+        padding: 1em;
+        box-sizing: border-box;
+        z-index: -1;
+        background-color: rgba(9, 28, 46, 0.5);
+        padding: 0;
+        gap: 0;
+    }
+
+    #Menu-Mobile-Frame {
+        display: flex;
+    }
+
+    tbody tr td:not(:nth-child(2)),
+    thead tr {
+        text-transform: capitalize;
+    }
+
+    tbody tr td,
+    thead tr td {
+        justify-content: left;
+    }
+
+    tbody tr td img {
+        border-radius: 50%;
+        width: 1rem;
+    }
+
+    thead {
+        display: none;
+    }
+
+    tr td,
+    td:nth-child(4) {
+        display: grid;
+        align-items: center;
+        grid-template-columns: 15ch max-content max-content;
+    }
+
+    tr td:nth-child(1) {
+        padding-top: 16px;
+    }
+
+    tr td:nth-child(6) {
+        padding-bottom: 16px;
+    }
+
+    tr td:last-child {
+        padding: 16px;
+        border-top: 1px solid #1F2D3A;
+        grid-template-columns: 0px max-content;
+    }
+
+    tr td:last-child img {
+        margin-right: 2em;
+        width: 25px;
+        height: auto;
+    }
+
+    tr td::before {
+        color: var(--placeholders, #929BA3);
+        font-size: 0.875rem;
+        padding: 1em;
+        font-family: Trade Gothic LT Std;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 0.875rem;
+        overflow-y: hidden;
+        letter-spacing: 0.035rem;
+    }
+
+    tr td:nth-child(1)::before {
+        content: "Name : ";
+    }
+
+    tr td:nth-child(2)::before {
+        content: "Email :";
+    }
+
+    tr td:nth-child(3)::before {
+        content: "Skype :";
+    }
+
+    tr td:nth-child(4)::before {
+        content: "Location :";
+    }
+
+    tr td:nth-child(5)::before {
+        content: "Time Zone :";
+    }
+
+    tr td:nth-child(6)::before {
+        content: "Role :";
+    }
+
+    tr td:nth-child(7)::before {
+        content: "";
+    }
+
+    /* tr:last-child {
+        margin-bottom: 3em;
+    } */
+
+}
+
+@media (min-width:801px) {
+
+
+
+    tr td {
+        color: white;
+    }
+
+    tr td:nth-child(2) {
+        color: var(--placeholders, #929BA3);
+    }
+
+    tr td:nth-child(3) {
+        color: var(--placeholders, #929BA3);
+    }
+
+    tr td:nth-child(5) {
+        color: var(--placeholders, #929BA3);
+    }
+
+
+
+    table {
+        display: block;
+        padding: 0;
+        overflow: auto;
+        border-collapse: collapse;
+    }
+
+
+    tr {
+        z-index: 1;
+        margin-bottom: 1em;
+        border-bottom: 1px solid var(--border, #1F2D3A);
+    }
+
+
+
+    thead tr {
+        border: 0;
+    }
+
+    tbody tr td img {
+        width: 1rem;
+        border-radius: 50%;
+    }
+
+    thead {
+        position: sticky;
+        background-color: #02121F;
+        z-index: 1;
+        top: 0;
+        margin-bottom: 5px;
+    }
+
+
+
+    tbody td,
+    thead th {
+        text-align: left;
+        padding: 1.5em;
+        font-family: 'Roboto';
+    }
+
+
+
+    table td,
+    th {
+        width: 7%;
+    }
+
+    #header-Container {
+        margin-bottom: 10px;
+    }
+
+}
+
+@media (max-width:999px) {
+    header {
+        padding: 20px 1em 0.62em 1em;
+    }
+
+    body {
+        display: grid;
+    }
+
+    #Menu-Mobile-Frame {
+        display: flex;
+    }
+
+    #Menu-Mobile-Frame-Extended {
+        display: none;
+    }
+
+    #Add-Edit-User {
+        height: 100%;
+        width: 100%;
+        min-height: 100%;
+        /* overflow: auto; */
+        max-width: none;
+    }
+
+    #Add-Edit-User-Closer {
+        width: 32px;
+        height: 32px;
+    }
+
+    .Edit-Or-Add {
+        width: 100%;
+    }
+
+    #myForm {
+        margin-top: 2em;
+        justify-content: flex-start;
+        min-height: 700px;
+        gap: 2.5em;
+    }
+
+
+
+}
+
+@media (min-width:1000px) {
+    #Add-Edit-User {
+        padding: 56px;
+    }
+
+    #header-Container {
+        gap: 2em;
+        flex-wrap: nowrap;
+    }
+
+    #Search-Input {
+        margin-left: auto;
+        width: 300px;
+    }
+
+    #header-Container div {
+        order: 2;
+    }
+
+    header {
+        justify-content: center;
+        padding-bottom: 0;
+        border: 0;
+    }
+
+    h1 {
+        font-size: 1.75rem;
+    }
+
+    button {
+        font-size: 1rem;
+        width: 20%;
+    }
+
+    #Menu-Mobile-Frame {
+        display: none;
+    }
+
+    main {
+        grid-template-rows: max-content !important;
+        gap: 0;
+    }
+
+    #Menu-Desktop {
+        height: 100%;
+        align-self: left;
+        display: flex;
+    }
+
+    body {
+        padding-right: 5%;
+        display: grid;
+        grid-template-columns: 1fr 7fr;
+        grid-template-rows: 100%;
+        gap: 3em;
+
+    }
+
+    button {
+        width: 110px;
+    }
+
+    #Menu-Mobile-Frame-Extended {
+        display: none !important;
+    }
+
+    #Menu-Mobile-Frame {
+        display: none !important;
+    }
+}

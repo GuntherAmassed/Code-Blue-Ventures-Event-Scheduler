@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Roboto:wght@100;400&display=swap"
+        rel="stylesheet">
+</head>
+
+<table style=" display: inline-flex;
+        background-color: #02121F;
+        margin: auto;
+        ">
+    <tbody>
+        <tr>
+            <td style="text-align: right;"> <img
+                    style="  width: 100px; padding: 2em; padding-bottom: 0;text-align: right; align-self: flex-end; "
+                    src="https://codebluetimes.com/images/CODEBLUE%20TIME.png" alt="CODEBLUE TIME"></td>
+        </tr>
+
+        <table
+            style=" margin: auto; border-collapse: collapse; font-family: sans-serif;  box-sizing: border-box; background: var(--background-dark, #02121F); color: white; max-width: 480px;">
+            <tbody>
+                <tr style="border-bottom: #1F2D3A solid 1px; width: 100%;">
+                    <td style="border-bottom: #1F2D3A solid 1px; width: 100%;
+                   ">
+                        <h1
+                            style="margin: 0;margin-top: .5em; text-align: left; box-sizing: border-box;  font-family: sans-serif; line-height: 3.5rem;letter-spacing: 0.1875rem; font-weight: 400; text-transform: uppercase;  font-size: 2.2em; color: #009AFE; ">
+                            Hello
+
+                        </h1>
+                        <p
+                            style=" margin: 0; text-align: left; box-sizing: border-box;  font-family: sans-serif; line-height: 3.5rem;letter-spacing: 0.1875rem; font-weight: 400; text-transform: uppercase;  font-size: 2.2em; font-family: sans-serif; color: rgb(249, 243, 243); padding-bottom: .5em;">
+                            <%= username %>_
+                        </p>
+                    </td>
+                </tr>
+                <% for(let i=0; i < items.End.length; i++ ) { %>
+                    <tr>
+                        <td style="  text-align: center;
+                        text-transform: capitalize;
+                        line-height: 1.2em;
+                        letter-spacing: .04em;
+                        
+                        padding: 1em;
+                        border: #1F2D3A solid 1px; border: 0;">
+                            <h2 style="text-align: left; font-size: 1.5em;">
+                                <%= items.Start[i].EventName %>
+                            </h2>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3" style="  text-align: center;
+                        text-transform: capitalize;
+                        line-height: 1.2em;
+                        letter-spacing: .04em;
+                        font-size: 12px;
+                        padding: 1em;
+                        border: #1F2D3A solid 1px;">
+                            <%= items.CityName %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="  text-align: center;
+                        text-transform: uppercase;
+                        line-height: 1.2em;
+                        letter-spacing: .04em;
+                        font-size: 12px;
+                        padding: 1em;
+                        border: #1F2D3A solid 1px;">Start
+                        </td>
+                        <td style="  text-align: center;
+                        text-transform: uppercase;
+                        line-height: 1.2em;
+                        letter-spacing: .04em;
+                        font-size: 12px;
+                        padding: .5em;
+                        border: #1F2D3A solid 1px;
+                        white-space: nowrap;">
+                            <span>
+                                <%= items.Start[i].timeOfEvent[0] %>
+                            </span>
+                            <span style="color:#929BA3 ;">
+                                <%= items.Start[i].timeOfEvent[1] %>,
+                            </span>
+                            <span style="color: #009AFE;">
+                                <%= items.Start[i].timeOfEvent[2]%>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="  text-align: center;
+                        text-transform: uppercase;
+                        line-height: 1.2em;
+                        letter-spacing: .04em;
+                        font-size: 12px;
+                        padding: 1em;
+                        border: #1F2D3A solid 1px;">End</td>
+                        <td style="  text-align: center;
+                        text-transform: uppercase;
+                        line-height: 1.2em;
+                        letter-spacing: .04em;
+                        font-size: 12px;
+                        padding: .5em;
+                        border: #1F2D3A solid 1px;
+                        white-space: nowrap;">
+                            <span>
+                                <%= items.End[i][0] %>
+                            </span>
+                            <span style="color:#929BA3 ;">
+                                <%= items.End[i][1] %>,
+                            </span>
+                            <span style="color: #009AFE;">
+                                <%= items.End[i][2] %>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height: 20px;"></td>
+                    </tr>
+                    <% }; %>
+            </tbody>
+
+
+        </table>
+        <table>
+            <tbody>
+                <tr>
+                    <td style="margin-top: 1em;"> <img style="display:block;"
+                            src="https://codebluetimes.com/images/i-039018-remote-management-distant-work-isometric-icons-011.png"
+                            alt="guy Doing Work"></td>
+                </tr>
+            </tbody>
+        </table>
+    </tbody>
+</table>
+
+
+</html>

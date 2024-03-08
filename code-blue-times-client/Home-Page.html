@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="JsFiles/checkingForCookies.js?versioncontrol=1696973044757"></script>
+    <script src="JsFiles/CheckLogin.js?versioncontrol=1696973044757"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&family=Roboto:wght@100;400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/font.css?versioncontrol=1696973044757">
+    <link rel="stylesheet" href="css/clock.css?versioncontrol=1696973044757">
+    <link rel="stylesheet" href="css/desktop-Menu.css?versioncontrol=1696973044757">
+    <link rel="stylesheet" href="css/scroll-Bar.css?versioncontrol=1696973044757">
+    <link rel="stylesheet" href="css/Mobile-Menu.css?versioncontrol=1696973044757">
+    <link rel="stylesheet" href="css/CSSFilesForHtmlPages/Home-Page.css?versioncontrol=1696973044757">
+    <link rel="stylesheet" href="css/iframe.css?versioncontrol=1696973044757">
+    <link rel="icon" href="https://codeblue.ventures/wp-content/uploads/2020/11/favicon.ico" sizes="32x32">
+    <link rel="icon" href="https://codeblue.ventures/wp-content/uploads/2020/11/favicon.ico" sizes="192x192">
+    <link rel="apple-touch-icon" href="https://codeblue.ventures/wp-content/uploads/2020/11/favicon.ico">
+    <meta name="msapplication-TileImage" content="https://codeblue.ventures/wp-content/uploads/2020/11/favicon.ico">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body class="GridItem">
+
+
+    <div id="iframe-Frame" class="hidden">
+        <iframe src="CalendarForYomTov.html" frameborder="0"></iframe>
+        <img id="Calendar-Closer" src="Images/admin-profile-icon-outline-close.svg" alt="">
+    </div>
+
+    <div class="Frame-Menu" id="Menu-Desktop">
+        <div class="container">
+            <img src="Images/CODEBLUE TIME.svg" alt="">
+            <p id="home"><img src="Images/admin-profile-icon-home.svg" alt=""> home</p>
+            <p id="user-Desktop-Admin"><img src="Images/admin-profile-icon-user.svg" alt=""> user</p>
+            <p id="My-Profile"><img src="Images/admin-profile-icon-users.svg" alt="">My Profile</p>
+        </div>
+        <p id="log-out"><img src="Images/admin-profile-icon-exit.svg" alt=""> log out</p>
+    </div>
+
+    <div id="Menu-Mobile-Frame">
+        <img id="Code-Blue" src="Images/CODEBLUE TIME.svg" alt="">
+        <img id="Option-Frame" src="Images/frame.svg" alt="">
+        <img id="Mobile-Frame" src="Images/mobilegoodFrameMenu.png" alt="">
+    </div>
+    <div id="Menu-Mobile-Frame-Extended">
+        <div>
+            <img id="Code-Blue" src="Images/CODEBLUE TIME.svg" alt="">
+            <img id="ExIcon" src="Images/admin-profile-icon-outline-close.svg" alt="">
+        </div>
+        <div>
+            <div>
+                <p id="home-Mobile"><img src="Images/admin-profile-icon-home.svg" alt="">Home</p>
+            </div>
+            <div id="user-Mobile-Frame">
+                <p id="user-Mobile"><img src="Images/admin-profile-icon-users.svg" alt="">Users</p>
+            </div>
+
+            <div>
+                <p id="My-Profile-Mobile"><img src="Images/admin-profile-icon-user.svg" alt="">My Profile</p>
+            </div>
+            <div>
+                <p id="log-out-Mobile"> <img src="Images/admin-profile-icon-exit.svg" alt="">Log out</p>
+            </div>
+        </div>
+        <img id="Mobile-Frame-Extended" src="Images/Frame 232-Extended.png" alt="">
+    </div>
+    <main class="Mains">
+
+        <div class="row">
+            <h1 id="Handthing"></h1>
+
+            <h1 id="User-Name-Time">
+
+            </h1>
+        </div>
+
+
+        <div class="row Frame" id="row-clock-frame-box">
+
+
+        </div>
+        <div class="Frame" id="upcomingTimeFrame">
+            <h1 class="small">upcoming time</h1>
+
+            <div class="row">
+                <div class="change-Date">
+                    <div id="Date-Calendar-Container">
+                        <div id="calendar-Frame">
+                            <div>
+                                <img id="calendarIcon" src="Images/icon-calendar.svg" alt="">
+                                <p id="Today-Date"></p>
+                            </div>
+                        </div>
+                        <div>
+                            <img id="Arrow-Left" src="Images/icon-outline-arrow-left.svg" alt="">
+                            <img id="Arrow-Right" src="Images/icon-outline-arrow-right.svg" alt="">
+                        </div>
+                        <div id="Today-Date-span">Today</div>
+                    </div>
+                    <div id="Location-scroll-Container">
+                        <div id="scroll-container">
+                            <img id="scrollButtonback" src="Images/icon-outline-arrow-left.svg" alt="">
+                            <img id="scrollButtonforward" src="Images/icon-outline-arrow-right.svg" alt="">
+                        </div>
+                        <div class="row Locations" id="row-location-frame">
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div id="table-Container">
+                <table>
+                    <tbody>
+                        <tr id="Event-Name-Row">
+                            <th>Event</th>
+                            <td id="Event-Name"></td>
+                        </tr>
+                        <tr id="Start-of-Event-Row">
+                            <th>Starts</th>
+                            <td id="Start-of-Event"></td>
+                        </tr>
+                        <tr id="End-Of-Event-Row">
+                            <th>Ends</th>
+                            <td id="End-Of-Event"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+        <div class="Frame ContentFrame">
+            <h1 class="small">FAQ</h1>
+            <div class="drop-Down-Paragraph">
+                <div class="Paragraph-Head">
+                    <h3> What does the timing of the Sabbath depend on?</h3>
+
+                </div>
+
+                <div class="Content hidden">
+                    <p> The timing of the Sabbath, also known as the Jewish Sabbath or Shabbat, is based on the lunar
+                        cycle and the Jewish calendar. It begins at sundown on Friday evening and ends at nightfall on
+                        Saturday. This timing is based on the biblical account of creation, which states that God rested
+                        on the seventh day. The Jewish tradition holds that this day of rest and reflection should be
+                        observed on the seventh day of each week, beginning with Friday evening.</p>
+
+                </div>
+                <img class="Plus-Icon" src="Images/PlusSign.svg" alt="">
+            </div>
+            <div class="drop-Down-Paragraph">
+                <div class="Paragraph-Head">
+                    <h3>What can I do on the Sabbath and what not?</h3>
+                </div>
+
+                <div class="Content hidden">
+                    <p>A series of rules concerning what is and is not permitted to be done on the Sabbath, which is
+                        considered a day of rest and spiritual restoration. These rules are based on Jewish law, or
+                        halacha, and include both positive and negative commandments.Things allowed on the Sabbath
+                        include going to synagogue, spending time with family and friends, studying religious texts, and
+                        taking walks.
+
+                        However, there are also restrictions on certain activities, such as cooking, using electronic
+                        devices, and engaging in commerce.It is worth noting that the specifics of what is allowed and
+                        what is prohibited on the Sabbath may vary depending on each person's level of observance and
+                        the community to which they belong. If you are unsure of what is appropriate, it is always best
+                        to ask someone who is well-versed in Jewish law and tradition.</p>
+
+                </div>
+                <img class="Plus-Icon" src="Images/PlusSign.svg" alt="">
+
+            </div>
+            <div class="drop-Down-Paragraph">
+                <div class="Paragraph-Head">
+                    <h3>What does the candle lit at the beginning of the Sabbath symbolize?</h3>
+                </div>
+
+                <div class="Content hidden">
+                    <p>The candle that is lit at the beginning of the Sabbath, also known as Shabbat candles, symbolizes
+                        the sanctity and joy of the day. It serves as a reminder of the special nature of the Sabbath,
+                        which is a time to rest, reflect, and connect with family and community.</p>
+
+                </div>
+                <img class="Plus-Icon" src="Images/PlusSign.svg" alt="">
+
+            </div>
+        </div>
+    </main>
+    <script>
+    </script>
+    <script src="JsFiles/appending.js?versioncontrol=1696973044757"></script>
+    <script src="JsFiles/clock.js?versioncontrol=1696973044757"></script>
+    <script src="JsFiles/ZmanimApi.js?versioncontrol=1696973044757"></script>
+    <script src="JsFiles/Main.js?versioncontrol=1696973044757"></script>
+    <script src="JsFiles/Mobile-Menu.js?versioncontrol=1696973044757"></script>
+    <script src="JsFiles/Menu.js?versioncontrol=1696973044757"></script>
+    <script src="JsFiles/JsfilesForhtmlPages/Home-Page.js?versioncontrol=1696973044757"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,172 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+td {
+    cursor: pointer;
+    color: white;
+}
+/* tr{
+    margin: 1em;
+    min-height: max-content;
+}
+ .fc table {
+    border-collapse: separate;
+    border-spacing: 5px;
+     font-size: 1em;
+}  */
+#calendar {
+    z-index: 1;
+    padding-bottom: 0;
+    background-color: #02121F;
+    color: var(--Placeholders, #929BA3);
+    font-family: Trade Gothic LT Std;
+    font-style: normal;
+    font-weight: 400;
+    text-transform: capitalize;
+    border: 0;
+}
+
+.fc .fc-daygrid-day-frame {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#calendar table * {
+    border: 0;
+
+}
+
+.fc-direction-ltr .fc-button-group>.fc-button:not(:last-child),
+.fc-direction-ltr .fc-button-group>.fc-button:not(:first-child) {
+    color: white;
+    border-bottom-right-radius: 0px;
+    background: transparent;
+    border: 0;
+    border-top-right-radius: 0px;
+}
+
+.fc-direction-ltr .fc-button-group>.fc-button:not(:last-child):focus,
+.fc-direction-ltr .fc-button-group>.fc-button:not(:first-child):focus {
+    border: none;
+    box-shadow: none;
+}
+
+.fc .fc-button-primary {
+    background-color: var(--fc-button-bg-color);
+    text-transform: capitalize;
+    border-color: var(--fc-button-border-color);
+    color: var(--fc-button-text-color);
+}
+
+.fc-header-toolbar {
+    font-family: Trade Gothic LT Std;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: white;
+    border-bottom: 1px solid #1F2D3A;
+    flex-direction: row;
+}
+
+.fc-theme-standard .fc-scrollgrid {
+    border: 0;
+}
+
+.fc-toolbar-chunk>button:first-of-type {
+    display: none;
+}
+
+.fc-daygrid-block-event .fc-event-time,
+.fc-daygrid-block-event .fc-event-title {
+    font-family: Trade Gothic LT Std;
+}
+
+
+.fc .fc-daygrid-day.fc-day-today {
+    background-color: #02121F;
+    border-radius: 0;
+    color: white;
+}
+
+.Today-Day-Style {
+    background: white !important;
+    border-radius: 50% !important;
+    color: #009AFE !important;
+}
+
+.fc-today-button,
+.fc-button,
+.fc-button-primary {
+    text-transform: capitalize;
+}
+
+.fc .fc-bg-event {
+    border: 2px solid #02121F !important;
+    background-color: #1F2D3A;
+    border-radius: 60px;
+    opacity: 1;
+    z-index: -1;
+}
+
+.end-day-style,
+.first-day-style {
+    border-radius: 50%;
+    background: #009AFE;
+    color: white;
+}
+
+.fc-daygrid-day-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fc th {
+    text-align: center;
+    color: var(--Placeholders, #929BA3);
+    font-family: Trade Gothic LT Std;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 14px;
+    letter-spacing: 0.56px;
+}
+
+.fc td {
+
+    text-align: center;
+    font-size: 10px;
+}
+
+.fc .fc-daygrid-day-bg .fc-bg-event {
+    z-index: -1;
+}
+
+.fc-daygrid-day-events {
+    display: none;
+}
+
+.fc .fc-toolbar {
+    justify-content: normal;
+}
+
+.fc .fc-toolbar-title {
+    color: #FFF;
+    font-family: Trade Gothic LT Std;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.fc .fc-button .fc-icon {
+    font-size: 16px;
+    vertical-align: auto;
+}
